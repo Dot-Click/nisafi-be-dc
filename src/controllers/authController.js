@@ -6,19 +6,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
   try {
-    const { name, email, password } = req.body;
-    if (
-      !password.match(
-        /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/
-      )
-    ) {
-      return ErrorHandler(
-        "Password must contain atleast one uppercase letter, one special character and one number",
-        400,
-        req,
-        res
-      );
-    }
+    const { name, email, phone, password, role } = req.body;
     const user = await User.findOne({ email });
     if (user) {
       return ErrorHandler("User already exists", 400, req, res);
@@ -27,6 +15,7 @@ const register = async (req, res) => {
       name,
       email,
       password,
+      role,
     });
     newUser.save();
     return SuccessHandler("User created successfully", 200, res);
@@ -101,7 +90,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return ErrorHandler("User does not exist", req, 400, res);
+      return ErrorHandler("User does not exist", 400, req, res);
     }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
@@ -144,7 +133,7 @@ const forgotPassword = async (req, res) => {
     user.passwordResetToken = passwordResetToken;
     user.passwordResetTokenExpires = passwordResetTokenExpires;
     await user.save();
-    const message = `Your password reset token is ${resetPasswordToken} and it expires in 10 minutes`;
+    const message = `Your password reset token is ${passwordResetToken} and it expires in 10 minutes`;
     const subject = `Password reset token`;
     await sendMail(email, subject, message);
     return SuccessHandler(`Password reset token sent to ${email}`, 200, res);
