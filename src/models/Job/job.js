@@ -47,13 +47,26 @@ const jobSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["open", "in-progress", "completed", "cancelled", "disputed"],
+      enum: [
+        "open",
+        "in-progress",
+        "paymentRequested",
+        "completed",
+        "cancelled",
+        "disputed",
+      ],
       default: "open",
     },
     worker: {
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    proposals: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "proposal",
+      },
+    ],
   },
   { timestamps: true }
 );

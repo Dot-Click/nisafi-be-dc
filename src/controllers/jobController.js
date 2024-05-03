@@ -2,6 +2,8 @@ const SuccessHandler = require("../utils/SuccessHandler");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Job = require("../models/Job/job");
 const User = require("../models/User/user");
+const Proposal = require("../models/Job/proposal");
+const { default: mongoose } = require("mongoose");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -93,19 +95,106 @@ const getAllJobsWorker = async (req, res) => {
         status: "open",
         ...searchFilter,
       }).sort({ createdAt: -1 });
-    }
-
-    if (req.query?.status === "propsalSubmitted") {
+    } else if (req.query?.status === "propsalSubmitted") {
       // get all jobs where worker has submitted a proposal
+      const proposals = await Proposal.find({ user: req.user._id });
+      const jobIds = proposals.map((proposal) => proposal.job);
+      jobs = await Job.aggregate([
+        {
+          $match: {
+            _id: { $in: jobIds },
+            ...searchFilter,
+          },
+        },
+        {
+          $lookup: {
+            from: "proposals",
+            localField: "_id",
+            foreignField: "job",
+            as: "proposals",
+          },
+        },
+        {
+          $project: {
+            type: 1,
+            date: 1,
+            timeDuration: 1,
+            location: 1,
+            description: 1,
+            budget: 1,
+            tags: 1,
+            user: 1,
+            status: 1,
+            worker: 1,
+            proposals: {
+              $filter: {
+                input: "$proposals",
+                as: "proposal",
+                cond: {
+                  $eq: [
+                    "$$proposal.user",
+                    mongoose.Types.ObjectId(req.user._id),
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ]);
+    } else {
+      jobs = await Job.find({
+        worker: req.user._id,
+        status: req.query.status,
+        ...searchFilter,
+      }).sort({ createdAt: -1 });
     }
 
-    if (req.query?.status === "completed") {
-      // get all jobs where worker has been hired
+    return SuccessHandler(jobs, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const submitProposal = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    if (!req.user?.adminApproval) {
+      return ErrorHandler("User has not been approved by admin", 400, req, res);
+    }
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
     }
 
-    if (req.query?.status === "cancelled") {
-      // get all jobs where worker has been cancelled
+    if (job.status !== "open") {
+      return ErrorHandler("Job is not open for proposals", 400, req, res);
     }
+
+    const { coverLetter, budget, acknowledged } = req.body;
+
+    const proposal = await Proposal.create({
+      user: req.user._id,
+      job: job._id,
+      coverLetter,
+      budget,
+      acknowledged,
+    });
+    await proposal.save();
+
+    job?.proposals
+      ? job.proposals.push(proposal._id)
+      : (job.proposals = [proposal._id]);
+
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Proposal submitted successfully",
+        proposal,
+      },
+      201,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -115,4 +204,5 @@ module.exports = {
   createJob,
   getAllJobsClient,
   getAllJobsWorker,
+  submitProposal,
 };
