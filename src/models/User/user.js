@@ -33,28 +33,59 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  emailVerified: {
-    type: Boolean,
-    default: false,
-  },
-  emailVerificationToken: {
-    type: Number,
-  },
-  emailVerificationTokenExpires: {
-    type: Date,
-  },
+  // emailVerified: {
+  //   type: Boolean,
+  //   default: false,
+  // },
+  // emailVerificationToken: {
+  //   type: Number,
+  // },
+  // emailVerificationTokenExpires: {
+  //   type: Date,
+  // },
   passwordResetToken: {
     type: Number,
   },
   passwordResetTokenExpires: {
     type: Date,
   },
-  lastLogin: {
-    type: Date,
-  },
+  // lastLogin: {
+  //   type: Date,
+  // },
   isActive: {
     type: Boolean,
     default: true,
+  },
+  address: {
+    type: String,
+  },
+  address2: {
+    type: String,
+  },
+  profession: {
+    type: String,
+  },
+  idNumber: {
+    type: String,
+  },
+  certificate: {
+    type: String,
+  },
+  skills: {
+    type: String,
+  },
+  experience: {
+    type: String,
+  },
+  qualification: {
+    type: String,
+  },
+  idDocs: {
+    type: [String],
+  },
+  adminApproval: {
+    type: Boolean,
+    default: false,
   },
 });
 

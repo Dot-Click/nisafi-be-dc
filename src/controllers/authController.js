@@ -24,63 +24,63 @@ const register = async (req, res) => {
   }
 };
 
-//request email verification token
-const requestEmailToken = async (req, res) => {
-  // #swagger.tags = ['auth']
+// request email verification token
+// const requestEmailToken = async (req, res) => {
+//   // #swagger.tags = ['auth']
 
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-      return ErrorHandler("User does not exist", 400, req, res);
-    }
-    const emailVerificationToken = Math.floor(100000 + Math.random() * 900000);
-    const emailVerificationTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
-    user.emailVerificationToken = emailVerificationToken;
-    user.emailVerificationTokenExpires = emailVerificationTokenExpires;
-    await user.save();
-    const message = `Your email verification token is ${emailVerificationToken} and it expires in 10 minutes`;
-    const subject = `Email verification token`;
-    await sendMail(email, subject, message);
-    return SuccessHandler(
-      `Email verification token sent to ${email}`,
-      200,
-      res
-    );
-  } catch (error) {
-    return ErrorHandler(error.message, 500, req, res);
-  }
-};
+//   try {
+//     const { email } = req.body;
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return ErrorHandler("User does not exist", 400, req, res);
+//     }
+//     const emailVerificationToken = Math.floor(100000 + Math.random() * 900000);
+//     const emailVerificationTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
+//     user.emailVerificationToken = emailVerificationToken;
+//     user.emailVerificationTokenExpires = emailVerificationTokenExpires;
+//     await user.save();
+//     const message = `Your email verification token is ${emailVerificationToken} and it expires in 10 minutes`;
+//     const subject = `Email verification token`;
+//     await sendMail(email, subject, message);
+//     return SuccessHandler(
+//       `Email verification token sent to ${email}`,
+//       200,
+//       res
+//     );
+//   } catch (error) {
+//     return ErrorHandler(error.message, 500, req, res);
+//   }
+// };
 
-//verify email token
-const verifyEmail = async (req, res) => {
-  // #swagger.tags = ['auth']
+// //verify email token
+// const verifyEmail = async (req, res) => {
+//   // #swagger.tags = ['auth']
 
-  try {
-    const { email, emailVerificationToken } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "User does not exist",
-      });
-    }
-    if (
-      user.emailVerificationToken !== emailVerificationToken ||
-      user.emailVerificationTokenExpires < Date.now()
-    ) {
-      return ErrorHandler("Invalid token", 400, req, res);
-    }
-    user.emailVerified = true;
-    user.emailVerificationToken = null;
-    user.emailVerificationTokenExpires = null;
-    jwtToken = user.getJWTToken();
-    await user.save();
-    return SuccessHandler("Email verified successfully", 200, res);
-  } catch (error) {
-    return ErrorHandler(error.message, 500, req, res);
-  }
-};
+//   try {
+//     const { email, emailVerificationToken } = req.body;
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User does not exist",
+//       });
+//     }
+//     if (
+//       user.emailVerificationToken !== emailVerificationToken ||
+//       user.emailVerificationTokenExpires < Date.now()
+//     ) {
+//       return ErrorHandler("Invalid token", 400, req, res);
+//     }
+//     user.emailVerified = true;
+//     user.emailVerificationToken = null;
+//     user.emailVerificationTokenExpires = null;
+//     jwtToken = user.getJWTToken();
+//     await user.save();
+//     return SuccessHandler("Email verified successfully", 200, res);
+//   } catch (error) {
+//     return ErrorHandler(error.message, 500, req, res);
+//   }
+// };
 
 //login
 const login = async (req, res) => {
@@ -96,9 +96,9 @@ const login = async (req, res) => {
     if (!isMatch) {
       return ErrorHandler("Invalid credentials", 400, req, res);
     }
-    if (!user.emailVerified) {
-      return ErrorHandler("Email not verified", 400, req, res);
-    }
+    // if (!user.emailVerified) {
+    //   return ErrorHandler("Email not verified", 400, req, res);
+    // }
     jwtToken = user.getJWTToken();
     return SuccessHandler("Logged in successfully", 200, res);
   } catch (error) {
@@ -208,13 +208,66 @@ const updatePassword = async (req, res) => {
   }
 };
 
+//get me
+const me = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    return SuccessHandler(req.user, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+//update me
+const updateMe = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    const {
+      name,
+      email,
+      phone,
+      address,
+      address2,
+      profession,
+      idNumber,
+      certificate,
+      skills,
+      experience,
+      qualification,
+    } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return ErrorHandler("User does not exist", 400, req, res);
+    }
+    // images array upload to aws or cloudinary
+    
+    user.name = name || user.name;
+    // user.email = email || user.email;
+    user.phone = phone || user.phone;
+    user.address = address || user.address;
+    user.address2 = address2 || user.address2;
+    user.profession = profession || user.profession;
+    user.idNumber = idNumber || user.idNumber;
+    user.certificate = certificate || user.certificate;
+    user.skills = skills || user.skills;
+    user.experience = experience || user.experience;
+    user.qualification = qualification || user.qualification;
+    await user.save();
+    return SuccessHandler("User updated successfully", 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   register,
-  requestEmailToken,
-  verifyEmail,
+  // requestEmailToken,
+  // verifyEmail,
   login,
   logout,
   forgotPassword,
   resetPassword,
   updatePassword,
+  me,
+  updateMe,
 };
