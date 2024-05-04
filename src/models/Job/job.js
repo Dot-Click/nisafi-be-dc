@@ -67,6 +67,10 @@ const jobSchema = new Schema(
         ref: "proposal",
       },
     ],
+    laundryPickupTime: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -4,6 +4,7 @@ const Job = require("../models/Job/job");
 const User = require("../models/User/user");
 const Proposal = require("../models/Job/proposal");
 const { default: mongoose } = require("mongoose");
+const sendMail = require("../utils/sendMail");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -200,9 +201,188 @@ const submitProposal = async (req, res) => {
   }
 };
 
+const acceptProposal = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { laundryPickupTime, proposalId } = req.body;
+
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "open") {
+      return ErrorHandler("Job is not open for proposals", 400, req, res);
+    }
+
+    const proposal = await Proposal.findById(proposalId);
+
+    if (!proposal) {
+      return ErrorHandler("Proposal does not exist", 400, req, res);
+    }
+
+    if (proposal.job.toString() !== job._id.toString()) {
+      return ErrorHandler(
+        "Proposal does not belong to this job",
+        400,
+        req,
+        res
+      );
+    }
+
+    job.status = "in-progress";
+    job.worker = proposal.user;
+    job.laundryPickupTime = laundryPickupTime;
+
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Proposal accepted successfully",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const submitProofOfWork = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { images, description } = req.files;
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "in-progress") {
+      return ErrorHandler("Job is not in progress", 400, req, res);
+    }
+
+    // upload images to aws or cloudinary
+
+    job.status = "paymentRequested";
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Proof of work submitted successfully",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const endContract = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "paymentRequested") {
+      return ErrorHandler("Payment has not been requested", 400, req, res);
+    }
+
+    job.status = "completed";
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Contract ended successfully",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const createDispute = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { description, jobId, proposalId } = req.body;
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "paymentRequested") {
+      return ErrorHandler("Payment has not been requested", 400, req, res);
+    }
+
+    job.status = "disputed";
+
+    await sendMail(
+      "admin@nisafi.com",
+      "Dispute Notification",
+      `A dispute has been created for job with id ${jobId} and proposal with id ${proposalId} with the following description: ${description}`
+    );
+
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Dispute created successfully",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const resolveDispute = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { jobId } = req.body;
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "disputed") {
+      return ErrorHandler("Job is not disputed", 400, req, res);
+    }
+
+    job.status = "completed";
+
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Dispute resolved successfully",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   createJob,
   getAllJobsClient,
   getAllJobsWorker,
   submitProposal,
+  acceptProposal,
 };
