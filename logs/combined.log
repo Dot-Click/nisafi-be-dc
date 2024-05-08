@@ -98,3 +98,93 @@
 {"date":"2023-03-18T12:29:00.797Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/"}
 {"date":"2023-03-18T12:30:38.116Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/"}
 {"date":"2023-03-18T12:38:23.451Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/"}
+{"date":"2024-05-07T16:18:10.135Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/docs"}
+{"date":"2024-05-07T16:18:27.049Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs"}
+{"date":"2024-05-07T16:18:27.067Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/"}
+{"date":"2024-05-07T16:18:27.094Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui.css"}
+{"date":"2024-05-07T16:18:27.097Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-bundle.js"}
+{"date":"2024-05-07T16:18:27.110Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-standalone-preset.js"}
+{"date":"2024-05-07T16:18:27.112Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-init.js"}
+{"date":"2024-05-07T16:18:27.434Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/favicon-32x32.png"}
+{"date":"2024-05-07T17:12:28.623Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/api/auth/register"}
+{"date":"2024-05-07T17:14:26.222Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/api/auth/register.com"}
+{"date":"2024-05-07T17:17:03.792Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register.com"}
+{"date":"2024-05-07T17:19:04.827Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T17:19:05.170Z","level":"error","message":"user validation failed: role: `Worker` is not a valid enum value for path `role`.","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T17:22:33.042Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/"}
+{"date":"2024-05-07T17:22:33.094Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui.css"}
+{"date":"2024-05-07T17:22:33.097Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-bundle.js"}
+{"date":"2024-05-07T17:22:33.111Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-standalone-preset.js"}
+{"date":"2024-05-07T17:22:33.114Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-init.js"}
+{"date":"2024-05-07T17:22:33.278Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/favicon-32x32.png"}
+{"date":"2024-05-07T17:27:31.927Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/"}
+{"date":"2024-05-07T17:27:31.968Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui.css"}
+{"date":"2024-05-07T17:27:31.970Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-bundle.js"}
+{"date":"2024-05-07T17:27:31.976Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-standalone-preset.js"}
+{"date":"2024-05-07T17:27:31.978Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-init.js"}
+{"date":"2024-05-07T17:27:32.130Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/favicon-32x32.png"}
+{"date":"2024-05-07T17:27:43.572Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T17:27:44.641Z","level":"error","message":"user validation failed: email: Invalid Email, role: `any` is not a valid enum value for path `role`.","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T17:28:04.628Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T17:28:04.941Z","level":"error","message":"user validation failed: email: Invalid Email","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T17:29:10.750Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T17:29:25.081Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T17:30:05.413Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-07T17:30:53.155Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T17:31:09.841Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-07T17:31:10.919Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-07T17:31:12.472Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-07T17:31:14.075Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-07T17:54:04.835Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T18:00:19.922Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/"}
+{"date":"2024-05-07T18:00:19.997Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui.css"}
+{"date":"2024-05-07T18:00:19.999Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-bundle.js"}
+{"date":"2024-05-07T18:00:20.002Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-init.js"}
+{"date":"2024-05-07T18:00:20.006Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/swagger-ui-standalone-preset.js"}
+{"date":"2024-05-07T18:00:20.175Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/api-docs/favicon-32x32.png"}
+{"date":"2024-05-07T18:00:48.866Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T18:00:50.257Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T18:00:57.782Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T18:00:58.223Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T18:01:02.435Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T18:01:02.938Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T18:04:18.979Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T18:21:53.836Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T18:21:54.126Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T18:37:46.601Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T18:37:46.939Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T18:38:39.477Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T18:41:12.785Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T18:42:17.582Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T18:57:09.116Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:06:13.092Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:06:56.780Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:06:56.805Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:06:57.067Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:06:57.117Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:08:37.760Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:08:38.044Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:08:38.444Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:08:38.724Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:09:54.774Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:10:39.723Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:10:40.035Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:10:56.953Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:11:13.884Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:11:14.183Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:11:14.421Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:11:14.772Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:13:05.636Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:13:05.913Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:14:05.162Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:14:08.992Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:14:09.263Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:14:54.256Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:14:54.538Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:16:25.048Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-07T19:16:25.315Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:17:39.367Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T19:17:39.842Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T19:18:21.171Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-07T19:18:21.580Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T19:34:38.379Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}

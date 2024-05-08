@@ -11,7 +11,7 @@ global.io;
 global.onlineUsers = [];
 
 //server setup
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 8002;
 
 var server = http.createServer(app);
 server.listen(PORT, () => {

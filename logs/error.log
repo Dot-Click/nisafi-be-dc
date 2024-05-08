@@ -1,0 +1,21 @@
+{"date":"2024-05-07T17:19:05.170Z","level":"error","message":"user validation failed: role: `Worker` is not a valid enum value for path `role`.","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T17:27:44.641Z","level":"error","message":"user validation failed: email: Invalid Email, role: `any` is not a valid enum value for path `role`.","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T17:28:04.941Z","level":"error","message":"user validation failed: email: Invalid Email","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T18:00:50.257Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T18:00:58.223Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T18:01:02.938Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T18:21:54.126Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T18:37:46.939Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:06:57.067Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:06:57.117Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:08:38.044Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:08:38.724Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:10:40.035Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:11:14.183Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:11:14.772Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:13:05.913Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:14:09.263Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:14:54.538Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:16:25.315Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-05-07T19:17:39.842Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-07T19:18:21.580Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}

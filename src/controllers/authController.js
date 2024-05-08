@@ -100,7 +100,12 @@ const login = async (req, res) => {
     //   return ErrorHandler("Email not verified", 400, req, res);
     // }
     jwtToken = user.getJWTToken();
-    return SuccessHandler("Logged in successfully", 200, res);
+    delete user.password;
+    return SuccessHandler({
+      message: "Logged in successfully",
+      token: jwtToken,
+      user,
+    }, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }

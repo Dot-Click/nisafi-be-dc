@@ -5,7 +5,7 @@ const doc = {
     description: "Cloudfront api endpoints",
     version: "1.0.0",
   },
-  host: "localhost:8001",
+  host: "192.168.100.16:8002",
   basePath: "/",
   schemes: ["http"],
   consumes: ["application/json"],
