@@ -5,10 +5,10 @@
     "description": "Cloudfront api endpoints",
     "version": "1.0.0"
   },
-  "host": "192.168.100.16:8002",
+  "host": "nisafi-staging.up.railway.app",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -67,9 +67,6 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
-                },
-                "email": {
                   "example": "any"
                 },
                 "phone": {
@@ -420,7 +417,7 @@
         }
       }
     },
-    "/job/": {
+    "/job/create": {
       "post": {
         "tags": [
           "job"
@@ -507,6 +504,91 @@
                   "example": "any"
                 },
                 "acknowledged": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/job/acceptProposal": {
+      "put": {
+        "tags": [
+          "job"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "laundryPickupTime": {
+                  "example": "any"
+                },
+                "proposalId": {
+                  "example": "any"
+                },
+                "jobId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/job/deliverWork": {
+      "put": {
+        "tags": [
+          "job"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "example": "any"
+                },
+                "jobId": {
                   "example": "any"
                 }
               }

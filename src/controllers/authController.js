@@ -101,11 +101,16 @@ const login = async (req, res) => {
     // }
     jwtToken = user.getJWTToken();
     delete user.password;
-    return SuccessHandler({
-      message: "Logged in successfully",
-      token: jwtToken,
-      user,
-    }, 200, res);
+
+    return SuccessHandler(
+      {
+        message: "Logged in successfully",
+        token: jwtToken,
+        user: user.role === "worker" ? (user?.address ? user : null) : user,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -229,7 +234,6 @@ const updateMe = async (req, res) => {
   try {
     const {
       name,
-      email,
       phone,
       address,
       address2,
@@ -245,7 +249,9 @@ const updateMe = async (req, res) => {
       return ErrorHandler("User does not exist", 400, req, res);
     }
     // images array upload to aws or cloudinary
+    const { image } = req.files;
     
+
     user.name = name || user.name;
     // user.email = email || user.email;
     user.phone = phone || user.phone;

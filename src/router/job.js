@@ -7,9 +7,11 @@ const router = express.Router();
 router.route("/client").get(isAuthenticated, job.getAllJobsClient);
 router.route("/worker").get(isAuthenticated, job.getAllJobsWorker);
 // post
-router.route("/").post(isAuthenticated, isClient, job.createJob);
+router.route("/create").post(isAuthenticated, isClient, job.createJob);
 router.route("/submitProposal/:id").post(isAuthenticated, isWorker, job.submitProposal);
+
 // put
-// delete
+router.route("/acceptProposal").put(isAuthenticated, isClient, job.acceptProposal);
+router.route("/deliverWork").put(isAuthenticated, isWorker, job.deliverWork);
 
 module.exports = router;

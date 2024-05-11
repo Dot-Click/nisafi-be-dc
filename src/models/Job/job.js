@@ -71,6 +71,10 @@ const jobSchema = new Schema(
       type: String,
       required: true,
     },
+    proofOfWork: {
+      type: Schema.Types.ObjectId,
+      ref: "proofOfWork",
+    },
   },
   { timestamps: true }
 );
