@@ -10,13 +10,13 @@ const ProofOfWork = require("../models/Job/proofOfWork");
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-    const { type, date, timeDuration, location, description, budget, tags } =
+    const { type, date, timeDuration, location, description, budget, tags, laundryPickupTime } =
       req.body;
 
     // if (req.user.adminApproval === false) {
     //   return ErrorHandler("User has not been approved by admin", 400, req, res);
     // }
-
+    
     const { images } = req.files;
 
     if (!images) {
@@ -29,10 +29,11 @@ const createJob = async (req, res) => {
       type,
       date,
       timeDuration,
-      location,
+      location: JSON.parse(location),
       description,
       budget,
       tags,
+      laundryPickupTime,
       user: req.user._id,
     });
 
