@@ -188,3 +188,73 @@
 {"date":"2024-05-07T19:18:21.171Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
 {"date":"2024-05-07T19:18:21.580Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-05-07T19:34:38.379Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-11T12:40:27.952Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:40:33.942Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:40:44.115Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:40:44.595Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:41:00.568Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:41:01.730Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:41:38.506Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:41:38.993Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:43:09.267Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:43:09.698Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:43:21.526Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:43:22.225Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:43:22.676Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:43:26.896Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:43:27.364Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:44:26.879Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:44:27.098Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:44:43.903Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:45:04.499Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:49:36.232Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:49:39.734Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:49:50.802Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:50:20.723Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:50:24.018Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:50:33.650Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:52:51.570Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:54:50.979Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:55:04.488Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T12:55:18.442Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T12:55:33.152Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:56:25.500Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:57:37.563Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:58:06.001Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:58:32.425Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T12:58:55.355Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:00:23.612Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T13:00:41.946Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:02:04.930Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T13:02:27.132Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:03:17.211Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-11T13:03:23.645Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T13:03:36.096Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:05:01.014Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T13:05:27.567Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:08:35.309Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T13:08:42.724Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T13:08:42.881Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-11T13:08:55.382Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T13:08:55.650Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T13:09:02.545Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-11T13:09:06.127Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:09:06.398Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:09:18.670Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:09:18.940Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:09:20.720Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:09:21.007Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:09:59.196Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:09:59.465Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:10:44.870Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:10:45.136Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:10:56.375Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:10:56.650Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:12:33.426Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:12:33.695Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:14:30.227Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:14:30.493Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:23:43.004Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:23:43.266Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:25:31.190Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-11T13:25:33.776Z","level":"error","message":"job validation failed: date: Cast to date failed for value \"2025-21-1\" (type string) at path \"date\", timeDuration: Cast to Number failed for value \"timeDuration\" (type string) at path \"timeDuration\", budget: Cast to Number failed for value \"budget\" (type string) at path \"budget\", laundryPickupTime: Path `laundryPickupTime` is required., location.string: Path `location.string` is required., location.coordinates: Path `location.coordinates` is required.","method":"POST","service":"user-service","url":"/create"}

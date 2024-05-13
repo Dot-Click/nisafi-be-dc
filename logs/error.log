@@ -19,3 +19,21 @@
 {"date":"2024-05-07T19:16:25.315Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
 {"date":"2024-05-07T19:17:39.842Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-05-07T19:18:21.580Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:40:33.942Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:40:44.595Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:41:01.730Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:41:38.993Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:43:09.698Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:43:22.676Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T12:43:27.364Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T13:08:55.650Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-11T13:09:06.398Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:09:18.940Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:09:21.007Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:09:59.465Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:10:45.136Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:10:56.650Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:12:33.695Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:14:30.493Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:23:43.266Z","level":"error","message":"Cannot destructure property 'images' of 'req.files' as it is undefined.","method":"POST","service":"user-service","url":"/create"}
+{"date":"2024-05-11T13:25:33.776Z","level":"error","message":"job validation failed: date: Cast to date failed for value \"2025-21-1\" (type string) at path \"date\", timeDuration: Cast to Number failed for value \"timeDuration\" (type string) at path \"timeDuration\", budget: Cast to Number failed for value \"budget\" (type string) at path \"budget\", laundryPickupTime: Path `laundryPickupTime` is required., location.string: Path `location.string` is required., location.coordinates: Path `location.coordinates` is required.","method":"POST","service":"user-service","url":"/create"}

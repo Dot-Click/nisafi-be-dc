@@ -102,6 +102,8 @@ const login = async (req, res) => {
     jwtToken = user.getJWTToken();
     delete user.password;
 
+    console.log(jwtToken);
+
     return SuccessHandler(
       {
         message: "Logged in successfully",

@@ -7,6 +7,7 @@ dotenv.config({ path: ".././src/config/config.env" });
 const isAuthenticated = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
+    console.log(token);
     if (!token) {
       return res.status(401).json({ success: false, message: "Not logged in" });
     }
@@ -53,6 +54,7 @@ const isClient = async (req, res, next) => {
     }
     next();
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, message: error.message });
   }
 }
