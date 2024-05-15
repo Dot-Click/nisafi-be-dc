@@ -6,17 +6,26 @@ const Proposal = require("../models/Job/proposal");
 const { default: mongoose } = require("mongoose");
 const sendMail = require("../utils/sendMail");
 const ProofOfWork = require("../models/Job/proofOfWork");
+const Review = require("../models/Job/review");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-    const { type, date, timeDuration, location, description, budget, tags, laundryPickupTime } =
-      req.body;
+    const {
+      type,
+      date,
+      timeDuration,
+      location,
+      description,
+      budget,
+      tags,
+      // laundryPickupTime,
+    } = req.body;
 
     // if (req.user.adminApproval === false) {
     //   return ErrorHandler("User has not been approved by admin", 400, req, res);
     // }
-    
+
     const { images } = req.files;
 
     if (!images) {
@@ -33,7 +42,7 @@ const createJob = async (req, res) => {
       description,
       budget,
       tags,
-      laundryPickupTime,
+      // laundryPickupTime,
       user: req.user._id,
     });
 
@@ -70,7 +79,7 @@ const getAllJobsClient = async (req, res) => {
       user: req.user._id,
       ...statusFilter,
       ...searchFilter,
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: -1 }).populate("proposals review proofOfWork worker");
 
     return SuccessHandler(jobs, 200, res);
   } catch (error) {
@@ -98,10 +107,11 @@ const getAllJobsWorker = async (req, res) => {
         status: "open",
         ...searchFilter,
       }).sort({ createdAt: -1 });
-    } else if (req.query?.status === "propsalSubmitted") {
+    } else if (req.query?.status === "proposalSubmitted") {
       // get all jobs where worker has submitted a proposal
       const proposals = await Proposal.find({ user: req.user._id });
       const jobIds = proposals.map((proposal) => proposal.job);
+      console.log(jobIds);
       jobs = await Job.aggregate([
         {
           $match: {
@@ -293,7 +303,157 @@ const deliverWork = async (req, res) => {
   }
 };
 
+const markAsCompleted = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { id } = req.params;
+    const job = await Job.findById(id);
 
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "paymentRequested") {
+      return ErrorHandler(
+        "Worker has not delivered the work yet",
+        400,
+        req,
+        res
+      );
+    }
+
+    job.status = "completed";
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Job marked as completed",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const createDispute = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { description, jobId } = req.body;
+    const { proofOfWork } = req.files;
+
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "paymentRequested") {
+      return ErrorHandler(
+        "Worker has not delivered the work yet",
+        400,
+        req,
+        res
+      );
+    }
+
+    job.disputedDetails = {
+      description,
+      proofOfWork,
+    };
+
+    job.status = "disputed";
+
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Dispute created",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const submitReview = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { rating, review, jobId } = req.body;
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+
+    if (job.status !== "completed") {
+      return ErrorHandler("Job is not completed", 400, req, res);
+    }
+
+    const { images } = req.files;
+
+    const review2 = await Review.create({
+      job: job._id,
+      user: job.user,
+      worker: job.worker,
+      rating,
+      review,
+    });
+
+    await review2.save();
+
+    job.review = review2._id;
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Review submitted successfully",
+        review: review2,
+      },
+      201,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const cancelJob = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return ErrorHandler("Job does not exist", 400, req, res);
+    }
+    if (job.status !== "open") {
+      return ErrorHandler(
+        "This job can not be cancelled as the status is not open",
+        400,
+        req,
+        res
+      );
+    }
+
+    job.status = "cancelled";
+    await job.save();
+
+    return SuccessHandler(
+      {
+        message: "Job cancelled successfully",
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
 
 module.exports = {
   createJob,
@@ -302,4 +462,8 @@ module.exports = {
   submitProposal,
   acceptProposal,
   deliverWork,
+  markAsCompleted,
+  createDispute,
+  submitReview,
+  cancelJob,
 };

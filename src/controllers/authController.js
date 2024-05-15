@@ -16,6 +16,7 @@ const register = async (req, res) => {
       email,
       password,
       role,
+      // phone,
     });
     newUser.save();
     return SuccessHandler("User created successfully", 200, res);
@@ -145,6 +146,7 @@ const forgotPassword = async (req, res) => {
     user.passwordResetToken = passwordResetToken;
     user.passwordResetTokenExpires = passwordResetTokenExpires;
     await user.save();
+    console.log(passwordResetToken);
     const message = `Your password reset token is ${passwordResetToken} and it expires in 10 minutes`;
     const subject = `Password reset token`;
     await sendMail(email, subject, message);
@@ -186,18 +188,18 @@ const updatePassword = async (req, res) => {
 
   try {
     const { currentPassword, newPassword } = req.body;
-    if (
-      !newPassword.match(
-        /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/
-      )
-    ) {
-      return ErrorHandler(
-        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character",
-        400,
-        req,
-        res
-      );
-    }
+    // if (
+    //   !newPassword.match(
+    //     /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/
+    //   )
+    // ) {
+    //   return ErrorHandler(
+    //     "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character",
+    //     400,
+    //     req,
+    //     res
+    //   );
+    // }
     const user = await User.findById(req.user.id).select("+password");
     const isMatch = await user.comparePassword(currentPassword);
     if (!isMatch) {
@@ -251,7 +253,7 @@ const updateMe = async (req, res) => {
       return ErrorHandler("User does not exist", 400, req, res);
     }
     // images array upload to aws or cloudinary
-    const { image } = req.files;
+    const { image, idDocs } = req.files;
     
 
     user.name = name || user.name;

@@ -69,11 +69,18 @@ const jobSchema = new Schema(
     ],
     laundryPickupTime: {
       type: String,
-      required: true,
+      // required: true,
     },
     proofOfWork: {
       type: Schema.Types.ObjectId,
       ref: "proofOfWork",
+    },
+    review: {
+      type: Schema.Types.ObjectId,
+      ref: "review",
+    },
+    disputedDetails: {
+      type: String,
     },
   },
   { timestamps: true }

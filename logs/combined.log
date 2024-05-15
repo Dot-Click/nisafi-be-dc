@@ -263,3 +263,43 @@
 {"date":"2024-05-13T16:02:20.595Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
 {"date":"2024-05-13T16:02:20.931Z","level":"error","message":"job validation failed: location.string: Path `location.string` is required., location.coordinates: Path `location.coordinates` is required.","method":"POST","service":"user-service","url":"/create"}
 {"date":"2024-05-13T16:03:05.318Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-15T05:55:08.970Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-15T05:55:25.376Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/register"}
+{"date":"2024-05-15T05:56:25.647Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T05:58:25.396Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/forgotPassword"}
+{"date":"2024-05-15T06:00:10.891Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/forgotPassword"}
+{"date":"2024-05-15T06:00:13.825Z","level":"error","message":"The provided authorization grant is invalid, expired, or revoked","method":"POST","service":"user-service","url":"/forgotPassword"}
+{"date":"2024-05-15T06:02:18.391Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/resetPassword"}
+{"date":"2024-05-15T06:02:32.737Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/resetPassword"}
+{"date":"2024-05-15T06:02:54.351Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T06:09:23.817Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/updatePassword"}
+{"date":"2024-05-15T06:13:46.904Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T06:20:24.434Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-15T06:20:47.916Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T06:21:05.501Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-15T06:29:43.138Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-15T06:29:56.991Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-15T06:50:25.101Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T06:50:26.083Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-05-15T06:50:34.975Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T07:04:24.428Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-15T07:13:01.069Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client"}
+{"date":"2024-05-15T07:13:59.115Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/create"}
+{"date":"2024-05-15T07:14:06.312Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client"}
+{"date":"2024-05-15T07:14:40.864Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?search=lau"}
+{"date":"2024-05-15T07:14:58.378Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?search=clo"}
+{"date":"2024-05-15T07:15:05.227Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?search=jh"}
+{"date":"2024-05-15T07:15:25.455Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?search=jh&status=open"}
+{"date":"2024-05-15T07:15:35.403Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?status=open"}
+{"date":"2024-05-15T07:23:13.703Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-05-15T07:23:27.526Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker"}
+{"date":"2024-05-15T07:26:32.259Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search&status"}
+{"date":"2024-05-15T07:38:49.477Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/submitProposal/664460b747ac33dc72f4f9c0"}
+{"date":"2024-05-15T07:38:49.813Z","level":"error","message":"User has not been approved by admin","method":"POST","service":"user-service","url":"/submitProposal/664460b747ac33dc72f4f9c0"}
+{"date":"2024-05-15T07:42:02.423Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/job/submitProposal/664460b747ac33dc72f4f9c0"}
+{"date":"2024-05-15T07:42:22.288Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search&status=proposalSubmitted"}
+{"date":"2024-05-15T07:43:49.616Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search&status=proposalSubmitted"}
+{"date":"2024-05-15T07:44:21.020Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search&status=proposalSubmitted"}
+{"date":"2024-05-15T07:58:35.364Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?status=open"}
+{"date":"2024-05-15T08:33:26.470Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/acceptProposal"}
+{"date":"2024-05-15T08:33:43.672Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/job/acceptProposal"}
