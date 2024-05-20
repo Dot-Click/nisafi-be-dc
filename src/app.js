@@ -8,7 +8,9 @@ const loggerMiddleware = require("./middleware/loggerMiddleware");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("../swagger_output.json"); // Generated Swagger file
 const fileUpload = require("express-fileupload");
-
+// const admin = require("firebase-admin");
+// const serviceAccount = require("../google-services.json");
+// console.log("serviceAccount", serviceAccount);
 // Middlewares
 app.use(express.json());
 app.use(cors());
@@ -17,6 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(loggerMiddleware);
 app.use(fileUpload());
+// app.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// })
 
 // router index
 app.use("/", router);

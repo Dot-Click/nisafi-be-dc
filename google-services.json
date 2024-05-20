@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270165489981",
+    "project_id": "nisafi-6934e",
+    "storage_bucket": "nisafi-6934e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270165489981:android:1d86ee962f5a13a7162d54",
+        "android_client_info": {
+          "package_name": "com.app.nisafilaundry"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCloqYmCnXGvTr_m8reotlPdPI5xp_rgPs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

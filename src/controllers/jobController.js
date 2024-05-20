@@ -79,7 +79,9 @@ const getAllJobsClient = async (req, res) => {
       user: req.user._id,
       ...statusFilter,
       ...searchFilter,
-    }).sort({ createdAt: -1 }).populate("proposals review proofOfWork worker");
+    }).sort({ createdAt: -1 })
+    .populate("proposals review proofOfWork worker");
+    // .populate
 
     return SuccessHandler(jobs, 200, res);
   } catch (error) {
