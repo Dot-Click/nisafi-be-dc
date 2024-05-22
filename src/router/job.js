@@ -11,6 +11,7 @@ const router = express.Router();
 // get
 router.route("/client").get(isAuthenticated, isClient, job.getAllJobsClient);
 router.route("/worker").get(isAuthenticated, isWorker, job.getAllJobsWorker);
+router.route("/proposals/:id").get(isAuthenticated, job.getProposalsByJobId);
 
 // post
 router.route("/create").post(isAuthenticated, isClient, job.createJob);

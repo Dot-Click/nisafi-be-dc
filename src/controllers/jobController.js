@@ -80,8 +80,14 @@ const getAllJobsClient = async (req, res) => {
       ...statusFilter,
       ...searchFilter,
     }).sort({ createdAt: -1 })
-    .populate("proposals review proofOfWork worker");
-    // .populate
+    .populate("review proofOfWork worker");
+    // .populate({
+    //   path: "proposals",
+    //   populate: {
+    //     path: "user",
+    //     select: "firstName lastName email profilePic",
+    //   },
+    // });
 
     return SuccessHandler(jobs, 200, res);
   } catch (error) {
@@ -279,6 +285,7 @@ const deliverWork = async (req, res) => {
     }
 
     // upload images to aws or cloudinary
+    const { images } = req.files;
 
     const proofOfWork = await ProofOfWork.create({
       job: job._id,
@@ -286,6 +293,7 @@ const deliverWork = async (req, res) => {
       images: [],
       description,
     });
+    
     await proofOfWork.save();
 
     job.status = "paymentRequested";
@@ -457,6 +465,68 @@ const cancelJob = async (req, res) => {
   }
 };
 
+const getProposalsByJobId = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+
+    const proposals = await Proposal.aggregate([
+      {
+        $match: { job: mongoose.Types.ObjectId(req.params.id) },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: "$user",
+      },
+      {
+        $project: {
+          coverLetter: 1,
+          budget: 1,
+          acknowledged: 1,
+          user: {
+            _id: "$user._id",
+            firstName: "$user.firstName",
+            lastName: "$user.lastName",
+            email: "$user.email",
+            profilePic: "$user.profilePic",
+            successRate: {
+              $multiply: [
+                {
+                  $divide: [
+                    {
+                      $size: {
+                        $filter: {
+                          input: "$user.jobs",
+                          as: "job",
+                          cond: { $eq: ["$$job.status", "completed"] },
+                        },
+                      },
+                    },
+                    {
+                      $size: "$user.jobs",
+                    },
+                  ],
+                },
+                100,
+              ],
+            },
+          },
+        },
+      },
+    ]);
+
+    return SuccessHandler(proposals, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   createJob,
   getAllJobsClient,
@@ -468,4 +538,5 @@ module.exports = {
   createDispute,
   submitReview,
   cancelJob,
+  getProposalsByJobId,
 };
