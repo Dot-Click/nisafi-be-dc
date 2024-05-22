@@ -484,6 +484,15 @@ const getProposalsByJobId = async (req, res) => {
       {
         $unwind: "$user",
       },
+      // populate jobs matching the worker as user id and store in user.jobs
+      {
+        $lookup: {
+          from: "jobs",
+          localField: "user._id",
+          foreignField: "worker",
+          as: "user.jobs",
+        },
+      },
       {
         $project: {
           coverLetter: 1,
@@ -518,7 +527,7 @@ const getProposalsByJobId = async (req, res) => {
             },
           },
         },
-      },
+      }
     ]);
 
     return SuccessHandler(proposals, 200, res);

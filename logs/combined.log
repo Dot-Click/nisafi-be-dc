@@ -303,3 +303,7 @@
 {"date":"2024-05-15T07:58:35.364Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/client?status=open"}
 {"date":"2024-05-15T08:33:26.470Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/acceptProposal"}
 {"date":"2024-05-15T08:33:43.672Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/job/acceptProposal"}
+{"date":"2024-05-22T17:31:59.035Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/proposals/6644f03ce9a588be915ee81e"}
+{"date":"2024-05-22T17:32:15.349Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/proposals/6644f03ce9a588be915ee81e"}
+{"date":"2024-05-22T17:32:16.025Z","level":"error","message":"PlanExecutor error during aggregation :: caused by :: The argument to $size must be an array, but was of type: null","method":"GET","service":"user-service","url":"/proposals/6644f03ce9a588be915ee81e"}
+{"date":"2024-05-22T17:36:14.019Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/proposals/6644f03ce9a588be915ee81e"}

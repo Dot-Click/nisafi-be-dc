@@ -42,3 +42,4 @@
 {"date":"2024-05-15T06:00:13.825Z","level":"error","message":"The provided authorization grant is invalid, expired, or revoked","method":"POST","service":"user-service","url":"/forgotPassword"}
 {"date":"2024-05-15T06:50:26.083Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-05-15T07:38:49.813Z","level":"error","message":"User has not been approved by admin","method":"POST","service":"user-service","url":"/submitProposal/664460b747ac33dc72f4f9c0"}
+{"date":"2024-05-22T17:32:16.025Z","level":"error","message":"PlanExecutor error during aggregation :: caused by :: The argument to $size must be an array, but was of type: null","method":"GET","service":"user-service","url":"/proposals/6644f03ce9a588be915ee81e"}
