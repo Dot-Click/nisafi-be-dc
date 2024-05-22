@@ -343,6 +343,7 @@ const markAsCompleted = async (req, res) => {
       200,
       res
     );
+    
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
