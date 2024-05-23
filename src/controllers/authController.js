@@ -2,6 +2,9 @@ const User = require("../models/User/user");
 const sendMail = require("../utils/sendMail");
 const SuccessHandler = require("../utils/SuccessHandler");
 const ErrorHandler = require("../utils/ErrorHandler");
+const saveToServer = require("../utils/saveToServer");
+const path = require("path");
+const fs = require("fs");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -247,6 +250,7 @@ const updateMe = async (req, res) => {
       skills,
       experience,
       qualification,
+      aboutMe,
     } = req.body;
     const user = await User.findById(req.user.id);
     if (!user) {
@@ -254,10 +258,25 @@ const updateMe = async (req, res) => {
     }
     // images array upload to aws or cloudinary
     const { image, idDocs } = req.files;
-    
+
+    if (image) {
+      const image = req.files.image;
+      const imageUrl = await saveToServer([image]);
+      if(user.profilePic){
+        const filePath = path.join(__dirname, `../../${user.profilePic}`);
+        fs.unlinkSync(filePath);
+      }
+      user.profilePic = imageUrl[0];
+    }
+
+
+    if (idDocs && idDocs.length > 0) {
+      const idDocs = req.files.idDocs;
+      const idDocsUrl = await saveToServer(idDocs);
+      user.idDocs = idDocsUrl;
+    }
 
     user.name = name || user.name;
-    // user.email = email || user.email;
     user.phone = phone || user.phone;
     user.address = address || user.address;
     user.address2 = address2 || user.address2;
@@ -267,6 +286,7 @@ const updateMe = async (req, res) => {
     user.skills = skills || user.skills;
     user.experience = experience || user.experience;
     user.qualification = qualification || user.qualification;
+    user.aboutMe = aboutMe || user.aboutMe;
     await user.save();
     return SuccessHandler("User updated successfully", 200, res);
   } catch (error) {

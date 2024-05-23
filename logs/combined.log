@@ -307,3 +307,15 @@
 {"date":"2024-05-22T17:32:15.349Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/proposals/6644f03ce9a588be915ee81e"}
 {"date":"2024-05-22T17:32:16.025Z","level":"error","message":"PlanExecutor error during aggregation :: caused by :: The argument to $size must be an array, but was of type: null","method":"GET","service":"user-service","url":"/proposals/6644f03ce9a588be915ee81e"}
 {"date":"2024-05-22T17:36:14.019Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/proposals/6644f03ce9a588be915ee81e"}
+{"date":"2024-05-23T13:38:32.413Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:38:34.567Z","level":"error","message":"Cannot destructure property 'image' of 'req.files' as it is null.","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-05-23T13:39:02.947Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:39:21.825Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:39:22.470Z","level":"error","message":"Cannot destructure property 'image' of 'req.files' as it is null.","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-05-23T13:39:58.646Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:41:21.107Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:41:37.677Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:42:09.578Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:42:35.615Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:43:52.532Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-23T13:46:42.541Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}

@@ -95,6 +95,9 @@
                 },
                 "qualification": {
                   "example": "any"
+                },
+                "aboutMe": {
+                  "example": "any"
                 }
               }
             }

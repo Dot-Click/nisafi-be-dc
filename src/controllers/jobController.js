@@ -28,11 +28,17 @@ const createJob = async (req, res) => {
 
     const { images } = req.files;
 
+    
     if (!images) {
       return ErrorHandler("Please upload images", 400, req, res);
     }
+    if(images.length > 5) {
+      return ErrorHandler("You can only upload a maximum of 5 images", 400, req, res);
+    }
 
     // images array upload to aws or cloudinary
+
+    const imageUrls = await saveToServer(images);
 
     const job = await Job.create({
       type,
@@ -42,6 +48,7 @@ const createJob = async (req, res) => {
       description,
       budget,
       tags,
+      images: imageUrls,
       // laundryPickupTime,
       user: req.user._id,
     });
@@ -191,6 +198,15 @@ const submitProposal = async (req, res) => {
       return ErrorHandler("Job is not open for proposals", 400, req, res);
     }
 
+    const exProposal = await Proposal.findOne({
+      user: req.user._id,
+      job: job._id,
+    });
+
+    if (exProposal) {
+      return ErrorHandler("You have already submitted a proposal", 400, req, res);
+    }
+
     const { coverLetter, budget, acknowledged } = req.body;
 
     const proposal = await Proposal.create({
@@ -286,11 +302,19 @@ const deliverWork = async (req, res) => {
 
     // upload images to aws or cloudinary
     const { images } = req.files;
+    if (!images) {
+      return ErrorHandler("Please upload images", 400, req, res);
+    }
+    if(images.length > 5) {
+      return ErrorHandler("You can only upload a maximum of 5 images", 400, req, res);
+    }
+
+    const imageUrls = await saveToServer(images);
 
     const proofOfWork = await ProofOfWork.create({
       job: job._id,
       worker: job.worker,
-      images: [],
+      images: imageUrls,
       description,
     });
     
@@ -343,7 +367,7 @@ const markAsCompleted = async (req, res) => {
       200,
       res
     );
-    
+
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -354,6 +378,10 @@ const createDispute = async (req, res) => {
   try {
     const { description, jobId } = req.body;
     const { proofOfWork } = req.files;
+
+    if (!proofOfWork) {
+      return ErrorHandler("Please upload proof of work", 400, req, res);
+    }
 
     const job = await Job.findById(jobId);
 
@@ -370,9 +398,11 @@ const createDispute = async (req, res) => {
       );
     }
 
+    const proofOfWorkUrl = await saveToServer(proofOfWork);
+
     job.disputedDetails = {
       description,
-      proofOfWork,
+      proofOfWork: proofOfWorkUrl,
     };
 
     job.status = "disputed";
