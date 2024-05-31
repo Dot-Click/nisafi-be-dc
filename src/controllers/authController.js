@@ -6,6 +6,9 @@ const saveToServer = require("../utils/saveToServer");
 const path = require("path");
 const fs = require("fs");
 const sendNotification = require("../utils/sendNotification");
+const Job = require("../models/Job/job");
+const { default: mongoose } = require("mongoose");
+const Review = require("../models/Job/review");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -244,7 +247,67 @@ const updatePassword = async (req, res) => {
 const me = async (req, res) => {
   // #swagger.tags = ['auth']
   try {
-    return SuccessHandler(req.user, 200, res);
+    let response = req.user;
+    if (req.user.role === "worker") {
+      // successRate = percentage of jobs completed successfully out of total jobs
+      // ratings = average rating of the worker
+
+      const successRate = await Job.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(req.user.id),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalJobs: { $sum: 1 },
+            completedJobs: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "completed"] }, 1, 0],
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            successRate: {
+              $cond: [
+                { $eq: ["$totalJobs", 0] },
+                0,
+                {
+                  $multiply: [
+                    { $divide: ["$completedJobs", "$totalJobs"] },
+                    100,
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ]);
+
+      const avgRating = await Review.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(req.user.id),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            avgRating: { $avg: "$rating" },
+          },
+        },
+      ]);
+
+      response = {
+        ...req.user._doc,
+        successRate: successRate[0]?.successRate || 0,
+        rating: avgRating[0]?.avgRating || 0,
+      }
+    }
+    return SuccessHandler(response, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -308,6 +371,72 @@ const updateMe = async (req, res) => {
   }
 };
 
+const getWorkerById = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    const worker = await User.findById(req.params.id);
+    if (!worker) {
+      return ErrorHandler("Worker not found", 400, req, res);
+    }
+
+    const successRate = await Job.aggregate([
+      {
+        $match: {
+          worker: mongoose.Types.ObjectId(worker.id),
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalJobs: { $sum: 1 },
+          completedJobs: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "completed"] }, 1, 0],
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          successRate: {
+            $cond: [
+              { $eq: ["$totalJobs", 0] },
+              0,
+              {
+                $multiply: [
+                  { $divide: ["$completedJobs", "$totalJobs"] },
+                  100,
+                ],
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    const avgRating = await Review.aggregate([
+      {
+        $match: {
+          worker: mongoose.Types.ObjectId(worker.id),
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: "$rating" },
+        },
+      },
+    ]);
+    return SuccessHandler({
+      ...worker._doc,
+      successRate: successRate[0]?.successRate || 0,
+      rating: avgRating[0]?.avgRating || 0,
+    }, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   register,
   // requestEmailToken,
@@ -319,4 +448,5 @@ module.exports = {
   updatePassword,
   me,
   updateMe,
+  getWorkerById,
 };

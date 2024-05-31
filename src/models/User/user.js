@@ -93,6 +93,9 @@ const userSchema = new Schema({
   deviceToken: {
     type: String,
   },
+  aboutMe: {
+    type: String,
+  },
 });
 
 //hash password before saving

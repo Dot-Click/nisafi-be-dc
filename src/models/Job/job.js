@@ -77,7 +77,7 @@ const jobSchema = new Schema(
     },
     review: {
       type: Schema.Types.ObjectId,
-      ref: "review",
+      ref: "Review",
     },
     disputedDetails: {
       type: Object,

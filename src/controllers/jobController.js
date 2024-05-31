@@ -97,7 +97,7 @@ const getAllJobsClient = async (req, res) => {
         ...searchFilter,
       })
         .sort({ createdAt: -1 })
-        .populate("Review proofOfWork worker proposals");
+        .populate("review proofOfWork worker proposals");
     } else {
       jobs = await Job.find({
         user: req.user._id,
@@ -105,7 +105,7 @@ const getAllJobsClient = async (req, res) => {
         ...searchFilter,
       })
         .sort({ createdAt: -1 })
-        .populate("Review proofOfWork worker");
+        .populate("review proofOfWork worker");
     }
     // .populate({
     //   path: "proposals",
@@ -209,9 +209,9 @@ const getAllJobsWorker = async (req, res) => {
             as: "proposals",
           },
         },
-        {
-          $unwind: "$proposals",
-        },
+        // {
+        //   $unwind: "$proposals",
+        // },
         {
           $project: {
             type: 1,
