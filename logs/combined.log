@@ -319,3 +319,9 @@
 {"date":"2024-05-23T13:42:35.615Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
 {"date":"2024-05-23T13:43:52.532Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
 {"date":"2024-05-23T13:46:42.541Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-05-31T13:09:46.959Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717160319380-download.png"}
+{"date":"2024-05-31T13:09:48.375Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717160319380-download.png"}
+{"date":"2024-05-31T13:09:54.234Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717160319380-download.png"}
+{"date":"2024-05-31T13:10:24.510Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717160319380-download.png"}
+{"date":"2024-05-31T13:10:26.465Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717160319380-download.png"}
+{"date":"2024-05-31T13:10:38.544Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717160319380-download.png"}
