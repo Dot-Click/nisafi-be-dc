@@ -7,6 +7,7 @@ const { default: mongoose } = require("mongoose");
 const sendMail = require("../utils/sendMail");
 const ProofOfWork = require("../models/Job/proofOfWork");
 const Review = require("../models/Job/review");
+const saveToServer = require("../utils/saveToServer");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -19,21 +20,27 @@ const createJob = async (req, res) => {
       description,
       budget,
       tags,
-      // laundryPickupTime,
+      serviceTime,
+      laundryPickupTime,
     } = req.body;
 
     // if (req.user.adminApproval === false) {
     //   return ErrorHandler("User has not been approved by admin", 400, req, res);
     // }
 
+    console.log(req.files);
     const { images } = req.files;
 
-    
     if (!images) {
       return ErrorHandler("Please upload images", 400, req, res);
     }
-    if(images.length > 5) {
-      return ErrorHandler("You can only upload a maximum of 5 images", 400, req, res);
+    if (images.length > 5) {
+      return ErrorHandler(
+        "You can only upload a maximum of 5 images",
+        400,
+        req,
+        res
+      );
     }
 
     // images array upload to aws or cloudinary
@@ -49,8 +56,9 @@ const createJob = async (req, res) => {
       budget,
       tags,
       images: imageUrls,
-      // laundryPickupTime,
+      laundryPickupTime,
       user: req.user._id,
+      serviceTime,
     });
 
     await job.save();
@@ -81,13 +89,24 @@ const getAllJobsClient = async (req, res) => {
           ],
         }
       : {};
-
-    const jobs = await Job.find({
-      user: req.user._id,
-      ...statusFilter,
-      ...searchFilter,
-    }).sort({ createdAt: -1 })
-    .populate("review proofOfWork worker");
+    let jobs;
+    if (req.query.status === "completed") {
+      jobs = await Job.find({
+        user: req.user._id,
+        ...statusFilter,
+        ...searchFilter,
+      })
+        .sort({ createdAt: -1 })
+        .populate("Review proofOfWork worker proposals");
+    } else {
+      jobs = await Job.find({
+        user: req.user._id,
+        ...statusFilter,
+        ...searchFilter,
+      })
+        .sort({ createdAt: -1 })
+        .populate("Review proofOfWork worker");
+    }
     // .populate({
     //   path: "proposals",
     //   populate: {
@@ -95,6 +114,10 @@ const getAllJobsClient = async (req, res) => {
     //     select: "firstName lastName email profilePic",
     //   },
     // });
+    console.log("jobs", jobs);
+    console.log("user", req.user._id);
+    console.log("status", req.query.status);
+    console.log("search", req.query.search);
 
     return SuccessHandler(jobs, 200, res);
   } catch (error) {
@@ -169,6 +192,53 @@ const getAllJobsWorker = async (req, res) => {
           },
         },
       ]);
+    } else if (req.query?.status === "completed") {
+      jobs = await Job.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(req.user._id),
+            status: "completed",
+            ...searchFilter,
+          },
+        },
+        {
+          $lookup: {
+            from: "proposals",
+            localField: "_id",
+            foreignField: "job",
+            as: "proposals",
+          },
+        },
+        {
+          $unwind: "$proposals",
+        },
+        {
+          $project: {
+            type: 1,
+            date: 1,
+            timeDuration: 1,
+            location: 1,
+            description: 1,
+            budget: 1,
+            tags: 1,
+            user: 1,
+            status: 1,
+            worker: 1,
+            proposals: {
+              $filter: {
+                input: "$proposals",
+                as: "proposal",
+                cond: {
+                  $eq: [
+                    "$$proposal.user",
+                    mongoose.Types.ObjectId(req.user._id),
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ]);
     } else {
       jobs = await Job.find({
         worker: req.user._id,
@@ -204,7 +274,12 @@ const submitProposal = async (req, res) => {
     });
 
     if (exProposal) {
-      return ErrorHandler("You have already submitted a proposal", 400, req, res);
+      return ErrorHandler(
+        "You have already submitted a proposal",
+        400,
+        req,
+        res
+      );
     }
 
     const { coverLetter, budget, acknowledged } = req.body;
@@ -305,8 +380,13 @@ const deliverWork = async (req, res) => {
     if (!images) {
       return ErrorHandler("Please upload images", 400, req, res);
     }
-    if(images.length > 5) {
-      return ErrorHandler("You can only upload a maximum of 5 images", 400, req, res);
+    if (images.length > 5) {
+      return ErrorHandler(
+        "You can only upload a maximum of 5 images",
+        400,
+        req,
+        res
+      );
     }
 
     const imageUrls = await saveToServer(images);
@@ -317,7 +397,7 @@ const deliverWork = async (req, res) => {
       images: imageUrls,
       description,
     });
-    
+
     await proofOfWork.save();
 
     job.status = "paymentRequested";
@@ -367,7 +447,6 @@ const markAsCompleted = async (req, res) => {
       200,
       res
     );
-
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -436,7 +515,10 @@ const submitReview = async (req, res) => {
       return ErrorHandler("Job is not completed", 400, req, res);
     }
 
+    console.log(req.files)
+
     const { images } = req.files;
+    const imageUrls = await saveToServer(images);
 
     const review2 = await Review.create({
       job: job._id,
@@ -444,6 +526,7 @@ const submitReview = async (req, res) => {
       worker: job.worker,
       rating,
       review,
+      images: imageUrls,
     });
 
     await review2.save();
@@ -499,7 +582,6 @@ const cancelJob = async (req, res) => {
 const getProposalsByJobId = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-
     const proposals = await Proposal.aggregate([
       {
         $match: { job: mongoose.Types.ObjectId(req.params.id) },
@@ -525,40 +607,70 @@ const getProposalsByJobId = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "reviews",
+          localField: "user._id",
+          foreignField: "worker",
+          as: "user.reviews",
+        },
+      },
+      {
         $project: {
           coverLetter: 1,
           budget: 1,
           acknowledged: 1,
           user: {
             _id: "$user._id",
-            firstName: "$user.firstName",
-            lastName: "$user.lastName",
+            name: "$user.name",
             email: "$user.email",
             profilePic: "$user.profilePic",
             successRate: {
               $multiply: [
                 {
-                  $divide: [
+                  $cond: [
+                    { $eq: [{ $size: "$user.jobs" }, 0] },
+                    0,
                     {
-                      $size: {
-                        $filter: {
-                          input: "$user.jobs",
-                          as: "job",
-                          cond: { $eq: ["$$job.status", "completed"] },
+                      $divide: [
+                        {
+                          $size: {
+                            $filter: {
+                              input: "$user.jobs",
+                              as: "job",
+                              cond: { $eq: ["$$job.status", "completed"] },
+                            },
+                          },
                         },
-                      },
-                    },
-                    {
-                      $size: "$user.jobs",
+                        {
+                          $size: "$user.jobs",
+                        },
+                      ],
                     },
                   ],
                 },
                 100,
               ],
             },
+            rating: {
+              // $avg: "$user.reviews.rating",
+              $cond: [
+                { $eq: [{ $size: "$user.reviews" }, 0] },
+                0,
+                {
+                  $divide: [
+                    {
+                      $sum: "$user.reviews.rating",
+                    },
+                    {
+                      $size: "$user.reviews",
+                    },
+                  ],
+                },
+              ],
+            },
           },
         },
-      }
+      },
     ]);
 
     return SuccessHandler(proposals, 200, res);

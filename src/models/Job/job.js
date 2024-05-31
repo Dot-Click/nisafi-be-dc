@@ -80,6 +80,9 @@ const jobSchema = new Schema(
       ref: "review",
     },
     disputedDetails: {
+      type: Object,
+    },
+    serviceTime: {
       type: String,
     },
   },

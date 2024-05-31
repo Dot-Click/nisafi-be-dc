@@ -5,6 +5,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const saveToServer = require("../utils/saveToServer");
 const path = require("path");
 const fs = require("fs");
+const sendNotification = require("../utils/sendNotification");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -108,7 +109,7 @@ const login = async (req, res) => {
 
     console.log(jwtToken);
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Logged in successfully",
         token: jwtToken,
@@ -117,6 +118,20 @@ const login = async (req, res) => {
       200,
       res
     );
+
+    if (req.body.deviceToken) {
+      user.deviceToken = req.body.deviceToken;
+      await user.save();
+      await sendNotification(
+        {
+          _id: user._id,
+          deviceToken: req.body.deviceToken,
+        },
+        "Welcome to the app",
+        "login",
+        "/home"
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -262,13 +277,12 @@ const updateMe = async (req, res) => {
     if (image) {
       const image = req.files.image;
       const imageUrl = await saveToServer([image]);
-      if(user.profilePic){
+      if (user.profilePic) {
         const filePath = path.join(__dirname, `../../${user.profilePic}`);
         fs.unlinkSync(filePath);
       }
       user.profilePic = imageUrl[0];
     }
-
 
     if (idDocs && idDocs.length > 0) {
       const idDocs = req.files.idDocs;
