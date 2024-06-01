@@ -189,6 +189,10 @@ const getAllJobsWorker = async (req, res) => {
                 },
               },
             },
+            createdAt: 1,
+            updatedAt: 1,
+            laundryPickupTime: 1,
+            serviceTime: 1,
           },
         },
       ]);
@@ -236,6 +240,10 @@ const getAllJobsWorker = async (req, res) => {
                 },
               },
             },
+            createdAt: 1,
+            updatedAt: 1,
+            laundryPickupTime: 1,
+            serviceTime: 1,
           },
         },
       ]);

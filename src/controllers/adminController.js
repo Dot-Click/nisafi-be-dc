@@ -16,7 +16,9 @@ const approveUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
+    const roleFilter = req.query.role ? { role: req.query.role } : {};
     const users = await User.find({
+      ...roleFilter,
       isActive: true,
     });
     return SuccessHandler(users, 200, res);
@@ -38,5 +40,5 @@ const getSingleUser = async (req, res) => {
 module.exports = {
   approveUser,
   getAllUsers,
-  getSingleUser
+  getSingleUser,
 };
