@@ -14,7 +14,7 @@ const jobSchema = new Schema(
       required: true,
     },
     timeDuration: {
-      type: Number,
+      type: String,
       required: true,
     },
     location: {
