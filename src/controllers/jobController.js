@@ -90,7 +90,7 @@ const getAllJobsClient = async (req, res) => {
         }
       : {};
     let jobs;
-    if (req.query.status === "completed") {
+    if (req.query.status === "completed" || req.query.status === "in-progress") {
       jobs = await Job.find({
         user: req.user._id,
         ...statusFilter,
