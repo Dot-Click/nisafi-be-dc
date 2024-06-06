@@ -161,6 +161,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "deviceToken": {
+                  "example": "any"
+                },
                 "email": {
                   "example": "any"
                 },
@@ -264,6 +267,35 @@
         }
       }
     },
+    "/auth/worker/{id}": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/admin/approveUser/{id}": {
       "get": {
         "tags": [
@@ -306,6 +338,21 @@
           {
             "name": "authorization",
             "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
             "type": "string"
           }
         ],
@@ -492,6 +539,12 @@
                   "example": "any"
                 },
                 "tags": {
+                  "example": "any"
+                },
+                "serviceTime": {
+                  "example": "any"
+                },
+                "laundryPickupTime": {
                   "example": "any"
                 }
               }

@@ -348,7 +348,7 @@ const updateMe = async (req, res) => {
     }
 
     if (idDocs && idDocs.length > 0) {
-      const idDocs = req.files.idDocs;
+      const idDocs = req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];
       const idDocsUrl = await saveToServer(idDocs);
       user.idDocs = idDocsUrl;
     }
