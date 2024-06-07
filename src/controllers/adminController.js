@@ -2,6 +2,7 @@ const SuccessHandler = require("../utils/SuccessHandler");
 const ErrorHandler = require("../utils/ErrorHandler");
 const User = require("../models/User/user");
 const Job = require("../models/Job/job");
+const Review = require("../models/Job/review");
 
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
@@ -28,11 +29,19 @@ const getAllUsers = async (req, res) => {
     const sort = req.query.sort
       ? { createdAt: req.query.sort === "asc" ? 1 : -1 }
       : { createdAt: -1 };
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     const users = await User.find({
       ...roleFilter,
       ...searchFilter,
       isActive: true,
-    }).sort(sort);
+    })
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
     return SuccessHandler(users, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
@@ -42,7 +51,66 @@ const getAllUsers = async (req, res) => {
 const getSingleUser = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
-    const user = await User.findById(req.params.id);
+    let user = await User.findById(req.params.id);
+    if(!user) return ErrorHandler("User not found", 404, req, res);
+
+    if(user.role === "worker") {
+      const successRate = await Job.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(req.user.id),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalJobs: { $sum: 1 },
+            completedJobs: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "completed"] }, 1, 0],
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            successRate: {
+              $cond: [
+                { $eq: ["$totalJobs", 0] },
+                0,
+                {
+                  $multiply: [
+                    { $divide: ["$completedJobs", "$totalJobs"] },
+                    100,
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ]);
+
+      const avgRating = await Review.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(req.user.id),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            avgRating: { $avg: "$rating" },
+          },
+        },
+      ]);
+
+      user = {
+        ...user._doc,
+        successRate: successRate[0].successRate,
+        avgRating: avgRating[0].avgRating,
+      };
+      
+    }
     return SuccessHandler(user, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
@@ -52,7 +120,6 @@ const getSingleUser = async (req, res) => {
 const getJobs = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
-    
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -62,5 +129,5 @@ module.exports = {
   approveUser,
   getAllUsers,
   getSingleUser,
-  getJobs
+  getJobs,
 };
