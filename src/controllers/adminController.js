@@ -120,6 +120,37 @@ const getSingleUser = async (req, res) => {
 const getJobs = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
+    const sort = req.query.sort
+      ? { createdAt: req.query.sort === "asc" ? 1 : -1 }
+      : { createdAt: -1 };
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const searchFilter = req.query.search
+      ? {
+          $or: [
+            { title: { $regex: req.query.search, $options: "i" } },
+            { description: { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    const statusFilter = req.query.status
+      ? { status: req.query.status }
+      : {};
+
+    const jobs = await Job.find({
+      ...searchFilter,
+      ...statusFilter,
+    })
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .populate("worker")
+      .populate("client");
+    return SuccessHandler(jobs, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }

@@ -195,6 +195,32 @@ const getAllJobsWorker = async (req, res) => {
             serviceTime: 1,
           },
         },
+        {
+          $unwind: "$proposals" // Unwind the proposals array to sort based on the createdAt field
+        },
+        {
+          $sort: { "proposals.createdAt": -1 } // Sort by proposals.createdAt field in descending order
+        },
+        {
+          $group: {
+            _id: "$_id",
+            type: { $first: "$type" },
+            date: { $first: "$date" },
+            timeDuration: { $first: "$timeDuration" },
+            location: { $first: "$location" },
+            description: { $first: "$description" },
+            budget: { $first: "$budget" },
+            tags: { $first: "$tags" },
+            user: { $first: "$user" },
+            status: { $first: "$status" },
+            worker: { $first: "$worker" },
+            proposals: { $push: "$proposals" },
+            createdAt: { $first: "$createdAt" },
+            updatedAt: { $first: "$updatedAt" },
+            laundryPickupTime: { $first: "$laundryPickupTime" },
+            serviceTime: { $first: "$serviceTime" },
+          }
+        },
       ]);
     } else if (req.query?.status === "completed") {
       jobs = await Job.aggregate([

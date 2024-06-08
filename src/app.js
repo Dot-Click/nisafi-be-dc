@@ -9,6 +9,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("../swagger_output.json"); // Generated Swagger file
 const fileUpload = require("express-fileupload");
 const path = require("path");
+const sendNotification = require("./utils/sendNotification");
 
 // console.log("serviceAccount", serviceAccount);
 // Middlewares
@@ -30,7 +31,13 @@ app.use("/", router);
 // api doc
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  await sendNotification(
+    {_id:"6662fa2a9a23b868ac36c83a", deviceToken:"dRuCV11SRmeCIjn1OlXfZi:APA91bHtbyELyS-qCdmVnyQH2TZfT1XXLB4TvrfV-yYZRLwlLH7mNOKBXqwjCGKFtxB-Xxeie2gzU7EcxZlYwxfSU8Yyf9FZckH1n3HPKhKnqX_fblihSE9wB0LAPFCOsToI56ZS72b4"},
+    "Test notification",
+    "test",
+    "https://google.com"
+  );
   res.send("BE-boilerplate v1.1");
 });
 
