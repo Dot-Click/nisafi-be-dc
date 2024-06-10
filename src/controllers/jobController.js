@@ -243,6 +243,17 @@ const getAllJobsWorker = async (req, res) => {
         //   $unwind: "$proposals",
         // },
         {
+          $lookup: {
+            from: "reviews",
+            localField: "review",
+            foreignField: "_id",
+            as: "reviews",
+          },
+        },
+        {
+          $unwind: "$reviews",
+        },
+        {
           $project: {
             type: 1,
             date: 1,
@@ -270,6 +281,7 @@ const getAllJobsWorker = async (req, res) => {
             updatedAt: 1,
             laundryPickupTime: 1,
             serviceTime: 1,
+            reviews: 1
           },
         },
       ]);
@@ -290,7 +302,7 @@ const getAllJobsWorker = async (req, res) => {
 const submitProposal = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-    if (!req.user?.adminApproval) {
+    if (req.user?.adminApproval !== "approved") {
       return ErrorHandler("User has not been approved by admin", 400, req, res);
     }
     const job = await Job.findById(req.params.id);

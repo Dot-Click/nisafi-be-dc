@@ -87,14 +87,18 @@ const userSchema = new Schema({
     type: [String],
   },
   adminApproval: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: "pending",
   },
   deviceToken: {
     type: String,
   },
   aboutMe: {
     type: String,
+  },
+  phone: {
+    type: String,
+    // required: true,
   },
 });
 

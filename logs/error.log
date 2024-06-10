@@ -55,3 +55,6 @@
 {"date":"2024-05-31T15:37:13.206Z","level":"error","message":"PlanExecutor error during aggregation :: caused by :: input to $filter must be an array not object","method":"GET","service":"user-service","url":"/worker?search=&status=completed"}
 {"date":"2024-05-31T15:37:13.240Z","level":"error","message":"PlanExecutor error during aggregation :: caused by :: input to $filter must be an array not object","method":"GET","service":"user-service","url":"/worker?search=&status=completed"}
 {"date":"2024-05-31T15:37:13.248Z","level":"error","message":"PlanExecutor error during aggregation :: caused by :: input to $filter must be an array not object","method":"GET","service":"user-service","url":"/worker?search=&status=completed"}
+{"date":"2024-06-10T13:41:38.140Z","level":"error","message":"Cannot read properties of undefined (reading 'successRate')","method":"GET","service":"user-service","url":"/users/6661dbc9de32234e6426ceb2"}
+{"date":"2024-06-10T13:41:39.357Z","level":"error","message":"Cannot read properties of undefined (reading 'successRate')","method":"GET","service":"user-service","url":"/users/6661dbc9de32234e6426ceb2"}
+{"date":"2024-06-10T16:07:36.188Z","level":"error","message":"Cast to date failed for value \"{}\" (type Object) at path \"createdAt\" for model \"job\"","method":"GET","service":"user-service","url":"/dashboardStats"}

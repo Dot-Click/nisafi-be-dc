@@ -306,6 +306,8 @@ const me = async (req, res) => {
         successRate: successRate[0]?.successRate || 0,
         rating: avgRating[0]?.avgRating || 0,
       }
+
+      console.log(response)
     }
     return SuccessHandler(response, 200, res);
   } catch (error) {
@@ -347,9 +349,11 @@ const updateMe = async (req, res) => {
       user.profilePic = imageUrl[0];
     }
 
-    if (idDocs && idDocs.length > 0) {
+
+    if (idDocs) {
       const idDocs = req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];
       const idDocsUrl = await saveToServer(idDocs);
+      console.log(idDocsUrl)
       user.idDocs = idDocsUrl;
     }
 
@@ -364,6 +368,8 @@ const updateMe = async (req, res) => {
     user.experience = experience || user.experience;
     user.qualification = qualification || user.qualification;
     user.aboutMe = aboutMe || user.aboutMe;
+
+    console.log(user)
     await user.save();
     return SuccessHandler("User updated successfully", 200, res);
   } catch (error) {
