@@ -43,7 +43,16 @@ const getAllUsers = async (req, res) => {
       .sort(sort)
       .skip(skip)
       .limit(limit);
-    return SuccessHandler(users, 200, res);
+
+    const totalUsers = await User.countDocuments({
+      ...roleFilter,
+      ...searchFilter,
+      isActive: true,
+    });
+    return SuccessHandler({
+      users,
+      totalUsers,
+    }, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
