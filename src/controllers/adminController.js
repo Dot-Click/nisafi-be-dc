@@ -139,11 +139,11 @@ const getJobs = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const searchFilter = req.query.search
+    const searchFilter = req.query.search && req.query.search !== ""  
       ? {
           $or: [
-            { title: { $regex: req.query.search, $options: "i" } },
-            { description: { $regex: req.query.search, $options: "i" } },
+            { type: { $regex: req.query.search, $options: "i" } },
+            // { description: { $regex: req.query.search, $options: "i" } },
           ],
         }
       : {};
@@ -162,7 +162,15 @@ const getJobs = async (req, res) => {
       .populate("review")
       .populate("proofOfWork");
 
-    return SuccessHandler(jobs, 200, res);
+    const jobsCount = await Job.countDocuments({
+      ...searchFilter,
+      ...statusFilter,
+    });
+
+    return SuccessHandler({
+      jobs,
+      totalJobs: jobsCount,
+    }, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
