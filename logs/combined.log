@@ -3137,3 +3137,73 @@
 {"date":"2024-06-12T16:37:53.848Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718210257425-Screenshot from 2024-06-10 20-15-23.png'","method":"PUT","service":"user-service","url":"/me"}
 {"date":"2024-06-12T16:37:54.169Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1718210273782-Screenshot%20from%202024-06-08%2010-52-32.png"}
 {"date":"2024-06-12T16:58:31.225Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1718210273782-Screenshot%20from%202024-06-08%2010-52-32.png"}
+{"date":"2024-06-12T18:57:11.197Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1718210273782-Screenshot%20from%202024-06-08%2010-52-32.png"}
+{"date":"2024-06-12T18:58:10.135Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T18:58:10.957Z","level":"error","message":"bcrypt is not defined","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T18:59:17.660Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:00:35.740Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:00:36.403Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:02:02.886Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:02:03.530Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:02:19.493Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:02:46.668Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:02:47.347Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:02:57.401Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:02:58.050Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:28.979Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:03:29.634Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:39.439Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:03:39.989Z","level":"error","message":"Please provide old password","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:50.714Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:03:51.865Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:56.505Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:04:10.124Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:04:10.782Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:07:01.930Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:07:02.601Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:10:39.411Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:11:01.785Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:11:02.582Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:11:10.892Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:11:11.591Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:11:52.439Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:13:22.541Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:13:23.369Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:14:09.964Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:10.540Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:10.861Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:11.430Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:13.836Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:14.402Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:14.411Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:15.021Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:15:44.199Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:15:46.825Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:16:55.079Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:16:56.157Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:17:07.037Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:17:08.156Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:17:38.073Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:17:58.517Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:18:01.754Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:18:02.546Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:18:56.215Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:19:06.016Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:20:02.848Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:20:21.036Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:20:43.259Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:21:12.871Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:21:36.967Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:21:43.708Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:22:04.002Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:22:35.248Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:23:33.372Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:24:41.119Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:24:41.961Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:27:00.458Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:27:38.719Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:27:39.720Z","level":"error","message":"password is not defined","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:27:55.200Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T19:28:00.112Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:28:11.381Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:28:17.507Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}

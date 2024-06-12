@@ -9,6 +9,7 @@ const sendNotification = require("../utils/sendNotification");
 const Job = require("../models/Job/job");
 const { default: mongoose } = require("mongoose");
 const Review = require("../models/Job/review");
+const bcrypt = require("bcryptjs");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -358,6 +359,14 @@ const updateMe = async (req, res) => {
     }
 
     if (req.body.password) {
+      if (!req.body.oldPassword) {
+        return ErrorHandler("Please provide old password", 400, req, res);
+      }
+      console.log(req.body.oldPassword, req.body.password);
+      const confirm = await user.comparePassword(req.body.oldPassword);
+      if (!confirm) {
+        return ErrorHandler("Old password is incorrect", 400, req, res);
+      }
       const isMatch = await user.comparePassword(req.body.password);
       if (isMatch) {
         return ErrorHandler(
@@ -367,8 +376,8 @@ const updateMe = async (req, res) => {
           res
         );
       }
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(req.body.password, salt);
+      // const salt = await bcrypt.genSalt(10);
+      user.password = req.body.password;
     }
 
     user.name = req.body.name || user.name;

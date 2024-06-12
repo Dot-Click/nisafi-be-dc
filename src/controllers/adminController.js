@@ -181,8 +181,8 @@ const getSingleJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id)
       .populate("worker")
-      .populate("client")
-      .populate("reviews")
+      .populate("user")
+      .populate("review")
       .populate({
         path: "proposals",
         populate: {

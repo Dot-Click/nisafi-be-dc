@@ -64,3 +64,22 @@
 {"date":"2024-06-12T16:37:37.523Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718210248176-Screenshot from 2024-06-03 17-41-37.png'","method":"PUT","service":"user-service","url":"/me"}
 {"date":"2024-06-12T16:37:53.822Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718210257425-Screenshot from 2024-06-10 20-15-23.png'","method":"PUT","service":"user-service","url":"/me"}
 {"date":"2024-06-12T16:37:53.848Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718210257425-Screenshot from 2024-06-10 20-15-23.png'","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T18:58:10.957Z","level":"error","message":"bcrypt is not defined","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:00:36.403Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:02:03.530Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:02:47.347Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:02:58.050Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:29.634Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:39.989Z","level":"error","message":"Please provide old password","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:03:51.865Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:04:10.782Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:07:02.601Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:11:02.582Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:11:11.591Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:13:23.369Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:14:10.540Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:11.430Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:14.402Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:14:15.021Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-12T19:18:02.546Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-12T19:27:39.720Z","level":"error","message":"password is not defined","method":"PUT","service":"user-service","url":"/me"}
