@@ -305,9 +305,9 @@ const me = async (req, res) => {
         ...req.user._doc,
         successRate: successRate[0]?.successRate || 0,
         rating: avgRating[0]?.avgRating || 0,
-      }
+      };
 
-      console.log(response)
+      console.log(response);
     }
     return SuccessHandler(response, 200, res);
   } catch (error) {
@@ -319,27 +319,27 @@ const me = async (req, res) => {
 const updateMe = async (req, res) => {
   // #swagger.tags = ['auth']
   try {
-    const {
-      name,
-      phone,
-      address,
-      address2,
-      profession,
-      idNumber,
-      certificate,
-      skills,
-      experience,
-      qualification,
-      aboutMe,
-    } = req.body;
+    // const {
+    //   name,
+    //   phone,
+    //   address,
+    //   address2,
+    //   profession,
+    //   idNumber,
+    //   certificate,
+    //   skills,
+    //   experience,
+    //   qualification,
+    //   aboutMe,
+    // } = req.body;
     const user = await User.findById(req.user.id);
     if (!user) {
       return ErrorHandler("User does not exist", 400, req, res);
     }
     // images array upload to aws or cloudinary
-    const { image, idDocs } = req.files;
+    // const { image, idDocs } = req.files;
 
-    if (image) {
+    if (req?.files?.image) {
       const image = req.files.image;
       const imageUrl = await saveToServer([image]);
       if (user.profilePic) {
@@ -349,29 +349,51 @@ const updateMe = async (req, res) => {
       user.profilePic = imageUrl[0];
     }
 
-
-    if (idDocs) {
-      const idDocs = req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];
+    if (req?.files?.idDocs) {
+      const idDocs =
+        req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];
       const idDocsUrl = await saveToServer(idDocs);
-      console.log(idDocsUrl)
+      console.log(idDocsUrl);
       user.idDocs = idDocsUrl;
     }
 
-    user.name = name || user.name;
-    user.phone = phone || user.phone;
-    user.address = address || user.address;
-    user.address2 = address2 || user.address2;
-    user.profession = profession || user.profession;
-    user.idNumber = idNumber || user.idNumber;
-    user.certificate = certificate || user.certificate;
-    user.skills = skills || user.skills;
-    user.experience = experience || user.experience;
-    user.qualification = qualification || user.qualification;
-    user.aboutMe = aboutMe || user.aboutMe;
+    if (req.body.password) {
+      const isMatch = await user.comparePassword(req.body.password);
+      if (isMatch) {
+        return ErrorHandler(
+          "New password cannot be same as old password",
+          400,
+          req,
+          res
+        );
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+    }
 
-    console.log(user)
+    user.name = req.body.name || user.name;
+    user.phone = req.body.phone || user.phone;
+    user.address = req.body.address || user.address;
+    user.address2 = req.body.address2 || user.address2;
+    user.profession = req.body.profession || user.profession;
+    user.idNumber = req.body.idNumber || user.idNumber;
+    user.certificate = req.body.certificate || user.certificate;
+    user.skills = req.body.skills || user.skills;
+    user.experience = req.body.experience || user.experience;
+    user.qualification = req.body.qualification || user.qualification;
+    user.aboutMe = req.body.aboutMe || user.aboutMe;
+
     await user.save();
-    return SuccessHandler("User updated successfully", 200, res);
+
+    console.log(user);
+    return SuccessHandler(
+      {
+        message: "User updated successfully",
+        user,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -409,10 +431,7 @@ const getWorkerById = async (req, res) => {
               { $eq: ["$totalJobs", 0] },
               0,
               {
-                $multiply: [
-                  { $divide: ["$completedJobs", "$totalJobs"] },
-                  100,
-                ],
+                $multiply: [{ $divide: ["$completedJobs", "$totalJobs"] }, 100],
               },
             ],
           },
@@ -433,11 +452,15 @@ const getWorkerById = async (req, res) => {
         },
       },
     ]);
-    return SuccessHandler({
-      ...worker._doc,
-      successRate: successRate[0]?.successRate || 0,
-      rating: avgRating[0]?.avgRating || 0,
-    }, 200, res);
+    return SuccessHandler(
+      {
+        ...worker._doc,
+        successRate: successRate[0]?.successRate || 0,
+        rating: avgRating[0]?.avgRating || 0,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
