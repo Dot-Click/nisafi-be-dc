@@ -8,7 +8,9 @@ const mongoose = require("mongoose");
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
-    await User.findByIdAndUpdate(req.params.id, { adminApproval: req.params.status });
+    await User.findByIdAndUpdate(req.params.id, {
+      adminApproval: req.params.status,
+    });
     return SuccessHandler("User approved successfully", 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
@@ -49,10 +51,14 @@ const getAllUsers = async (req, res) => {
       ...searchFilter,
       isActive: true,
     });
-    return SuccessHandler({
-      users,
-      totalUsers,
-    }, 200, res);
+    return SuccessHandler(
+      {
+        users,
+        totalUsers,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -139,14 +145,15 @@ const getJobs = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const searchFilter = req.query.search && req.query.search !== ""  
-      ? {
-          $or: [
-            { type: { $regex: req.query.search, $options: "i" } },
-            // { description: { $regex: req.query.search, $options: "i" } },
-          ],
-        }
-      : {};
+    const searchFilter =
+      req.query.search && req.query.search !== ""
+        ? {
+            $or: [
+              { type: { $regex: req.query.search, $options: "i" } },
+              // { description: { $regex: req.query.search, $options: "i" } },
+            ],
+          }
+        : {};
 
     const statusFilter = req.query.status ? { status: req.query.status } : {};
 
@@ -167,10 +174,14 @@ const getJobs = async (req, res) => {
       ...statusFilter,
     });
 
-    return SuccessHandler({
-      jobs,
-      totalJobs: jobsCount,
-    }, 200, res);
+    return SuccessHandler(
+      {
+        jobs,
+        totalJobs: jobsCount,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -179,18 +190,74 @@ const getJobs = async (req, res) => {
 const getSingleJob = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
-    const job = await Job.findById(req.params.id)
+    let job = await Job.findById(req.params.id)
       .populate("worker")
       .populate("user")
       .populate("review")
       .populate({
         path: "proposals",
         populate: {
-          path: "worker",
+          path: "user",
         },
       })
       .populate("proofOfWork");
+
     if (!job) return ErrorHandler("Job not found", 404, req, res);
+    const successRate = await Job.aggregate([
+      {
+        $match: {
+          worker: mongoose.Types.ObjectId(job.worker._id),
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalJobs: { $sum: 1 },
+          completedJobs: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "completed"] }, 1, 0],
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          successRate: {
+            $cond: [
+              { $eq: ["$totalJobs", 0] },
+              0,
+              {
+                $multiply: [{ $divide: ["$completedJobs", "$totalJobs"] }, 100],
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    const avgRating = await Review.aggregate([
+      {
+        $match: {
+          worker: mongoose.Types.ObjectId(job.worker._id),
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: "$rating" },
+        },
+      },
+    ]);
+
+    job = {
+      ...job._doc,
+      worker: {
+        ...job.worker._doc,
+        successRate: successRate[0]?.successRate || 0,
+        avgRating: avgRating[0]?.avgRating || 0,
+      },
+    };
+
     return SuccessHandler(job, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
@@ -225,39 +292,39 @@ const dashboardStats = async (req, res) => {
       "December",
     ];
     let yearRange = {};
-    if(req.query?.yearRange){
-      if(req.query.yearRange === 'thisYear'){
+    if (req.query?.yearRange) {
+      if (req.query.yearRange === "thisYear") {
         yearRange = {
           createdAt: {
             $gte: new Date(new Date().getFullYear(), 0, 1),
             $lt: new Date(new Date().getFullYear(), 11, 31),
-          }
-        }
-      }else if(req.query.yearRange === 'lastYear'){
+          },
+        };
+      } else if (req.query.yearRange === "lastYear") {
         yearRange = {
           createdAt: {
-            $gte: new Date(new Date().getFullYear()-1, 0, 1),
+            $gte: new Date(new Date().getFullYear() - 1, 0, 1),
             $lt: new Date(new Date().getFullYear(), 11, 31),
-          }
-        }
-      } else if(req.query.yearRange === 'last3Years'){
+          },
+        };
+      } else if (req.query.yearRange === "last3Years") {
         yearRange = {
           createdAt: {
-            $gte: new Date(new Date().getFullYear()-3, 0, 1),
+            $gte: new Date(new Date().getFullYear() - 3, 0, 1),
             $lt: new Date(new Date().getFullYear(), 11, 31),
-          }
-        }
+          },
+        };
       }
     }
 
     // jobs data
     const totalJobs = await Job.countDocuments({
-      ...yearRange
+      ...yearRange,
     });
     let totalJobsGraph = await Job.aggregate([
       {
         $match: {
-          ...yearRange
+          ...yearRange,
         },
       },
       {
@@ -283,13 +350,13 @@ const dashboardStats = async (req, res) => {
 
     const completedJobs = await Job.countDocuments({
       status: "completed",
-      ...yearRange
+      ...yearRange,
     });
     let completedJobsGraph = await Job.aggregate([
       {
         $match: {
           status: "completed",
-          ...yearRange
+          ...yearRange,
         },
       },
       {
@@ -317,13 +384,13 @@ const dashboardStats = async (req, res) => {
 
     const disputedJobs = await Job.countDocuments({
       status: "disputed",
-      ...yearRange
+      ...yearRange,
     });
     let disputedJobsGraph = await Job.aggregate([
       {
         $match: {
           status: "disputed",
-          ...yearRange
+          ...yearRange,
         },
       },
       {
@@ -348,7 +415,6 @@ const dashboardStats = async (req, res) => {
         disputedJobs: monthData ? monthData.disputedJobs : 0,
       };
     });
-
 
     return SuccessHandler(
       {

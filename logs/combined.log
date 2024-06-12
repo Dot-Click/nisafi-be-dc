@@ -3207,3 +3207,10 @@
 {"date":"2024-06-12T19:28:00.112Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
 {"date":"2024-06-12T19:28:11.381Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/6669efa48fdc3f3e84f17c84"}
 {"date":"2024-06-12T19:28:17.507Z","level":"info","message":"Request received","method":"PUT","service":"user-service","url":"/auth/me"}
+{"date":"2024-06-12T20:10:03.305Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/666438fcfa727fb1844a0603"}
+{"date":"2024-06-12T20:10:08.854Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/666438fcfa727fb1844a0603"}
+{"date":"2024-06-12T20:10:10.558Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/666438fcfa727fb1844a0603"}
+{"date":"2024-06-12T20:10:10.694Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1717689775375-image_picker_32A65976-5506-445A-92EE-835FEA2AF7D8-14374-000000453788F5DD.png"}
+{"date":"2024-06-12T20:10:59.033Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/666438fcfa727fb1844a0603"}
+{"date":"2024-06-12T20:11:04.392Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/666438fcfa727fb1844a0603"}
+{"date":"2024-06-12T20:11:48.014Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/jobs/666438fcfa727fb1844a0603"}
