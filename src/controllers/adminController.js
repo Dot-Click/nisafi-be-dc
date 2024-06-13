@@ -203,60 +203,64 @@ const getSingleJob = async (req, res) => {
       .populate("proofOfWork");
 
     if (!job) return ErrorHandler("Job not found", 404, req, res);
-    const successRate = await Job.aggregate([
-      {
-        $match: {
-          worker: mongoose.Types.ObjectId(job.worker._id),
+    if(job.worker){
+      const successRate = await Job.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(job.worker._id),
+          },
         },
-      },
-      {
-        $group: {
-          _id: null,
-          totalJobs: { $sum: 1 },
-          completedJobs: {
-            $sum: {
-              $cond: [{ $eq: ["$status", "completed"] }, 1, 0],
+        {
+          $group: {
+            _id: null,
+            totalJobs: { $sum: 1 },
+            completedJobs: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "completed"] }, 1, 0],
+              },
             },
           },
         },
-      },
-      {
-        $project: {
-          successRate: {
-            $cond: [
-              { $eq: ["$totalJobs", 0] },
-              0,
-              {
-                $multiply: [{ $divide: ["$completedJobs", "$totalJobs"] }, 100],
-              },
-            ],
+        {
+          $project: {
+            successRate: {
+              $cond: [
+                { $eq: ["$totalJobs", 0] },
+                0,
+                {
+                  $multiply: [{ $divide: ["$completedJobs", "$totalJobs"] }, 100],
+                },
+              ],
+            },
           },
         },
-      },
-    ]);
-
-    const avgRating = await Review.aggregate([
-      {
-        $match: {
-          worker: mongoose.Types.ObjectId(job.worker._id),
+      ]);
+  
+      const avgRating = await Review.aggregate([
+        {
+          $match: {
+            worker: mongoose.Types.ObjectId(job.worker._id),
+          },
         },
-      },
-      {
-        $group: {
-          _id: null,
-          avgRating: { $avg: "$rating" },
+        {
+          $group: {
+            _id: null,
+            avgRating: { $avg: "$rating" },
+          },
         },
-      },
-    ]);
+      ]);
 
-    job = {
-      ...job._doc,
-      worker: {
-        ...job.worker._doc,
-        successRate: successRate[0]?.successRate || 0,
-        avgRating: avgRating[0]?.avgRating || 0,
-      },
-    };
+      job = {
+        ...job._doc,
+        worker: {
+          ...job.worker._doc,
+          successRate: successRate[0]?.successRate || 0,
+          avgRating: avgRating[0]?.avgRating || 0,
+        },
+      };
+    }
+
+    
 
     return SuccessHandler(job, 200, res);
   } catch (error) {
