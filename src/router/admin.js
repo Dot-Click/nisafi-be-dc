@@ -12,4 +12,9 @@ router.route("/jobs/:id").get(isAuthenticated, isAdmin, admin.getSingleJob);
 router.route("/recentjobs").get(isAuthenticated, isAdmin, admin.recentjobs);
 router.route("/dashboardStats").get(isAuthenticated, isAdmin, admin.dashboardStats);
 
+router.route("/banner").post(isAuthenticated, isAdmin, admin.createBanner);
+router.route("/banner").get(isAuthenticated, admin.getBanners);
+router.route("/banner/:id").delete(isAuthenticated, isAdmin, admin.deleteBanner);
+
+
 module.exports = router;

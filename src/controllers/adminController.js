@@ -4,6 +4,8 @@ const User = require("../models/User/user");
 const Job = require("../models/Job/job");
 const Review = require("../models/Job/review");
 const mongoose = require("mongoose");
+const saveToServer = require("../utils/saveToServer");
+const Banner = require("../models/Banner");
 
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
@@ -203,7 +205,7 @@ const getSingleJob = async (req, res) => {
       .populate("proofOfWork");
 
     if (!job) return ErrorHandler("Job not found", 404, req, res);
-    if(job.worker){
+    if (job.worker) {
       const successRate = await Job.aggregate([
         {
           $match: {
@@ -228,14 +230,17 @@ const getSingleJob = async (req, res) => {
                 { $eq: ["$totalJobs", 0] },
                 0,
                 {
-                  $multiply: [{ $divide: ["$completedJobs", "$totalJobs"] }, 100],
+                  $multiply: [
+                    { $divide: ["$completedJobs", "$totalJobs"] },
+                    100,
+                  ],
                 },
               ],
             },
           },
         },
       ]);
-  
+
       const avgRating = await Review.aggregate([
         {
           $match: {
@@ -259,8 +264,6 @@ const getSingleJob = async (req, res) => {
         },
       };
     }
-
-    
 
     return SuccessHandler(job, 200, res);
   } catch (error) {
@@ -437,6 +440,47 @@ const dashboardStats = async (req, res) => {
   }
 };
 
+const createBanner = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    const { url } = req.body;
+    if (!url) return ErrorHandler("Url is required", 400, req, res);
+    let imageUrl = [""];
+    if (req.files.image) {
+      const image = req.files.image;
+      imageUrl = await saveToServer([image]);
+    }
+    const banner = new Banner({
+      image: imageUrl[0],
+      url,
+    });
+    await banner.save();
+    return SuccessHandler("Banner created successfully", 201, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const getBanners = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    const banners = await Banner.find();
+    return SuccessHandler(banners, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const deleteBanner = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    await Banner.findByIdAndDelete(req.params.id);
+    return SuccessHandler("Banner deleted successfully", 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   approveUser,
   getAllUsers,
@@ -445,4 +489,7 @@ module.exports = {
   getSingleJob,
   recentjobs,
   dashboardStats,
+  createBanner,
+  getBanners,
+  deleteBanner,
 };
