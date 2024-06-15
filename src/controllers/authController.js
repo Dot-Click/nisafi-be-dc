@@ -24,7 +24,7 @@ const register = async (req, res) => {
       email,
       password,
       role,
-      // phone,
+      phone,
     });
     newUser.save();
     return SuccessHandler("User created successfully", 200, res);
