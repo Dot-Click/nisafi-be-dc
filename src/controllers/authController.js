@@ -27,7 +27,20 @@ const register = async (req, res) => {
       phone,
     });
     newUser.save();
-    return SuccessHandler("User created successfully", 200, res);
+    SuccessHandler("User created successfully", 200, res);
+    if (req.body.deviceToken) {
+      newUser.deviceToken = req.body.deviceToken;
+      await newUser.save();
+      await sendNotification(
+        {
+          _id: newUser._id,
+          deviceToken: req.body.deviceToken,
+        },
+        "Welcome to the app",
+        "register",
+        "/home"
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -126,15 +139,6 @@ const login = async (req, res) => {
     if (req.body.deviceToken) {
       user.deviceToken = req.body.deviceToken;
       await user.save();
-      await sendNotification(
-        {
-          _id: user._id,
-          deviceToken: req.body.deviceToken,
-        },
-        "Welcome to the app",
-        "login",
-        "/home"
-      );
     }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);

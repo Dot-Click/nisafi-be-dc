@@ -7,9 +7,9 @@ const getUnreadCount = async (req, res) => {
   try {
     const { _id } = req.user;
     const count = await Notification.countDocuments({ user: _id, read: false });
-    SuccessHandler(res, count);
+    SuccessHandler(count, 200, res);
   } catch (error) {
-    ErrorHandler(res, error);
+    ErrorHandler(error.message, 500, req, res);
   }
 };
 
@@ -22,9 +22,9 @@ const getAllNotifications = async (req, res) => {
     });
 
     await Notification.updateMany({ user: _id, read: false }, { read: true });
-    SuccessHandler(res, notifications);
+    SuccessHandler(notifications, 200, res);
   } catch (error) {
-    ErrorHandler(res, error);
+    ErrorHandler(error.message, 500, req, res);
   }
 };
 
