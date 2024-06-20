@@ -6,6 +6,7 @@ const Review = require("../models/Job/review");
 const mongoose = require("mongoose");
 const saveToServer = require("../utils/saveToServer");
 const Banner = require("../models/Banner");
+const Wallet = require("../models/User/workerWallet");
 
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
@@ -481,6 +482,18 @@ const deleteBanner = async (req, res) => {
   }
 };
 
+const getWallets = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    const wallets = await Wallet.find().populate(
+      "user transactions.paidBy transactions.paidTo transactions.job"
+    );
+    return SuccessHandler(wallets, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   approveUser,
   getAllUsers,
@@ -492,4 +505,5 @@ module.exports = {
   createBanner,
   getBanners,
   deleteBanner,
+  getWallets,
 };

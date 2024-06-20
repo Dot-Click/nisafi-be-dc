@@ -96,3 +96,7 @@
 {"date":"2024-06-15T06:43:27.144Z","level":"error","message":"Cannot read properties of undefined (reading 'image')","method":"POST","service":"user-service","url":"/banner"}
 {"date":"2024-06-20T16:45:37.239Z","level":"error","message":"Schema hasn't been registered for model \"User\".\nUse mongoose.model(name, schema)","method":"GET","service":"user-service","url":"/wallet"}
 {"date":"2024-06-20T16:46:31.826Z","level":"error","message":"Schema hasn't been registered for model \"Job\".\nUse mongoose.model(name, schema)","method":"GET","service":"user-service","url":"/wallet"}
+{"date":"2024-06-20T17:14:11.796Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}
+{"date":"2024-06-20T17:14:19.794Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}
+{"date":"2024-06-20T17:15:01.687Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}
+{"date":"2024-06-20T17:15:14.817Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}

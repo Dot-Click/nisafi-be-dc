@@ -15,6 +15,7 @@ router.route("/dashboardStats").get(isAuthenticated, isAdmin, admin.dashboardSta
 router.route("/banner").post(isAuthenticated, isAdmin, admin.createBanner);
 router.route("/banner").get(isAuthenticated, admin.getBanners);
 router.route("/banner/:id").delete(isAuthenticated, isAdmin, admin.deleteBanner);
+router.route("/wallets").get(isAuthenticated, isAdmin, admin.getWallets);
 
 
 module.exports = router;
