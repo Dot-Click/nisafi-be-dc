@@ -1,6 +1,6 @@
 const express = require("express");
 const auth = require("../controllers/authController");
-const {isAuthenticated} = require("../middleware/auth");
+const { isAuthenticated } = require("../middleware/auth");
 const router = express.Router();
 
 //get
@@ -17,5 +17,6 @@ router.route("/resetPassword").put(auth.resetPassword);
 router.route("/updatePassword").put(isAuthenticated, auth.updatePassword);
 router.route("/me").put(isAuthenticated, auth.updateMe);
 router.route("/worker/:id").get(isAuthenticated, auth.getWorkerById);
+router.route("/wallet").get(isAuthenticated, auth.getWallet);
 
 module.exports = router;

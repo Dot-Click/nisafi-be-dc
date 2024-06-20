@@ -83,3 +83,16 @@
 {"date":"2024-06-12T19:14:15.021Z","level":"error","message":"Cannot populate path `reviews` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
 {"date":"2024-06-12T19:18:02.546Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
 {"date":"2024-06-12T19:27:39.720Z","level":"error","message":"password is not defined","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-13T13:08:59.967Z","level":"error","message":"Old password is incorrect","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-13T13:09:28.567Z","level":"error","message":"New password cannot be same as old password","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-13T13:09:34.617Z","level":"error","message":"New password cannot be same as old password","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-13T13:11:08.834Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718210273782-Screenshot from 2024-06-08 10-52-32.png'","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-13T13:11:09.158Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718210273782-Screenshot from 2024-06-08 10-52-32.png'","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-13T13:17:57.091Z","level":"error","message":"Cannot read properties of undefined (reading '_id')","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-13T13:18:03.299Z","level":"error","message":"Cannot read properties of undefined (reading '_id')","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-13T13:18:03.523Z","level":"error","message":"Cannot read properties of undefined (reading '_id')","method":"GET","service":"user-service","url":"/jobs/6669efa48fdc3f3e84f17c84"}
+{"date":"2024-06-15T06:42:37.678Z","level":"error","message":"Cannot read properties of undefined (reading 'image')","method":"POST","service":"user-service","url":"/banner"}
+{"date":"2024-06-15T06:43:00.041Z","level":"error","message":"Cannot read properties of undefined (reading 'image')","method":"POST","service":"user-service","url":"/banner"}
+{"date":"2024-06-15T06:43:27.144Z","level":"error","message":"Cannot read properties of undefined (reading 'image')","method":"POST","service":"user-service","url":"/banner"}
+{"date":"2024-06-20T16:45:37.239Z","level":"error","message":"Schema hasn't been registered for model \"User\".\nUse mongoose.model(name, schema)","method":"GET","service":"user-service","url":"/wallet"}
+{"date":"2024-06-20T16:46:31.826Z","level":"error","message":"Schema hasn't been registered for model \"Job\".\nUse mongoose.model(name, schema)","method":"GET","service":"user-service","url":"/wallet"}

@@ -8,6 +8,7 @@ const sendMail = require("../utils/sendMail");
 const ProofOfWork = require("../models/Job/proofOfWork");
 const Review = require("../models/Job/review");
 const saveToServer = require("../utils/saveToServer");
+const Wallet = require("../models/User/workerWallet");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -90,7 +91,11 @@ const getAllJobsClient = async (req, res) => {
         }
       : {};
     let jobs;
-    if (req.query.status === "completed" || req.query.status === "in-progress") {
+    if (
+      req.query.status === "completed" ||
+      req.query.status === "in-progress" ||
+      req.query.status === "disputed"
+    ) {
       jobs = await Job.find({
         user: req.user._id,
         ...statusFilter,
@@ -196,10 +201,10 @@ const getAllJobsWorker = async (req, res) => {
           },
         },
         {
-          $unwind: "$proposals" // Unwind the proposals array to sort based on the createdAt field
+          $unwind: "$proposals", // Unwind the proposals array to sort based on the createdAt field
         },
         {
-          $sort: { "proposals.createdAt": -1 } // Sort by proposals.createdAt field in descending order
+          $sort: { "proposals.createdAt": -1 }, // Sort by proposals.createdAt field in descending order
         },
         {
           $group: {
@@ -219,7 +224,7 @@ const getAllJobsWorker = async (req, res) => {
             updatedAt: { $first: "$updatedAt" },
             laundryPickupTime: { $first: "$laundryPickupTime" },
             serviceTime: { $first: "$serviceTime" },
-          }
+          },
         },
       ]);
     } else if (req.query?.status === "completed") {
@@ -281,7 +286,7 @@ const getAllJobsWorker = async (req, res) => {
             updatedAt: 1,
             laundryPickupTime: 1,
             serviceTime: 1,
-            reviews: 1
+            reviews: 1,
           },
         },
       ]);
@@ -388,6 +393,20 @@ const acceptProposal = async (req, res) => {
       );
     }
 
+    // charge user for accepting proposal
+    const transaction = {
+      amount: proposal.budget,
+      type: "credit",
+      // paidTo: proposal.user,
+      paidBy: job.user,
+      job: job._id,
+      escrow: true,
+    };
+
+    const wallet = await Wallet.findOne({ user: job.user });
+    wallet.transactions.push(transaction);
+    wallet.balance += transaction.amount;
+    await wallet.save();
     job.status = "in-progress";
     job.worker = proposal.user;
     job.laundryPickupTime = laundryPickupTime;
@@ -468,6 +487,7 @@ const markAsCompleted = async (req, res) => {
   try {
     const { id } = req.params;
     const job = await Job.findById(id);
+    const proposal = await Proposal.findOne({ job: id, user: job.worker });
 
     if (!job) {
       return ErrorHandler("Job does not exist", 400, req, res);
@@ -481,6 +501,33 @@ const markAsCompleted = async (req, res) => {
         res
       );
     }
+
+    const userWallet = await Wallet.findOne({ user: job.user });
+    const workerWallet = await Wallet.findOne({ user: job.worker });
+
+    const userTransaction = {
+      amount: proposal.budget,
+      type: "debit",
+      paidTo: job.worker,
+      job: job._id,
+      paidBy: job.user,
+    };
+
+    const workerTransaction = {
+      amount: proposal.budget,
+      type: "credit",
+      paidBy: job.user,
+      job: job._id,
+    };
+
+    userWallet.transactions.push(userTransaction);
+    userWallet.balance -= userTransaction.amount;
+
+    workerWallet.transactions.push(workerTransaction);
+    workerWallet.balance += workerTransaction.amount;
+
+    await userWallet.save();
+    await workerWallet.save();
 
     job.status = "completed";
     await job.save();
@@ -561,7 +608,7 @@ const submitReview = async (req, res) => {
       return ErrorHandler("Job is not completed", 400, req, res);
     }
 
-    console.log(req.files)
+    console.log(req.files);
 
     const { images } = req.files;
     const imageUrls = await saveToServer(images);
@@ -725,6 +772,66 @@ const getProposalsByJobId = async (req, res) => {
   }
 };
 
+const resolveDispute = async (req, res) => {
+  // #swagger.tags = ['job']
+  try {
+    const { jobId, resolution } = req.body;
+    const job = await Job.findById(jobId);
+    const proposal = await Proposal.findOne({ job: jobId, user: job.worker });
+    const userWallet = await Wallet.findOne({ user: job.user });
+    const workerWallet = await Wallet.findOne({ user: job.worker });
+    if (resolution === "release") {
+      const userTransaction = {
+        amount: proposal.budget,
+        type: "debit",
+        paidTo: job.worker,
+        job: job._id,
+        paidBy: job.user,
+      };
+
+      const workerTransaction = {
+        amount: proposal.budget,
+        type: "credit",
+        paidBy: job.user,
+        job: job._id,
+      };
+
+      userWallet.transactions.push(userTransaction);
+      userWallet.balance -= userTransaction.amount;
+
+      workerWallet.transactions.push(workerTransaction);
+      workerWallet.balance += workerTransaction.amount;
+
+      await userWallet.save();
+      await workerWallet.save();
+    } else if (resolution === "refund") {
+      // refund the user
+      const userTransaction = {
+        amount: proposal.budget,
+        type: "debit",
+        paidBy: job.user,
+        job: job._id,
+      };
+
+      userWallet.transactions.push(userTransaction);
+      userWallet.balance -= userTransaction.amount;
+      await userWallet.save();
+    }
+    job.status = resolution === "release" ? "completed" : "cancelled";
+    await job.save();
+    return SuccessHandler(
+      {
+        message: "Dispute resolved by " + resolution,
+        job,
+      },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   createJob,
   getAllJobsClient,
@@ -737,4 +844,5 @@ module.exports = {
   submitReview,
   cancelJob,
   getProposalsByJobId,
+  resolveDispute,
 };

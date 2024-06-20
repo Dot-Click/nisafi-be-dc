@@ -10,6 +10,7 @@ const Job = require("../models/Job/job");
 const { default: mongoose } = require("mongoose");
 const Review = require("../models/Job/review");
 const bcrypt = require("bcryptjs");
+const Wallet = require("../models/User/workerWallet");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -41,6 +42,13 @@ const register = async (req, res) => {
         "/home"
       );
     }
+
+    // create wallet for user
+    await Wallet.create({
+      user: newUser._id,
+      balance: 0,
+      transactions: [],
+    });
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -479,6 +487,21 @@ const getWorkerById = async (req, res) => {
   }
 };
 
+const getWallet = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    const wallet = await Wallet.findOne({ user: req.user._id }).populate({
+      path: "transactions.paidBy transactions.paidTo transactions.job",
+    });
+    if (!wallet) {
+      return ErrorHandler("Wallet not found", 400, req, res);
+    }
+    return SuccessHandler(wallet, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   register,
   // requestEmailToken,
@@ -491,4 +514,5 @@ module.exports = {
   me,
   updateMe,
   getWorkerById,
+  getWallet,
 };

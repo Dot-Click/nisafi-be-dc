@@ -32,5 +32,8 @@ router.route("/submitReview").put(isAuthenticated, isClient, job.submitReview);
 router
   .route("/createDispute")
   .put(isAuthenticated, isClient, job.createDispute);
+router
+  .route("/resolveDispute")
+  .put(isAuthenticated, isAdmin, job.resolveDispute);
 
 module.exports = router;
