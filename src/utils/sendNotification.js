@@ -55,4 +55,4 @@ const sendNotification = async (user, message, type, link) => {
   }
 };
 
-module.exports = sendNotification;
+module.exports = {sendNotification};

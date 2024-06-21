@@ -105,3 +105,6 @@
 {"date":"2024-06-21T14:22:35.663Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-06-21T14:22:51.482Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-06-21T14:23:40.515Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-06-21T15:28:45.534Z","level":"error","message":"Role is required","method":"GET","service":"user-service","url":"/getWallets"}
+{"date":"2024-06-21T15:29:59.228Z","level":"error","message":"Role is required","method":"GET","service":"user-service","url":"/getWallets"}
+{"date":"2024-06-21T16:00:12.706Z","level":"error","message":"role is not defined","method":"GET","service":"user-service","url":"/getWallets?role=client"}

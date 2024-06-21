@@ -5,7 +5,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const saveToServer = require("../utils/saveToServer");
 const path = require("path");
 const fs = require("fs");
-const sendNotification = require("../utils/sendNotification");
+const {sendNotification} = require("../utils/sendNotification");
 const Job = require("../models/Job/job");
 const { default: mongoose } = require("mongoose");
 const Review = require("../models/Job/review");
@@ -55,7 +55,6 @@ const register = async (req, res) => {
   }
 };
 
-// request email verification token
 // const requestEmailToken = async (req, res) => {
 //   // #swagger.tags = ['auth']
 

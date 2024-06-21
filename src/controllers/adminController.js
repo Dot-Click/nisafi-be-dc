@@ -285,7 +285,7 @@ const recentjobs = async (req, res) => {
   }
 };
 
-const dashboardStats = async (req, res) => {
+const jobStats = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
     const months = [
@@ -328,11 +328,10 @@ const dashboardStats = async (req, res) => {
       }
     }
 
-    // jobs data
     const totalJobs = await Job.countDocuments({
       ...yearRange,
     });
-    let totalJobsGraph = await Job.aggregate([
+    const totalJobsByMonth = await Job.aggregate([
       {
         $match: {
           ...yearRange,
@@ -341,21 +340,18 @@ const dashboardStats = async (req, res) => {
       {
         $group: {
           _id: { $month: "$createdAt" },
-          totalJobs: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          totalJobs: 1,
-          _id: 1,
+          count: { $sum: 1 },
         },
       },
     ]);
-    totalJobsGraph = months.map((month, index) => {
-      const monthData = totalJobsGraph.find((data) => data._id === index + 1);
+
+    const jobsByMonth = months.map((month) => {
+      const monthData = totalJobsByMonth.find(
+        (data) => data._id === months.indexOf(month) + 1
+      );
       return {
         month,
-        totalJobs: monthData ? monthData.totalJobs : 0,
+        count: monthData ? monthData.count : 0,
       };
     });
 
@@ -363,7 +359,8 @@ const dashboardStats = async (req, res) => {
       status: "completed",
       ...yearRange,
     });
-    let completedJobsGraph = await Job.aggregate([
+
+    const completedJobsByMonth = await Job.aggregate([
       {
         $match: {
           status: "completed",
@@ -372,24 +369,19 @@ const dashboardStats = async (req, res) => {
       },
       {
         $group: {
-          _id: { $month: "$createdAt" },
-          completedJobs: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          completedJobs: 1,
-          _id: 1,
+          _id: { $month: "$updatedAt" },
+          count: { $sum: 1 },
         },
       },
     ]);
-    completedJobsGraph = months.map((month, index) => {
-      const monthData = completedJobsGraph.find(
-        (data) => data._id === index + 1
+
+    const completedJobsByMonthData = months.map((month) => {
+      const monthData = completedJobsByMonth.find(
+        (data) => data._id === months.indexOf(month) + 1
       );
       return {
         month,
-        completedJobs: monthData ? monthData.completedJobs : 0,
+        count: monthData ? monthData.count : 0,
       };
     });
 
@@ -397,7 +389,8 @@ const dashboardStats = async (req, res) => {
       status: "disputed",
       ...yearRange,
     });
-    let disputedJobsGraph = await Job.aggregate([
+
+    const disputedJobsByMonth = await Job.aggregate([
       {
         $match: {
           status: "disputed",
@@ -406,35 +399,30 @@ const dashboardStats = async (req, res) => {
       },
       {
         $group: {
-          _id: { $month: "$createdAt" },
-          disputedJobs: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          disputedJobs: 1,
-          _id: 1,
+          _id: { $month: "$updatedAt" },
+          count: { $sum: 1 },
         },
       },
     ]);
-    disputedJobsGraph = months.map((month, index) => {
-      const monthData = disputedJobsGraph.find(
-        (data) => data._id === index + 1
+
+    const disputedJobsByMonthData = months.map((month) => {
+      const monthData = disputedJobsByMonth.find(
+        (data) => data._id === months.indexOf(month) + 1
       );
       return {
         month,
-        disputedJobs: monthData ? monthData.disputedJobs : 0,
+        count: monthData ? monthData.count : 0,
       };
     });
 
     return SuccessHandler(
       {
         totalJobs,
-        totalJobsGraph,
         completedJobs,
-        completedJobsGraph,
         disputedJobs,
-        disputedJobsGraph,
+        jobsByMonth,
+        completedJobsByMonth: completedJobsByMonthData,
+        disputedJobsByMonth: disputedJobsByMonthData,
       },
       200,
       res
@@ -488,10 +476,120 @@ const deleteBanner = async (req, res) => {
 const getWallets = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
-    const wallets = await Wallet.find().populate(
-      "user transactions.paidBy transactions.paidTo transactions.job"
-    );
+    if (!req.query.role) return ErrorHandler("Role is required", 400, req, res);
+    const searchFilter = req.query.search
+      ? {
+          $or: [
+            { "user.name": { $regex: req.query.search, $options: "i" } },
+            { "user.email": { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+    const wallets = await Wallet.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: "$user",
+      },
+      {
+        $match: {
+          "user.role": req.query.role,
+          ...searchFilter,
+        },
+      },
+      {
+        $unwind: "$transactions",
+      },
+      {
+        $lookup: {
+          from: "jobs",
+          localField: "transactions.job",
+          foreignField: "_id",
+          as: "transactions.job",
+        },
+      },
+      {
+        $unwind: {
+          path: "$transactions.job",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "transactions.paidBy",
+          foreignField: "_id",
+          as: "transactions.paidBy",
+        },
+      },
+      {
+        $unwind: {
+          path: "$transactions.paidBy",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "transactions.paidTo",
+          foreignField: "_id",
+          as: "transactions.paidTo",
+        },
+      },
+      {
+        $unwind: {
+          path: "$transactions.paidTo",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          user: { $first: "$user" },
+          balance: { $first: "$balance" },
+          transactions: { $push: "$transactions" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" },
+        },
+      },
+      {
+        $project: {
+          user: 1,
+          balance: 1,
+          transactions: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          key: "$_id",
+        },
+      },
+    ]);
     return SuccessHandler(wallets, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const generalStats = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    const totalJobs = await Job.countDocuments();
+    const totalWorkers = await User.countDocuments({ role: "worker", adminApproval: "approved" });
+    const totalClients = await User.countDocuments({ role: "client"});
+    return SuccessHandler(
+      {
+        totalJobs,
+        totalWorkers,
+        totalClients,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -504,7 +602,8 @@ module.exports = {
   getJobs,
   getSingleJob,
   recentjobs,
-  dashboardStats,
+  jobStats,
+  generalStats,
   createBanner,
   getBanners,
   deleteBanner,

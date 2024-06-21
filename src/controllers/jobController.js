@@ -9,6 +9,7 @@ const ProofOfWork = require("../models/Job/proofOfWork");
 const Review = require("../models/Job/review");
 const saveToServer = require("../utils/saveToServer");
 const Wallet = require("../models/User/workerWallet");
+const { sendNotification } = require("../utils/sendNotification");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -48,7 +49,7 @@ const createJob = async (req, res) => {
 
     const imageUrls = await saveToServer(images);
 
-    console.log("imageUrls", imageUrls)
+    console.log("imageUrls", imageUrls);
 
     const job = await Job.create({
       type,
@@ -66,7 +67,7 @@ const createJob = async (req, res) => {
 
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Job created successfully",
         job,
@@ -74,6 +75,27 @@ const createJob = async (req, res) => {
       201,
       res
     );
+
+    const allWorkers = await User.find({
+      role: "worker",
+      adminApproval: "approved",
+    });
+    // const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allWorkers.map(async (worker) => {
+        worker.deviceToken &&
+          (await sendNotification(
+            {
+              _id: worker._id,
+              deviceToken: worker.deviceToken,
+            },
+            "New job posted",
+            "job",
+            "/job/" + job._id
+          ));
+      })
+    );
+    // admin notification
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -312,7 +334,7 @@ const submitProposal = async (req, res) => {
     if (req.user?.adminApproval !== "approved") {
       return ErrorHandler("User has not been approved by admin", 400, req, res);
     }
-    const job = await Job.findById(req.params.id);
+    const job = await Job.findById(req.params.id).populate("user");
     if (!job) {
       return ErrorHandler("Job does not exist", 400, req, res);
     }
@@ -352,7 +374,7 @@ const submitProposal = async (req, res) => {
 
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Proposal submitted successfully",
         proposal,
@@ -360,6 +382,18 @@ const submitProposal = async (req, res) => {
       201,
       res
     );
+
+    if (job?.user?.deviceToken) {
+      await sendNotification(
+        {
+          _id: job.user._id,
+          deviceToken: job.user.deviceToken,
+        },
+        "New proposal submitted",
+        "proposal",
+        "/job/" + job._id
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -380,7 +414,7 @@ const acceptProposal = async (req, res) => {
       return ErrorHandler("Job is not open for proposals", 400, req, res);
     }
 
-    const proposal = await Proposal.findById(proposalId);
+    const proposal = await Proposal.findById(proposalId).populate("user");
 
     if (!proposal) {
       return ErrorHandler("Proposal does not exist", 400, req, res);
@@ -415,7 +449,7 @@ const acceptProposal = async (req, res) => {
 
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Proposal accepted successfully",
         job,
@@ -423,6 +457,18 @@ const acceptProposal = async (req, res) => {
       200,
       res
     );
+
+    if (proposal.user.deviceToken) {
+      await sendNotification(
+        {
+          _id: proposal.user._id,
+          deviceToken: proposal.user.deviceToken,
+        },
+        "Proposal accepted",
+        "job",
+        "/job/" + job._id
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -432,7 +478,7 @@ const deliverWork = async (req, res) => {
   // #swagger.tags = ['job']
   try {
     const { description, jobId } = req.body;
-    const job = await Job.findById(jobId);
+    const job = await Job.findById(jobId).populate("user");
 
     if (!job) {
       return ErrorHandler("Job does not exist", 400, req, res);
@@ -471,7 +517,7 @@ const deliverWork = async (req, res) => {
     job.proofOfWork = proofOfWork._id;
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Work Delivered",
         job,
@@ -479,6 +525,18 @@ const deliverWork = async (req, res) => {
       200,
       res
     );
+
+    if (job?.user?.deviceToken) {
+      await sendNotification(
+        {
+          _id: job.user._id,
+          deviceToken: job.user.deviceToken,
+        },
+        "Work delivered and payment requested",
+        "job",
+        "/job/" + job._id
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -488,8 +546,11 @@ const markAsCompleted = async (req, res) => {
   // #swagger.tags = ['job']
   try {
     const { id } = req.params;
-    const job = await Job.findById(id);
-    const proposal = await Proposal.findOne({ job: id, user: job.worker });
+    const job = await Job.findById(id).populate("user");
+    const proposal = await Proposal.findOne({
+      job: id,
+      user: job.worker,
+    }).populate("user");
 
     if (!job) {
       return ErrorHandler("Job does not exist", 400, req, res);
@@ -534,7 +595,7 @@ const markAsCompleted = async (req, res) => {
     job.status = "completed";
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Job marked as completed",
         job,
@@ -542,6 +603,29 @@ const markAsCompleted = async (req, res) => {
       200,
       res
     );
+
+    if (proposal.user.deviceToken) {
+      await sendNotification(
+        {
+          _id: proposal.user._id,
+          deviceToken: proposal.user.deviceToken,
+        },
+        "Job marked as completed and payment released",
+        "job",
+        "/job/" + job._id
+      );
+    }
+    if (job?.user?.deviceToken) {
+      await sendNotification(
+        {
+          _id: job.user._id,
+          deviceToken: job.user.deviceToken,
+        },
+        proposal.budget + " released to worker",
+        "job",
+        "/job/" + job._id
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -557,7 +641,7 @@ const createDispute = async (req, res) => {
       return ErrorHandler("Please upload proof of work", 400, req, res);
     }
 
-    const job = await Job.findById(jobId);
+    const job = await Job.findById(jobId).populate("worker");
 
     if (!job) {
       return ErrorHandler("Job does not exist", 400, req, res);
@@ -583,7 +667,7 @@ const createDispute = async (req, res) => {
 
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Dispute created",
         job,
@@ -591,6 +675,19 @@ const createDispute = async (req, res) => {
       200,
       res
     );
+
+    if (job.worker.deviceToken) {
+      await sendNotification(
+        {
+          _id: job.worker._id,
+          deviceToken: job.worker.deviceToken,
+        },
+        "Dispute created",
+        "job",
+        "/job/" + job._id
+      );
+    }
+
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -600,7 +697,7 @@ const submitReview = async (req, res) => {
   // #swagger.tags = ['job']
   try {
     const { rating, review, jobId } = req.body;
-    const job = await Job.findById(jobId);
+    const job = await Job.findById(jobId).populate("worker");
 
     if (!job) {
       return ErrorHandler("Job does not exist", 400, req, res);
@@ -629,7 +726,7 @@ const submitReview = async (req, res) => {
     job.review = review2._id;
     await job.save();
 
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Review submitted successfully",
         review: review2,
@@ -637,6 +734,18 @@ const submitReview = async (req, res) => {
       201,
       res
     );
+
+    if (job.worker.deviceToken) {
+      await sendNotification(
+        {
+          _id: job.worker._id,
+          deviceToken: job.worker.deviceToken,
+        },
+        "New review submitted",
+        "job",
+        "/job/" + job._id
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -778,8 +887,8 @@ const resolveDispute = async (req, res) => {
   // #swagger.tags = ['job']
   try {
     const { jobId, resolution } = req.body;
-    const job = await Job.findById(jobId);
-    const proposal = await Proposal.findOne({ job: jobId, user: job.worker });
+    const job = await Job.findById(jobId).populate("user");
+    const proposal = await Proposal.findOne({ job: jobId, user: job.worker }).populate("user");
     const userWallet = await Wallet.findOne({ user: job.user });
     const workerWallet = await Wallet.findOne({ user: job.worker });
     if (resolution === "release") {
@@ -821,7 +930,7 @@ const resolveDispute = async (req, res) => {
     }
     job.status = resolution === "release" ? "completed" : "cancelled";
     await job.save();
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "Dispute resolved by " + resolution,
         job,
@@ -829,6 +938,28 @@ const resolveDispute = async (req, res) => {
       200,
       res
     );
+    if(job.user.deviceToken) {
+      await sendNotification(
+        {
+          _id: job.user._id,
+          deviceToken: job.user.deviceToken,
+        },
+        "Dispute resolved by " + resolution,
+        "job",
+        "/job/" + job._id
+      );
+    }
+    if(proposal.user.deviceToken) {
+      await sendNotification(
+        {
+          _id: proposal.user._id,
+          deviceToken: proposal.user.deviceToken,
+        },
+        "Dispute resolved by " + resolution,
+        "job",
+        "/job/" + job._id
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }

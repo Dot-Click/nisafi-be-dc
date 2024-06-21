@@ -10,7 +10,8 @@ router.route("/users/:id").get(isAuthenticated, isAdmin, admin.getSingleUser);
 router.route("/jobs").get(isAuthenticated, isAdmin, admin.getJobs);
 router.route("/jobs/:id").get(isAuthenticated, isAdmin, admin.getSingleJob);
 router.route("/recentjobs").get(isAuthenticated, isAdmin, admin.recentjobs);
-router.route("/dashboardStats").get(isAuthenticated, isAdmin, admin.dashboardStats);
+router.route("/jobStats").get(isAuthenticated, isAdmin, admin.jobStats);
+router.route("/generalStats").get(isAuthenticated, isAdmin, admin.generalStats);
 
 router.route("/banner").post(isAuthenticated, isAdmin, admin.createBanner);
 router.route("/banner").get(isAuthenticated, admin.getBanners);
