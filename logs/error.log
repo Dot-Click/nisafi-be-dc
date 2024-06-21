@@ -100,3 +100,8 @@
 {"date":"2024-06-20T17:14:19.794Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}
 {"date":"2024-06-20T17:15:01.687Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}
 {"date":"2024-06-20T17:15:14.817Z","level":"error","message":"Cannot read properties of null (reading 'transactions')","method":"PUT","service":"user-service","url":"/resolveDispute"}
+{"date":"2024-06-21T13:04:43.101Z","level":"error","message":"ENOENT: no such file or directory, unlink '/home/ahmed/Documents/GitHub/nisafi-laundry-be/uploads/1718963580310-1000000041.png'","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-06-21T13:50:10.803Z","level":"error","message":"Aggregate has empty pipeline","method":"GET","service":"user-service","url":"/getWallets"}
+{"date":"2024-06-21T14:22:35.663Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-06-21T14:22:51.482Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-06-21T14:23:40.515Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}

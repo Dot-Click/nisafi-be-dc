@@ -88,7 +88,7 @@ const userSchema = new Schema({
   },
   adminApproval: {
     type: String,
-    default: "pending",
+    // default: "pending",
   },
   deviceToken: {
     type: String,

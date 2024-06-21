@@ -11,6 +11,9 @@ const Wallet = require("../models/User/workerWallet");
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
+    if (req.params.status == "pending") {
+      return ErrorHandler("Invalid status", 400, req, res);
+    }
     await User.findByIdAndUpdate(req.params.id, {
       adminApproval: req.params.status,
     });

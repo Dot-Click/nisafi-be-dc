@@ -43,10 +43,12 @@ const createJob = async (req, res) => {
         res
       );
     }
-
+    console.log("images", images);
     // images array upload to aws or cloudinary
 
     const imageUrls = await saveToServer(images);
+
+    console.log("imageUrls", imageUrls)
 
     const job = await Job.create({
       type,

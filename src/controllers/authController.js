@@ -26,6 +26,7 @@ const register = async (req, res) => {
       password,
       role,
       phone,
+      adminApproval: "pending"
     });
     newUser.save();
     SuccessHandler("User created successfully", 200, res);
@@ -357,11 +358,11 @@ const updateMe = async (req, res) => {
       const imageUrl = await saveToServer([image]);
       if (user.profilePic) {
         const filePath = path.join(__dirname, `../../${user.profilePic}`);
-        fs.unlinkSync(filePath);
+        // fs.unlinkSync(filePath);
       }
       user.profilePic = imageUrl[0];
     }
-
+    console.log(req?.files)
     if (req?.files?.idDocs) {
       const idDocs =
         req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];

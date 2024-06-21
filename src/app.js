@@ -31,7 +31,6 @@ app.use("/", router);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.get("/", async (req, res) => {
-  await User.updateMany({}, { $set: { adminApproval: "pending" } });
   res.send("BE-boilerplate v1.1");
 });
 
