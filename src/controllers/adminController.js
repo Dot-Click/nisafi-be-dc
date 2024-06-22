@@ -485,7 +485,14 @@ const getWallets = async (req, res) => {
           ],
         }
       : {};
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = req.query.page ? (page - 1) * limit : 0;
+    console.log("skip", skip, limit);
     const wallets = await Wallet.aggregate([
+      {
+        $sort: { createdAt: -1 },
+      },
       {
         $lookup: {
           from: "users",
@@ -502,6 +509,12 @@ const getWallets = async (req, res) => {
           "user.role": req.query.role,
           ...searchFilter,
         },
+      },
+      {
+        $skip: skip,
+      },
+      {
+        $limit: 10,
       },
       {
         $unwind: "$transactions",
@@ -569,7 +582,37 @@ const getWallets = async (req, res) => {
         },
       },
     ]);
-    return SuccessHandler(wallets, 200, res);
+    const totalWalletCount = await Wallet.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: "$user",
+      },
+      {
+        $match: {
+          "user.role": req.query.role,
+          ...searchFilter,
+        },
+      },
+      {
+        $count: "total",
+      },
+    ]);
+
+    return SuccessHandler(
+      {
+        wallets,
+        totalWalletCount: totalWalletCount[0]?.total || 0,
+      },
+      200,
+      res
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -579,8 +622,11 @@ const generalStats = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
     const totalJobs = await Job.countDocuments();
-    const totalWorkers = await User.countDocuments({ role: "worker", adminApproval: "approved" });
-    const totalClients = await User.countDocuments({ role: "client"});
+    const totalWorkers = await User.countDocuments({
+      role: "worker",
+      adminApproval: "approved",
+    });
+    const totalClients = await User.countDocuments({ role: "client" });
     return SuccessHandler(
       {
         totalJobs,

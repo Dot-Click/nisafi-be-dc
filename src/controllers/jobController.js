@@ -9,7 +9,10 @@ const ProofOfWork = require("../models/Job/proofOfWork");
 const Review = require("../models/Job/review");
 const saveToServer = require("../utils/saveToServer");
 const Wallet = require("../models/User/workerWallet");
-const { sendNotification } = require("../utils/sendNotification");
+const {
+  sendNotification,
+  sendAdminNotification,
+} = require("../utils/sendNotification");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -96,6 +99,18 @@ const createJob = async (req, res) => {
       })
     );
     // admin notification
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `New job for ${req.body.type} posted by ${req.user.name}`,
+          "job",
+          job._id,
+          "New Job Posted"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -394,6 +409,18 @@ const submitProposal = async (req, res) => {
         "/job/" + job._id
       );
     }
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `New proposal for ${job.type} posted by ${req.user.name}`,
+          "job",
+          job._id,
+          "New Proposal Submitted"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -469,6 +496,19 @@ const acceptProposal = async (req, res) => {
         "/job/" + job._id
       );
     }
+
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+          "job",
+          job._id,
+          "Proposal Accepted"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -537,6 +577,19 @@ const deliverWork = async (req, res) => {
         "/job/" + job._id
       );
     }
+
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `Work delivered by ${job.worker.name} for ${job.type} and payment has been requested`,
+          "job",
+          job._id,
+          "Work Delivered"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -626,6 +679,19 @@ const markAsCompleted = async (req, res) => {
         "/job/" + job._id
       );
     }
+
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `${proposal.budget} released to ${job.worker.name} for ${job.type}`,
+          "job",
+          job._id,
+          "Job Completed"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -688,6 +754,19 @@ const createDispute = async (req, res) => {
       );
     }
 
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `Dispute created by ${job.user.name} for ${job.type}`,
+          "job",
+          job._id,
+          "Dispute Created"
+        );
+      })
+    );
+
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -746,6 +825,19 @@ const submitReview = async (req, res) => {
         "/job/" + job._id
       );
     }
+
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `New review submitted by ${job.user.name} for ${job.type}`,
+          "job",
+          job._id,
+          "Review Submitted"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -888,7 +980,10 @@ const resolveDispute = async (req, res) => {
   try {
     const { jobId, resolution } = req.body;
     const job = await Job.findById(jobId).populate("user");
-    const proposal = await Proposal.findOne({ job: jobId, user: job.worker }).populate("user");
+    const proposal = await Proposal.findOne({
+      job: jobId,
+      user: job.worker,
+    }).populate("user");
     const userWallet = await Wallet.findOne({ user: job.user });
     const workerWallet = await Wallet.findOne({ user: job.worker });
     if (resolution === "release") {
@@ -938,7 +1033,7 @@ const resolveDispute = async (req, res) => {
       200,
       res
     );
-    if(job.user.deviceToken) {
+    if (job.user.deviceToken) {
       await sendNotification(
         {
           _id: job.user._id,
@@ -949,7 +1044,7 @@ const resolveDispute = async (req, res) => {
         "/job/" + job._id
       );
     }
-    if(proposal.user.deviceToken) {
+    if (proposal.user.deviceToken) {
       await sendNotification(
         {
           _id: proposal.user._id,

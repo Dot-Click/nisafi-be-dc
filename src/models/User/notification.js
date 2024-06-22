@@ -26,6 +26,10 @@ const notificationSchema = new Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    title: {
+        type: String,
+        // required: true
     }
 }, { timestamps: true });
 

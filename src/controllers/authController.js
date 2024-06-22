@@ -5,7 +5,10 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const saveToServer = require("../utils/saveToServer");
 const path = require("path");
 const fs = require("fs");
-const {sendNotification} = require("../utils/sendNotification");
+const {
+  sendNotification,
+  sendAdminNotification,
+} = require("../utils/sendNotification");
 const Job = require("../models/Job/job");
 const { default: mongoose } = require("mongoose");
 const Review = require("../models/Job/review");
@@ -26,7 +29,7 @@ const register = async (req, res) => {
       password,
       role,
       phone,
-      adminApproval: "pending"
+      adminApproval: "pending",
     });
     newUser.save();
     SuccessHandler("User created successfully", 200, res);
@@ -43,6 +46,20 @@ const register = async (req, res) => {
         "/home"
       );
     }
+
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(
+        async (admin) =>
+          await sendAdminNotification(
+            admin._id,
+            `New ${newUser.role}, ${newUser.name} has registered`,
+            "register",
+            newUser.email,
+            "New Registration"
+          )
+      )
+    );
 
     // create wallet for user
     await Wallet.create({
@@ -361,11 +378,12 @@ const updateMe = async (req, res) => {
       }
       user.profilePic = imageUrl[0];
     }
-    console.log(req?.files)
+    console.log(req?.files);
+    let idDocsUrl = [];
     if (req?.files?.idDocs) {
       const idDocs =
         req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];
-      const idDocsUrl = await saveToServer(idDocs);
+      idDocsUrl = await saveToServer(idDocs);
       console.log(idDocsUrl);
       user.idDocs = idDocsUrl;
     }
@@ -407,7 +425,7 @@ const updateMe = async (req, res) => {
     await user.save();
 
     console.log(user);
-    return SuccessHandler(
+    SuccessHandler(
       {
         message: "User updated successfully",
         user,
@@ -415,6 +433,22 @@ const updateMe = async (req, res) => {
       200,
       res
     );
+
+    if (idDocsUrl.length) {
+      const allAdmins = await User.find({ role: "admin" });
+      Promise.all(
+        allAdmins.map(
+          async (admin) =>
+            await sendAdminNotification(
+              admin._id,
+              `${user.role} ${user.name} has uploaded their documents.`,
+              "idDocs",
+              user._id,
+              "Documents Uploaded"
+            )
+        )
+      );
+    }
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }

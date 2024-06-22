@@ -2,6 +2,7 @@ const Notification = require("../models/User/notification");
 const admin = require("firebase-admin");
 const serviceAccount = require("../../firebase-admin.json");
 const { google } = require("googleapis");
+const { sendNotificationSocket } = require("../functions/socketFunctions");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -50,9 +51,27 @@ const sendNotification = async (user, message, type, link) => {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
   } catch (error) {
-    console.log(error); 
+    console.log(error);
     return error;
   }
 };
 
-module.exports = {sendNotification};
+const sendAdminNotification = async (user, message, type, link, title) => {
+  try {
+    const notification = new Notification({
+      message,
+      type,
+      link,
+      user,
+      title,
+    });
+    await notification.save();
+
+    await sendNotificationSocket(user, message, type, link, title);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+module.exports = { sendNotification, sendAdminNotification };

@@ -7,6 +7,7 @@ const addUser = async (user, socket) => {
   } else {
     global.onlineUsers[index].socket = socket;
   }
+  console.log("added user", global.onlineUsers);
 };
 
 const removeUser = async (socket) => {
@@ -19,15 +20,16 @@ const removeUser = async (socket) => {
   console.log("removed user", removedUser);
 };
 
-const sendNotificationSocket = async (user, message, type, link) => {
+const sendNotificationSocket = async (user, message, type, link, title) => {
   const index = global.onlineUsers.findIndex((user2) => {
     return user2.user == user;
   });
   if (index !== -1) {
-    global.onlineUsers[index].socket.emit("notification", {
+    global.io.to(global.onlineUsers[index].socket).emit("notification", {
       message,
       type,
       link,
+      title,
     });
   }
 };
