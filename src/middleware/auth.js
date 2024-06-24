@@ -13,6 +13,11 @@ const isAuthenticated = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(decoded._id);
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "User not found" });
+    }
     next();
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -43,7 +48,7 @@ const isWorker = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
 const isClient = async (req, res, next) => {
   try {
@@ -57,6 +62,6 @@ const isClient = async (req, res, next) => {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-module.exports = {isAuthenticated, isAdmin, isWorker, isClient};
+module.exports = { isAuthenticated, isAdmin, isWorker, isClient };

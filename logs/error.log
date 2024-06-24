@@ -231,3 +231,4 @@
 {"date":"2024-06-22T14:51:52.857Z","level":"error","message":"Job not found","method":"GET","service":"user-service","url":"/jobs/6676d5f7fe732fc9934278cf"}
 {"date":"2024-06-22T14:57:49.121Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
 {"date":"2024-06-22T14:58:44.095Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-06-24T13:33:47.990Z","level":"error","message":"Cannot read properties of null (reading '_id')","method":"GET","service":"user-service","url":"/wallet"}

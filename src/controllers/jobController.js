@@ -92,7 +92,7 @@ const createJob = async (req, res) => {
               _id: worker._id,
               deviceToken: worker.deviceToken,
             },
-            "New job posted",
+            `New job for ${req.body.type} posted by ${req.user.name}`,
             "job",
             "/job/" + job._id
           ));
@@ -404,7 +404,7 @@ const submitProposal = async (req, res) => {
           _id: job.user._id,
           deviceToken: job.user.deviceToken,
         },
-        "New proposal submitted",
+        `${req.user.name} submitted a proposal for ${job.type}`,
         "proposal",
         "/job/" + job._id
       );
@@ -491,7 +491,7 @@ const acceptProposal = async (req, res) => {
           _id: proposal.user._id,
           deviceToken: proposal.user.deviceToken,
         },
-        "Proposal accepted",
+        `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
         "job",
         "/job/" + job._id
       );
@@ -572,7 +572,7 @@ const deliverWork = async (req, res) => {
           _id: job.user._id,
           deviceToken: job.user.deviceToken,
         },
-        "Work delivered and payment requested",
+        `Work delivered by ${job.worker.name} for ${job.type} and payment has been requested`,
         "job",
         "/job/" + job._id
       );
@@ -663,7 +663,7 @@ const markAsCompleted = async (req, res) => {
           _id: proposal.user._id,
           deviceToken: proposal.user.deviceToken,
         },
-        "Job marked as completed and payment released",
+        `Payment of ${proposal.budget} released to you for ${job.type}`,
         "job",
         "/job/" + job._id
       );
@@ -748,7 +748,7 @@ const createDispute = async (req, res) => {
           _id: job.worker._id,
           deviceToken: job.worker.deviceToken,
         },
-        "Dispute created",
+        `Dispute created by ${job.user.name} for ${job.type}`,
         "job",
         "/job/" + job._id
       );
@@ -820,7 +820,7 @@ const submitReview = async (req, res) => {
           _id: job.worker._id,
           deviceToken: job.worker.deviceToken,
         },
-        "New review submitted",
+        "New review received for " + job.type + " by " + job.user.name,
         "job",
         "/job/" + job._id
       );
@@ -1039,7 +1039,7 @@ const resolveDispute = async (req, res) => {
           _id: job.user._id,
           deviceToken: job.user.deviceToken,
         },
-        "Dispute resolved by " + resolution,
+        "Dispute resolved by " + resolution + " for " + job.type,
         "job",
         "/job/" + job._id
       );

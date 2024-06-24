@@ -6633,3 +6633,7 @@
 {"date":"2024-06-22T15:57:42.941Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1718284268807-Screenshot%20from%202024-06-10%2020-15-23.png"}
 {"date":"2024-06-22T15:57:43.865Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1718975134681-Screenshot%20from%202024-06-14%2000-56-33.png"}
 {"date":"2024-06-22T15:57:43.867Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/uploads/1718898282237-1000000041.png"}
+{"date":"2024-06-24T13:33:35.000Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/wallet"}
+{"date":"2024-06-24T13:33:47.749Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/wallet"}
+{"date":"2024-06-24T13:33:47.990Z","level":"error","message":"Cannot read properties of null (reading '_id')","method":"GET","service":"user-service","url":"/wallet"}
+{"date":"2024-06-24T13:34:52.938Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/wallet"}
