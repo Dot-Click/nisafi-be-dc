@@ -10,6 +10,11 @@ const swaggerFile = require("../swagger_output.json"); // Generated Swagger file
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const User = require("./models/User/user");
+const {
+  generate_access_token,
+  c2b_register_url,
+  c2b_simulate,
+} = require("./functions/mpesa");
 // console.log("serviceAccount", serviceAccount);
 // Middlewares
 app.use(express.json());
@@ -29,6 +34,27 @@ app.use(
 app.use("/", router);
 // api doc
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// webhook index
+// app.use("/webhooks", webhookRouter);
+
+app.post("/validation", (req, res) => {
+  console.log("request from validation----------------------", req.body);
+  res.status(200).json({
+    // {
+    ResultCode: "0",
+    ResultDesc: "Accepted",
+    //  }
+  });
+});
+
+app.post("/confirmation", (req, res) => {
+  console.log("request from confirmation-------------------", req.body);
+  // res.send("confirmation");
+  res.status(200).json({
+    ResultCode: "0",
+    ResultDesc: "Accepted",
+  });
+});
 
 app.get("/", async (req, res) => {
   res.send("BE-boilerplate v1.1");
