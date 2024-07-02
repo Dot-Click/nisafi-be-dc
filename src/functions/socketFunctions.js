@@ -34,8 +34,20 @@ const sendNotificationSocket = async (user, message, type, link, title) => {
   }
 };
 
+const paymentConfirmation = async (user, data) => {
+  const index = global.onlineUsers.findIndex((user2) => {
+    return user2.user == user;
+  });
+  if (index !== -1) {
+    global.io
+      .to(global.onlineUsers[index].socket)
+      .emit("paymentConfirmation", data);
+  }
+};
+
 module.exports = {
   addUser,
   removeUser,
   sendNotificationSocket,
+  paymentConfirmation,
 };

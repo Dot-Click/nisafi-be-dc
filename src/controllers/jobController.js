@@ -13,6 +13,7 @@ const {
   sendNotification,
   sendAdminNotification,
 } = require("../utils/sendNotification");
+const { c2b_simulate } = require("../functions/mpesa");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -429,7 +430,8 @@ const submitProposal = async (req, res) => {
 const acceptProposal = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-    const { laundryPickupTime, proposalId, jobId } = req.body;
+    const { laundryPickupTime, proposalId, jobId, paymentPhoneNumber } =
+      req.body;
 
     const job = await Job.findById(jobId);
 
@@ -456,59 +458,73 @@ const acceptProposal = async (req, res) => {
       );
     }
 
-    // charge user for accepting proposal
-    const transaction = {
-      amount: proposal.budget,
-      type: "credit",
-      // paidTo: proposal.user,
-      paidBy: job.user,
-      job: job._id,
-      escrow: true,
-    };
-
-    const wallet = await Wallet.findOne({ user: job.user });
-    wallet.transactions.push(transaction);
-    wallet.balance += transaction.amount;
-    await wallet.save();
-    job.status = "in-progress";
-    job.worker = proposal.user;
-    job.laundryPickupTime = laundryPickupTime;
-
-    await job.save();
-
-    SuccessHandler(
-      {
-        message: "Proposal accepted successfully",
-        job,
-      },
-      200,
-      res
-    );
-
-    if (proposal.user.deviceToken) {
-      await sendNotification(
-        {
-          _id: proposal.user._id,
-          deviceToken: proposal.user.deviceToken,
-        },
-        `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
-        "job",
-        "/job/" + job._id
-      );
-    }
-
-    const allAdmins = await User.find({ role: "admin" });
-    Promise.all(
-      allAdmins.map(async (admin) => {
-        await sendAdminNotification(
-          admin._id,
-          `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
-          "job",
-          job._id,
-          "Proposal Accepted"
-        );
+    const paymentResponse = await c2b_simulate(
+      `${proposal.budget}`,
+      paymentPhoneNumber,
+      JSON.stringify({
+        proposalId,
+        jobId,
+        laundryPickupTime,
       })
     );
+
+    // charge user for accepting proposal
+    // const transaction = {
+    //   amount: proposal.budget,
+    //   type: "credit",
+    //   // paidTo: proposal.user,
+    //   paidBy: job.user,
+    //   job: job._id,
+    //   escrow: true,
+    // };
+
+    // const wallet = await Wallet.findOne({ user: job.user });
+    // wallet.transactions.push(transaction);
+    // wallet.balance += transaction.amount;
+    // await wallet.save();
+    // job.status = "in-progress";
+    // job.worker = proposal.user;
+    // job.laundryPickupTime = laundryPickupTime;
+
+    // await job.save();
+
+    if (paymentResponse) {
+      return SuccessHandler(
+        {
+          message: "Proposal accepted successfully",
+          job,
+          paymentResponse,
+        },
+        200,
+        res
+      );
+    } else {
+      throw new Error("Payment failed:" + paymentResponse.ResponseDescription);
+    }
+    // if (proposal.user.deviceToken) {
+    //   await sendNotification(
+    //     {
+    //       _id: proposal.user._id,
+    //       deviceToken: proposal.user.deviceToken,
+    //     },
+    //     `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+    //     "job",
+    //     "/job/" + job._id
+    //   );
+    // }
+
+    // const allAdmins = await User.find({ role: "admin" });
+    // Promise.all(
+    //   allAdmins.map(async (admin) => {
+    //     await sendAdminNotification(
+    //       admin._id,
+    //       `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+    //       "job",
+    //       job._id,
+    //       "Proposal Accepted"
+    //     );
+    //   })
+    // );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -766,7 +782,6 @@ const createDispute = async (req, res) => {
         );
       })
     );
-
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }

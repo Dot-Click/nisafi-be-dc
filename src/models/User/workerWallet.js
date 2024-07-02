@@ -41,7 +41,10 @@ const walletSchema = new Schema(
         },
         escrow: {
           type: Boolean,
-        //   default: false,
+          //   default: false,
+        },
+        mpesaDetails: {
+          type: Object,
         },
       },
     ],

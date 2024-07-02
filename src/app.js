@@ -14,6 +14,7 @@ const {
   generate_access_token,
   c2b_register_url,
   c2b_simulate,
+  confirmationHook,
 } = require("./functions/mpesa");
 // console.log("serviceAccount", serviceAccount);
 // Middlewares
@@ -47,13 +48,10 @@ app.post("/validation", (req, res) => {
   });
 });
 
-app.post("/confirmation", (req, res) => {
+app.post("/confirmation", async (req, res) => {
   console.log("request from confirmation-------------------", req.body);
-  // res.send("confirmation");
-  res.status(200).json({
-    ResultCode: "0",
-    ResultDesc: "Accepted",
-  });
+  // await confirmationHook(req, res);
+  res.send("confirmation");
 });
 
 app.get("/", async (req, res) => {

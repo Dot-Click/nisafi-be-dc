@@ -21,7 +21,7 @@ router.route("/register").get(async (req, res) => {
 router.route("/simulate").get(async (req, res) => {
   // #swagger.tags = ['Mpesa']
   try {
-    const resp = await c2b_simulate();
+    const resp = await c2b_simulate("100", "254708374149", "testapi");
     return res.status(200).json({
       message: "Simulation successful",
       data: resp,
