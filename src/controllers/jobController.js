@@ -491,7 +491,7 @@ const acceptProposal = async (req, res) => {
     if (paymentResponse) {
       return SuccessHandler(
         {
-          message: "Proposal accepted successfully",
+          message: "Payment confirmation in progress",
           job,
           paymentResponse,
         },

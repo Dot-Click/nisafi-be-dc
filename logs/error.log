@@ -232,3 +232,11 @@
 {"date":"2024-06-22T14:57:49.121Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
 {"date":"2024-06-22T14:58:44.095Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
 {"date":"2024-06-24T13:33:47.990Z","level":"error","message":"Cannot read properties of null (reading '_id')","method":"GET","service":"user-service","url":"/wallet"}
+{"date":"2024-07-03T13:29:49.492Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-03T13:30:32.714Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-03T13:31:04.250Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-07-03T13:31:08.473Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-07-03T13:31:11.609Z","level":"error","message":"User already exists","method":"POST","service":"user-service","url":"/register"}
+{"date":"2024-07-03T13:31:42.547Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-03T13:35:08.654Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-03T13:35:16.802Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}

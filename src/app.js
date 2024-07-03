@@ -55,6 +55,7 @@ app.post("/confirmation", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
+  await c2b_register_url();
   res.send("BE-boilerplate v1.1");
 });
 

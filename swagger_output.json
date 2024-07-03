@@ -5,10 +5,10 @@
     "description": "Cloudfront api endpoints",
     "version": "1.0.0"
   },
-  "host": "nisafi-staging.up.railway.app",
+  "host": "localhost:8002",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -990,6 +990,9 @@
                   "example": "any"
                 },
                 "jobId": {
+                  "example": "any"
+                },
+                "paymentPhoneNumber": {
                   "example": "any"
                 }
               }

@@ -11,44 +11,52 @@ const {
 const { paymentConfirmation } = require("./socketFunctions");
 
 const generate_access_token = async () => {
-  const result = await axios({
-    url: "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
-    method: "GET",
-    headers: {
-      Authorization:
-        "Basic N0JZWUFKU0dhMXBZd29WRUNRWEtleVpna3pPdnNKTXRnYzV3dDVpWFVGa3ZqbEM5OnNOV0REbGRBU0FidXlmRklNY3huRXp5SjB0bHBwMkNFNXFLSUJ2MjVTbEdnODN2UmRpN3VkSVFsWXg0cktpSFQ=",
-    },
-  });
+  try {
+    const result = await axios({
+      url: "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+      method: "GET",
+      headers: {
+        Authorization:
+          "Basic N0JZWUFKU0dhMXBZd29WRUNRWEtleVpna3pPdnNKTXRnYzV3dDVpWFVGa3ZqbEM5OnNOV0REbGRBU0FidXlmRklNY3huRXp5SjB0bHBwMkNFNXFLSUJ2MjVTbEdnODN2UmRpN3VkSVFsWXg0cktpSFQ=",
+      },
+    });
 
-  console.log("acc", result.data);
-  return result.data.access_token;
+    console.log("acc", result.data);
+    return result.data.access_token;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
 const c2b_register_url = async (
-  shortCode = "600992",
+  shortCode = "600988",
   responseType = "Completed",
   confirmationUrl = "https://nisafi-staging.up.railway.app/confirmation",
   validationUrl = "https://nisafi-staging.up.railway.app/validation"
   // confirmationUrl = "http://192.168.100.16:8002/confirmation",
   // validationUrl = "http://192.168.100.16:8002/validation"
 ) => {
-  const access_token = await generate_access_token();
-  const url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
-  const result = await axios({
-    method: "POST",
-    url,
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    data: {
-      ShortCode: shortCode,
-      ResponseType: responseType,
-      ConfirmationURL: confirmationUrl,
-      ValidationURL: validationUrl,
-    },
-  });
-  console.log("result", result.data);
-  return result.data;
+  try {
+    const access_token = await generate_access_token();
+    const url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
+    const result = await axios({
+      method: "POST",
+      url,
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      data: {
+        ShortCode: shortCode,
+        ResponseType: responseType,
+        ConfirmationURL: confirmationUrl,
+        ValidationURL: validationUrl,
+      },
+    });
+    console.log("result", result.data);
+    return result.data;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
 const c2b_simulate = async (
@@ -58,90 +66,104 @@ const c2b_simulate = async (
   msisdn,
   billRefNumber
 ) => {
-  const access_token = await generate_access_token();
-  const url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
-  const result = await axios({
-    method: "POST",
-    url,
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    data: {
-      ShortCode: "600992",
-      CommandID: "CustomerPayBillOnline",
-      Amount: amount,
-      Msisdn: msisdn,
-      BillRefNumber: billRefNumber,
-    },
-  });
-  console.log("result", result.data);
-  return result.data;
+  try {
+    const access_token = await generate_access_token();
+    const url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
+    const result = await axios({
+      method: "POST",
+      url,
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      data: {
+        ShortCode: "600988",
+        CommandID: "CustomerPayBillOnline",
+        Amount: amount,
+        Msisdn: msisdn,
+        BillRefNumber: billRefNumber,
+      },
+    });
+    console.log("result", result.data);
+    return result.data;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
 const confirmationHook = async (req, res) => {
-  if (req.body) {
-    const data = JSON.parse(req.body.BillRefNumber);
-    const job = await Job.findById(data.jobId).populate("user");
-    if (job.status !== "open") {
-      return;
-    }
-    const proposal = await Proposal.findById(data.proposalId).populate("user");
+  try {
+    if (req.body) {
+      const data = JSON.parse(req.body.BillRefNumber);
+      const job = await Job.findById(data.jobId).populate("user");
+      if (job.status !== "open") {
+        return;
+      }
+      const proposal = await Proposal.findById(data.proposalId).populate(
+        "user"
+      );
 
-    const transaction = {
-      amount: proposal.budget,
-      type: "credit",
-      paidBy: job.user._id,
-      // paidTo: proposal.user._id,
-      job: job._id,
-      escrow: true,
-      mpesaDetails: req.body,
-    };
+      const transaction = {
+        amount: proposal.budget,
+        type: "credit",
+        paidBy: job.user._id,
+        // paidTo: proposal.user._id,
+        job: job._id,
+        escrow: true,
+        mpesaDetails: req.body,
+      };
 
-    const wallet = await Wallet.findOne({ user: job.user._id });
-    wallet.balance += transaction.amount;
-    wallet.transactions.push(transaction);
-    await wallet.save();
+      const wallet = await Wallet.findOne({ user: job.user._id });
+      wallet.balance += transaction.amount;
+      wallet.transactions.push(transaction);
+      await wallet.save();
 
-    job.status = "in_progress";
-    job.worker = proposal.user._id;
-    job.laundryPickupTime = data.laundryPickupTime;
-    await job.save();
+      job.status = "in_progress";
+      job.worker = proposal.user._id;
+      job.laundryPickupTime = data.laundryPickupTime;
+      await job.save();
 
-    await paymentConfirmation(job.user._id, {
-      jobId: job._id,
-      proposalId: proposal._id,
-    });
+      await paymentConfirmation(job.user._id, {
+        jobId: job._id,
+        proposalId: proposal._id,
+      });
 
-    if (proposal.user.deviceToken) {
-      await sendNotification(
-        {
-          _id: proposal.user._id,
-          deviceToken: proposal.user.deviceToken,
-        },
-        `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
-        "job",
-        "/job/" + job._id
+      if (proposal.user.deviceToken) {
+        await sendNotification(
+          {
+            _id: proposal.user._id,
+            deviceToken: proposal.user.deviceToken,
+          },
+          `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+          "job",
+          "/job/" + job._id
+        );
+      }
+
+      const allAdmins = await User.find({ role: "admin" });
+      Promise.all(
+        allAdmins.map(async (admin) => {
+          await sendAdminNotification(
+            admin._id,
+            `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+            "job",
+            job._id,
+            "Proposal Accepted"
+          );
+        })
       );
     }
 
-    const allAdmins = await User.find({ role: "admin" });
-    Promise.all(
-      allAdmins.map(async (admin) => {
-        await sendAdminNotification(
-          admin._id,
-          `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
-          "job",
-          job._id,
-          "Proposal Accepted"
-        );
-      })
-    );
+    return res.status(200).json({
+      ResultCode: "0",
+      ResultDesc: "Accepted",
+    });
+  } catch (error) {
+    // await paymentConfirmation(job.user._id, {
+    //   jobId: job._id,
+    //   proposalId: proposal._id,
+    // });
+    console.log("error", error);
   }
-
-  return res.status(200).json({
-    ResultCode: "0",
-    ResultDesc: "Accepted",
-  });
 };
 
 module.exports = {

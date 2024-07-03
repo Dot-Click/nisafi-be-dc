@@ -27,7 +27,7 @@ router.route("/simulate").get(async (req, res) => {
       data: resp,
     });
   } catch (error) {
-    console.log("error", error.response.data.Envelope.Body.Fault);
+    console.log("error", error.response.data.Envelope?.Body?.Fault);
     return res.status(500).json({
       message: error.message,
     });
