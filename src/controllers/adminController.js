@@ -4,7 +4,7 @@ const User = require("../models/User/user");
 const Job = require("../models/Job/job");
 const Review = require("../models/Job/review");
 const mongoose = require("mongoose");
-const saveToServer = require("../utils/saveToServer");
+const {uploadFilesOnAWS, deleteImageFromAWS} = require("../utils/saveToServer");
 const Banner = require("../models/Banner");
 const Wallet = require("../models/User/workerWallet");
 
@@ -440,7 +440,7 @@ const createBanner = async (req, res) => {
     let imageUrl = [""];
     if (req.files.image) {
       const image = req.files.image;
-      imageUrl = await saveToServer([image]);
+      imageUrl = await uploadFilesOnAWS([image]);
     }
     const banner = new Banner({
       image: imageUrl[0],

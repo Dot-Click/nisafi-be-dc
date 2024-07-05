@@ -240,3 +240,12 @@
 {"date":"2024-07-03T13:31:42.547Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-07-03T13:35:08.654Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
 {"date":"2024-07-03T13:35:16.802Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-04T15:24:07.956Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-04T15:59:44.795Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-04T15:59:54.658Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-05T15:24:05.800Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-07-05T15:29:02.384Z","level":"error","message":"Cannot set headers after they are sent to the client","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-07-05T15:30:47.481Z","level":"error","message":"Cannot read properties of undefined (reading '0')","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-07-05T15:37:26.292Z","level":"error","message":"Cannot read properties of undefined (reading '0')","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-07-05T15:46:13.238Z","level":"error","message":"Cannot read properties of undefined (reading '0')","method":"PUT","service":"user-service","url":"/me"}
+{"date":"2024-07-05T15:47:16.128Z","level":"error","message":"Cannot read properties of undefined (reading '0')","method":"PUT","service":"user-service","url":"/me"}

@@ -7,7 +7,10 @@ const { default: mongoose } = require("mongoose");
 const sendMail = require("../utils/sendMail");
 const ProofOfWork = require("../models/Job/proofOfWork");
 const Review = require("../models/Job/review");
-const saveToServer = require("../utils/saveToServer");
+const {
+  uploadFilesOnAWS,
+  deleteImageFromAWS,
+} = require("../utils/saveToServer");
 const Wallet = require("../models/User/workerWallet");
 const {
   sendNotification,
@@ -51,7 +54,7 @@ const createJob = async (req, res) => {
     console.log("images", images);
     // images array upload to aws or cloudinary
 
-    const imageUrls = await saveToServer(images);
+    const imageUrls = await uploadFilesOnAWS(images);
 
     console.log("imageUrls", imageUrls);
 
@@ -558,7 +561,7 @@ const deliverWork = async (req, res) => {
       );
     }
 
-    const imageUrls = await saveToServer(images);
+    const imageUrls = await uploadFilesOnAWS(images);
 
     const proofOfWork = await ProofOfWork.create({
       job: job._id,
@@ -738,7 +741,7 @@ const createDispute = async (req, res) => {
       );
     }
 
-    const proofOfWorkUrl = await saveToServer(proofOfWork);
+    const proofOfWorkUrl = await uploadFilesOnAWS(proofOfWork);
 
     job.disputedDetails = {
       description,
@@ -804,7 +807,7 @@ const submitReview = async (req, res) => {
     console.log(req.files);
 
     const { images } = req.files;
-    const imageUrls = await saveToServer(images);
+    const imageUrls = await uploadFilesOnAWS(images);
 
     const review2 = await Review.create({
       job: job._id,

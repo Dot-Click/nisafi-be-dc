@@ -51,7 +51,12 @@ app.post("/validation", (req, res) => {
 app.post("/confirmation", async (req, res) => {
   console.log("request from confirmation-------------------", req.body);
   // await confirmationHook(req, res);
-  res.send("confirmation");
+  res.send({
+    // {
+    ResultCode: "0",
+    ResultDesc: "Accepted",
+    //  }
+  });
 });
 
 app.get("/", async (req, res) => {

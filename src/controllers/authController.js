@@ -2,7 +2,10 @@ const User = require("../models/User/user");
 const sendMail = require("../utils/sendMail");
 const SuccessHandler = require("../utils/SuccessHandler");
 const ErrorHandler = require("../utils/ErrorHandler");
-const saveToServer = require("../utils/saveToServer");
+const {
+  uploadFilesOnAWS,
+  deleteImageFromAWS,
+} = require("../utils/saveToServer");
 const path = require("path");
 const fs = require("fs");
 const {
@@ -371,7 +374,8 @@ const updateMe = async (req, res) => {
 
     if (req?.files?.image) {
       const image = req.files.image;
-      const imageUrl = await saveToServer([image]);
+      const imageUrl = await uploadFilesOnAWS([image]);
+      console.log(imageUrl);
       if (user.profilePic) {
         const filePath = path.join(__dirname, `../../${user.profilePic}`);
         // fs.unlinkSync(filePath);
@@ -383,7 +387,7 @@ const updateMe = async (req, res) => {
     if (req?.files?.idDocs) {
       const idDocs =
         req.files.idDocs.length > 1 ? req.files.idDocs : [req.files.idDocs];
-      idDocsUrl = await saveToServer(idDocs);
+      idDocsUrl = await uploadFilesOnAWS(idDocs);
       console.log(idDocsUrl);
       user.idDocs = idDocsUrl;
     }

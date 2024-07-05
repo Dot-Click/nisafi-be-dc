@@ -5,7 +5,7 @@ const doc = {
     description: "Cloudfront api endpoints",
     version: "1.0.0",
   },
-  // host: "nisafi-staging.up.railway.app",
+  // host: "backed-fe-production.up.railway.app",
   host: "localhost:8002",
   basePath: "/",
   schemes: ["http"],

@@ -29,14 +29,15 @@ const generate_access_token = async () => {
 };
 
 const c2b_register_url = async (
-  shortCode = "600988",
+  shortCode = "600990",
   responseType = "Completed",
-  confirmationUrl = "https://nisafi-staging.up.railway.app/confirmation",
-  validationUrl = "https://nisafi-staging.up.railway.app/validation"
+  confirmationUrl = "https://efe6-212-97-68-37.ngrok-free.app/confirmation",
+  validationUrl = "https://efe6-212-97-68-37.ngrok-free.app/validation"
   // confirmationUrl = "http://192.168.100.16:8002/confirmation",
   // validationUrl = "http://192.168.100.16:8002/validation"
 ) => {
   try {
+    console.log("shortCode", shortCode);
     const access_token = await generate_access_token();
     const url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
     const result = await axios({
@@ -76,7 +77,7 @@ const c2b_simulate = async (
         Authorization: `Bearer ${access_token}`,
       },
       data: {
-        ShortCode: "600988",
+        ShortCode: "600990",
         CommandID: "CustomerPayBillOnline",
         Amount: amount,
         Msisdn: msisdn,
@@ -114,7 +115,7 @@ const confirmationHook = async (req, res) => {
 
       const wallet = await Wallet.findOne({ user: job.user._id });
       wallet.balance += transaction.amount;
-      wallet.transactions.push(transaction);
+      wallet.transactions.push(transaction); 
       await wallet.save();
 
       job.status = "in_progress";
