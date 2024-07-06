@@ -40,7 +40,9 @@ const {
   // ListObjectsCommand,
 } = require("@aws-sdk/client-s3");
 
-require('dotenv').config();
+require('dotenv').config({
+  path: "../src/config/config.env"
+});
 
 const s3 = new S3Client({
   region: "ap-northeast-1",
