@@ -34,7 +34,6 @@ const generate_access_token = async () => {
 
 const c2b_register_url = async () => {
   try {
-    console.log("shortCode", shortCode);
     const access_token = await generate_access_token();
     const url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
     const result = await axios({

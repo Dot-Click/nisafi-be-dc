@@ -44,7 +44,7 @@ router.route("/withdraw").get(async (req, res) => {
     const resp = await b2c_request(
       "100",
       "254708374149",
-      "/b2c/123/timeout",
+      "/b2c/123/queue",
       "/b2c/123/result"
     );
     return res.status(200).json({
