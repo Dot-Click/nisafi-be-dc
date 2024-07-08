@@ -15,6 +15,9 @@ const {
   c2b_register_url,
   c2b_simulate,
   confirmationHook,
+  b2c_request,
+  b2c_timeoutHook,
+  b2c_resultHook,
 } = require("./functions/mpesa");
 // console.log("serviceAccount", serviceAccount);
 // Middlewares
@@ -59,8 +62,29 @@ app.post("/confirmation", async (req, res) => {
   });
 });
 
+app.post("/b2c/:id/timeout", async (req, res) => {
+  console.log("request from b2c_timeout-------------------", req.body);
+  // await b2c_timeoutHook(req, res);
+  res.send({
+    // {
+    ResultCode: "0",
+    ResultDesc: "Accepted",
+    //  }
+  });
+});
+
+app.post("/b2c/:id/result", async (req, res) => {
+  console.log("request from b2c_result-------------------", req.body);
+  // await b2c_resultHook(req, res);
+  res.send({
+    // {
+    ResultCode: "0",
+    ResultDesc: "Accepted",
+    //  }
+  });
+});
+
 app.get("/", async (req, res) => {
-  await c2b_register_url();
   res.send("BE-boilerplate v1.1");
 });
 

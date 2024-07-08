@@ -5,10 +5,10 @@
     "description": "Cloudfront api endpoints",
     "version": "1.0.0"
   },
-  "host": "localhost:8002",
+  "host": "nisafi-staging.up.railway.app",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -321,6 +321,47 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/withdraw": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1307,6 +1348,23 @@
       }
     },
     "/mpesa/simulate": {
+      "get": {
+        "tags": [
+          "Mpesa"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/mpesa/withdraw": {
       "get": {
         "tags": [
           "Mpesa"

@@ -17,6 +17,7 @@ const { default: mongoose } = require("mongoose");
 const Review = require("../models/Job/review");
 const bcrypt = require("bcryptjs");
 const Wallet = require("../models/User/workerWallet");
+const { b2c_request } = require("../functions/mpesa");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -540,6 +541,49 @@ const getWallet = async (req, res) => {
   }
 };
 
+const withdraw = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    const { amount, phone } = req.body;
+    const user = await User.findById(req.user._id);
+    if (user?.withdrawal) {
+      return ErrorHandler(
+        "You have already requested for withdrawal",
+        400,
+        req,
+        res
+      );
+    }
+
+    const wallet = await Wallet.findOne({ user: req.user._id });
+
+    if (wallet.balance < amount) {
+      return ErrorHandler("Insufficient balance", 400, req, res);
+    }
+
+    const remarks = JSON.stringify({
+      amount,
+      phone,
+      user: req.user._id,
+    });
+
+    const resultUrl = `/b2c/${user._id}/result`;
+    const timeOutUrl = `/b2c/${user._id}/timeout`;
+
+    const response = await b2c_request(amount, phone, resultUrl, timeOutUrl);
+    if (response?.ResponseCode == "0") {
+      // return ErrorHandler(response.ResponseDescription, 400, req, res);
+      user.withdrawal = true;
+      await user.save();
+      return SuccessHandler("Withdrawal request sent", 200, res);
+    } else {
+      return ErrorHandler(response.errorMessage, 400, req, res);
+    }
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   register,
   // requestEmailToken,
@@ -553,4 +597,5 @@ module.exports = {
   updateMe,
   getWorkerById,
   getWallet,
+  withdraw,
 };

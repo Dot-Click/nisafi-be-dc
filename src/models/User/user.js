@@ -100,6 +100,10 @@ const userSchema = new Schema({
     type: String,
     // required: true,
   },
+  withdrawal: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //hash password before saving

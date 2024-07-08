@@ -271,7 +271,7 @@ const getAllJobsWorker = async (req, res) => {
         },
       ]);
     } else if (req.query?.status === "completed") {
-      jobs = await Job.aggregate([
+      jobs = await Job.aggregate([  
         {
           $match: {
             worker: mongoose.Types.ObjectId(req.user._id),
