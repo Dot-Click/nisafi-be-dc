@@ -16,7 +16,6 @@ const {
   sendNotification,
   sendAdminNotification,
 } = require("../utils/sendNotification");
-const { c2b_simulate } = require("../functions/mpesa");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -461,15 +460,15 @@ const acceptProposal = async (req, res) => {
       );
     }
 
-    const paymentResponse = await c2b_simulate(
-      `${proposal.budget}`,
-      paymentPhoneNumber,
-      JSON.stringify({
-        proposalId,
-        jobId,
-        laundryPickupTime,
-      })
-    );
+    // const paymentResponse = await c2b_simulate(
+    //   `${proposal.budget}`,
+    //   paymentPhoneNumber,
+    //   JSON.stringify({
+    //     proposalId,
+    //     jobId,
+    //     laundryPickupTime,
+    //   })
+    // );
 
     // charge user for accepting proposal
     // const transaction = {
