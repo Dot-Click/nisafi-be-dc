@@ -349,7 +349,7 @@
                 "amount": {
                   "example": "any"
                 },
-                "phone": {
+                "email": {
                   "example": "any"
                 }
               }
@@ -1024,16 +1024,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "laundryPickupTime": {
-                  "example": "any"
-                },
                 "proposalId": {
                   "example": "any"
                 },
                 "jobId": {
-                  "example": "any"
-                },
-                "paymentPhoneNumber": {
                   "example": "any"
                 }
               }
@@ -1323,57 +1317,6 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/mpesa/register": {
-      "get": {
-        "tags": [
-          "Mpesa"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/mpesa/simulate": {
-      "get": {
-        "tags": [
-          "Mpesa"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/mpesa/withdraw": {
-      "get": {
-        "tags": [
-          "Mpesa"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
