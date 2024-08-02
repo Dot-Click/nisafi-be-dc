@@ -270,7 +270,7 @@ const getAllJobsWorker = async (req, res) => {
         },
       ]);
     } else if (req.query?.status === "completed") {
-      jobs = await Job.aggregate([  
+      jobs = await Job.aggregate([
         {
           $match: {
             worker: mongoose.Types.ObjectId(req.user._id),
@@ -432,8 +432,7 @@ const submitProposal = async (req, res) => {
 const acceptProposal = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-    const { laundryPickupTime, proposalId, jobId, paymentPhoneNumber } =
-      req.body;
+    const { proposalId, jobId } = req.body;
 
     const job = await Job.findById(jobId);
 
@@ -460,73 +459,59 @@ const acceptProposal = async (req, res) => {
       );
     }
 
-    // const paymentResponse = await c2b_simulate(
-    //   `${proposal.budget}`,
-    //   paymentPhoneNumber,
-    //   JSON.stringify({
-    //     proposalId,
-    //     jobId,
-    //     laundryPickupTime,
-    //   })
-    // );
-
     // charge user for accepting proposal
-    // const transaction = {
-    //   amount: proposal.budget,
-    //   type: "credit",
-    //   // paidTo: proposal.user,
-    //   paidBy: job.user,
-    //   job: job._id,
-    //   escrow: true,
-    // };
+    const transaction = {
+      amount: proposal.budget,
+      type: "credit",
+      // paidTo: proposal.user,
+      paidBy: job.user,
+      job: job._id,
+      escrow: true,
+    };
 
-    // const wallet = await Wallet.findOne({ user: job.user });
-    // wallet.transactions.push(transaction);
-    // wallet.balance += transaction.amount;
-    // await wallet.save();
-    // job.status = "in-progress";
-    // job.worker = proposal.user;
+    const wallet = await Wallet.findOne({ user: job.user });
+    wallet.transactions.push(transaction);
+    wallet.balance += transaction.amount;
+    await wallet.save();
+    job.status = "in-progress";
+    job.worker = proposal.user;
     // job.laundryPickupTime = laundryPickupTime;
 
-    // await job.save();
+    await job.save();
 
-    if (paymentResponse) {
-      return SuccessHandler(
+    SuccessHandler(
+      {
+        message: "Proposal accepted successfully",
+        job,
+      },
+      200,
+      res
+    );
+
+    if (proposal.user.deviceToken) {
+      await sendNotification(
         {
-          message: "Payment confirmation in progress",
-          job,
-          paymentResponse,
+          _id: proposal.user._id,
+          deviceToken: proposal.user.deviceToken,
         },
-        200,
-        res
+        `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+        "job",
+        "/job/" + job._id
       );
-    } else {
-      throw new Error("Payment failed:" + paymentResponse.ResponseDescription);
     }
-    // if (proposal.user.deviceToken) {
-    //   await sendNotification(
-    //     {
-    //       _id: proposal.user._id,
-    //       deviceToken: proposal.user.deviceToken,
-    //     },
-    //     `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
-    //     "job",
-    //     "/job/" + job._id
-    //   );
-    // }
 
-    // const allAdmins = await User.find({ role: "admin" });
-    // Promise.all(
-    //   allAdmins.map(async (admin) => {
-    //     await sendAdminNotification(
-    //       admin._id,
-    //       `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
-    //       "job",
-    //       job._id,
-    //       "Proposal Accepted"
-    //     );
-    //   })
-    // );
+    const allAdmins = await User.find({ role: "admin" });
+    Promise.all(
+      allAdmins.map(async (admin) => {
+        await sendAdminNotification(
+          admin._id,
+          `Proposal for ${job.type} accepted by ${job.user.name} and the job is in progress`,
+          "job",
+          job._id,
+          "Proposal Accepted"
+        );
+      })
+    );
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }

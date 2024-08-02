@@ -10,6 +10,7 @@ const swaggerFile = require("../swagger_output.json"); // Generated Swagger file
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const User = require("./models/User/user");
+const { createPayout } = require("./functions/paypal");
 
 // console.log("serviceAccount", serviceAccount);
 // Middlewares
@@ -34,6 +35,12 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 // app.use("/webhooks", webhookRouter);
 
 app.get("/", async (req, res) => {
+  // await createPayout({
+  //   email: "sb-z4368c30364532@personal.example.com",
+  //   amount: 5000,
+  //   id:123456789,
+    
+  // })
   res.send("BE-boilerplate v1.1");
 });
 
