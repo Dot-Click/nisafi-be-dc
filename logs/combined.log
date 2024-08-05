@@ -7099,3 +7099,190 @@
 {"date":"2024-08-02T14:27:12.326Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/"}
 {"date":"2024-08-02T14:37:09.383Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/"}
 {"date":"2024-08-02T14:38:12.803Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/"}
+{"date":"2024-08-03T11:52:22.228Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-03T11:52:58.799Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-03T11:52:59.031Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-08-03T12:45:17.615Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-03T12:45:17.847Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-08-03T13:22:53.846Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:26:09.313Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:26:37.302Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:26:41.476Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:26:50.826Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:27:27.171Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:27:31.829Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:29:47.096Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:30:07.353Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:30:11.616Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:30:43.538Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:30:47.916Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:31:49.143Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:31:54.050Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:32:44.458Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:32:48.972Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:33:14.337Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:33:18.814Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:33:56.864Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:34:04.489Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:46:44.258Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:47:33.512Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:47:39.049Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:47:54.440Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:48:04.780Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:48:10.539Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:48:17.757Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:48:23.647Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-03T13:50:26.664Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-03T13:50:30.441Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T13:20:51.423Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T13:20:52.588Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:20:52.710Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/admin/banner"}
+{"date":"2024-08-05T13:21:28.857Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T13:21:29.393Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:21:29.423Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:32.261Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/wallet"}
+{"date":"2024-08-05T13:21:32.270Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:37.036Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:37.093Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:37.118Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:37.146Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:37.156Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:58.406Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:58.411Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:21:58.415Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:22:00.057Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:22:58.038Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T13:25:10.847Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T13:25:16.980Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T13:31:16.860Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T13:31:23.980Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T13:37:58.586Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T13:38:04.200Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T13:38:54.353Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:38:54.360Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:38:54.373Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:38:57.400Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:38:57.407Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:38:57.413Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:39:52.636Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:39:52.644Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:39:52.649Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:39:54.391Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:39:55.021Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:39:55.158Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:39:55.701Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:40:16.506Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:40:16.509Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:40:16.514Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:40:26.873Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:40:26.880Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:40:26.886Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:40:40.867Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:40:40.871Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:40:40.902Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:44:14.997Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:44:14.999Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:44:15.002Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:45:39.507Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:45:39.516Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:45:39.540Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:46:24.750Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:46:24.758Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:46:24.761Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:50:07.136Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:50:07.698Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:53:51.886Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:53:51.891Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:53:51.893Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:54:13.864Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:54:13.868Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:54:13.871Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:54:27.232Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T13:54:28.517Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T13:55:50.786Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T13:55:51.683Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:55:51.717Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:55:54.685Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/wallet"}
+{"date":"2024-08-05T13:55:54.690Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:55:58.735Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:55:58.791Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:55:58.804Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:55:58.822Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:56:09.333Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:56:09.341Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T13:56:09.361Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:56:10.794Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T13:56:20.926Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T13:56:55.628Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T13:56:55.667Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T13:57:11.806Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T13:59:12.969Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:00:08.608Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:01:36.222Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:01:37.042Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:01:37.085Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:01:43.807Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T14:01:49.584Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T14:02:13.100Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:02:13.104Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:02:29.861Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:02:44.635Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:04:50.340Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T14:04:56.733Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T14:07:59.208Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T14:08:04.699Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T14:10:07.219Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T14:10:14.919Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:10:14.923Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:10:16.417Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T14:13:08.709Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T14:13:14.438Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
+{"date":"2024-08-05T14:13:45.406Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/withdraw"}
+{"date":"2024-08-05T14:15:30.657Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T14:15:54.782Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:15:55.547Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:15:55.585Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:16:02.770Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:23:58.208Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:23:58.751Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:23:58.776Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:27:55.559Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:32:38.252Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:32:38.257Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:39:27.650Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T14:39:48.955Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:41:29.736Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:41:30.452Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:41:30.473Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:41:53.943Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:41:53.950Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:42:08.731Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:42:08.786Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:42:28.229Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:42:29.523Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:42:29.531Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:43:02.175Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T14:43:09.902Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:44:11.764Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T14:44:38.263Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:44:39.307Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:44:39.334Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:44:57.537Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:47:28.503Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T14:47:42.868Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:50:03.401Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:50:03.743Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-08-05T14:50:29.602Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/auth/me"}
+{"date":"2024-08-05T14:50:46.152Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:50:47.245Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:50:47.283Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:51:29.059Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:51:49.616Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:51:49.628Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:51:50.861Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:51:50.864Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:51:50.896Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/job/worker?search=&status="}
+{"date":"2024-08-05T14:51:50.900Z","level":"info","message":"Request received","method":"GET","service":"user-service","url":"/notification/unread-count"}
+{"date":"2024-08-05T14:52:18.477Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:52:18.522Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}
+{"date":"2024-08-05T14:55:22.052Z","level":"info","message":"Request received","method":"POST","service":"user-service","url":"/auth/login"}

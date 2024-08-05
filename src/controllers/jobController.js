@@ -16,6 +16,7 @@ const {
   sendNotification,
   sendAdminNotification,
 } = require("../utils/sendNotification");
+const { createPayout } = require("../functions/paypal");
 
 const createJob = async (req, res) => {
   // #swagger.tags = ['job']
@@ -703,7 +704,7 @@ const markAsCompleted = async (req, res) => {
 const createDispute = async (req, res) => {
   // #swagger.tags = ['job']
   try {
-    const { description, jobId } = req.body;
+    const { description, jobId, paypalEmail } = req.body;
     const { proofOfWork } = req.files;
 
     if (!proofOfWork) {
@@ -730,6 +731,7 @@ const createDispute = async (req, res) => {
     job.disputedDetails = {
       description,
       proofOfWork: proofOfWorkUrl,
+      paypalEmail,
     };
 
     job.status = "disputed";
@@ -1014,6 +1016,16 @@ const resolveDispute = async (req, res) => {
       await workerWallet.save();
     } else if (resolution === "refund") {
       // refund the user
+
+      const status = createPayout({
+        email: job.disputedDetails.paypalEmail,
+        amount: proposal.budget,
+        id: job._id,
+      });
+
+      if(!status){
+        return ErrorHandler("Payment failed", 400, req, res);
+      }
       const userTransaction = {
         amount: proposal.budget,
         type: "debit",

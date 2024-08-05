@@ -17,6 +17,7 @@ const { default: mongoose } = require("mongoose");
 const Review = require("../models/Job/review");
 const bcrypt = require("bcryptjs");
 const Wallet = require("../models/User/workerWallet");
+const { createPayout } = require("../functions/paypal");
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -592,6 +593,7 @@ const withdraw = async (req, res) => {
       await user.save();
       return SuccessHandler("Withdrawal successful", 200, res);
     } else {
+      console.log(status);
       user.withdrawal = false;
       await user.save();
       return ErrorHandler("Failed to withdraw", 400, req, res);
