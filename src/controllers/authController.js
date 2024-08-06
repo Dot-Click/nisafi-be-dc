@@ -535,6 +535,7 @@ const getWallet = async (req, res) => {
     if (!wallet) {
       return ErrorHandler("Wallet not found", 400, req, res);
     }
+    wallet.transactions = wallet.transactions.reverse();
     return SuccessHandler(wallet, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);

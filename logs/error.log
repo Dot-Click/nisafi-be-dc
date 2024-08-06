@@ -274,3 +274,5 @@
 {"date":"2024-08-05T14:10:16.417Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
 {"date":"2024-08-05T14:13:14.438Z","level":"error","message":"Failed to withdraw","method":"POST","service":"user-service","url":"/withdraw"}
 {"date":"2024-08-05T14:50:03.743Z","level":"error","message":"Invalid credentials","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-08-05T16:10:40.932Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
+{"date":"2024-08-05T16:17:57.665Z","level":"error","message":"User does not exist","method":"POST","service":"user-service","url":"/login"}
