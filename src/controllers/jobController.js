@@ -133,6 +133,10 @@ const getAllJobsClient = async (req, res) => {
           ],
         }
       : {};
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
     let jobs;
     if (
       req.query.status === "completed" ||
@@ -145,7 +149,9 @@ const getAllJobsClient = async (req, res) => {
         ...searchFilter,
       })
         .sort({ createdAt: -1 })
-        .populate("review proofOfWork worker proposals");
+        .populate("review proofOfWork worker proposals")
+        .skip(skip)
+        .limit(limit);
     } else {
       jobs = await Job.find({
         user: req.user._id,
@@ -153,7 +159,9 @@ const getAllJobsClient = async (req, res) => {
         ...searchFilter,
       })
         .sort({ createdAt: -1 })
-        .populate("review proofOfWork worker");
+        .populate("review proofOfWork worker")
+        .skip(skip)
+        .limit(limit);
     }
     // .populate({
     //   path: "proposals",
@@ -185,6 +193,9 @@ const getAllJobsWorker = async (req, res) => {
           ],
         }
       : {};
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
 
     let jobs;
 
@@ -192,7 +203,9 @@ const getAllJobsWorker = async (req, res) => {
       jobs = await Job.find({
         status: "open",
         ...searchFilter,
-      }).sort({ createdAt: -1 });
+      }).sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
     } else if (req.query?.status === "proposalSubmitted") {
       // get all jobs where worker has submitted a proposal
       const proposals = await Proposal.find({ user: req.user._id });
@@ -269,6 +282,13 @@ const getAllJobsWorker = async (req, res) => {
             serviceTime: { $first: "$serviceTime" },
           },
         },
+        // pagination
+        {
+          $skip: skip,
+        },
+        {
+          $limit: limit,
+        },
       ]);
     } else if (req.query?.status === "completed") {
       jobs = await Job.aggregate([
@@ -332,13 +352,22 @@ const getAllJobsWorker = async (req, res) => {
             reviews: 1,
           },
         },
+        // pagination
+        {
+          $skip: skip,
+        },
+        {
+          $limit: limit,
+        },
       ]);
     } else {
       jobs = await Job.find({
         worker: req.user._id,
         status: req.query.status,
         ...searchFilter,
-      }).sort({ createdAt: -1 });
+      }).sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
     }
 
     return SuccessHandler(jobs, 200, res);
@@ -882,6 +911,8 @@ const cancelJob = async (req, res) => {
 const getProposalsByJobId = async (req, res) => {
   // #swagger.tags = ['job']
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
     const proposals = await Proposal.aggregate([
       {
         $match: { job: mongoose.Types.ObjectId(req.params.id) },
@@ -970,6 +1001,12 @@ const getProposalsByJobId = async (req, res) => {
             },
           },
         },
+      },
+      {
+        $skip: (page - 1) * limit,
+      },
+      {
+        $limit: limit,
       },
     ]);
 
