@@ -18,6 +18,8 @@ const Review = require("../models/Job/review");
 const bcrypt = require("bcryptjs");
 const Wallet = require("../models/User/workerWallet");
 const { createPayout } = require("../functions/paypal");
+const ejs = require("ejs");
+
 //register
 const register = async (req, res) => {
   // #swagger.tags = ['auth']
@@ -202,9 +204,16 @@ const forgotPassword = async (req, res) => {
     user.passwordResetTokenExpires = passwordResetTokenExpires;
     await user.save();
     console.log(passwordResetToken);
+
     const message = `Your password reset token is ${passwordResetToken} and it expires in 10 minutes`;
     const subject = `Password reset token`;
-    await sendMail(email, subject, message);
+    const emailTemp = await ejs.renderFile(
+      `${path.join(__dirname, "../view")}/forgotpassword.ejs`,
+      { otp: passwordResetToken }
+    );
+
+    await sendMail(email, subject, emailTemp);
+
     return SuccessHandler(`Password reset token sent to ${email}`, 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);

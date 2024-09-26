@@ -4,7 +4,10 @@ const User = require("../models/User/user");
 const Job = require("../models/Job/job");
 const Review = require("../models/Job/review");
 const mongoose = require("mongoose");
-const {uploadFilesOnAWS, deleteImageFromAWS} = require("../utils/saveToServer");
+const {
+  uploadFilesOnAWS,
+  deleteImageFromAWS,
+} = require("../utils/saveToServer");
 const Banner = require("../models/Banner");
 const Wallet = require("../models/User/workerWallet");
 
@@ -131,8 +134,6 @@ const getSingleUser = async (req, res) => {
         successRate: successRate[0]?.successRate || 0,
         avgRating: avgRating[0]?.avgRating || 0,
       };
-
-      console.log("user", user);
     }
     return SuccessHandler(user, 200, res);
   } catch (error) {
@@ -302,6 +303,7 @@ const jobStats = async (req, res) => {
       "November",
       "December",
     ];
+    const year = new Date().getFullYear();
     let yearRange = {};
     if (req.query?.yearRange) {
       if (req.query.yearRange === "thisYear") {
@@ -314,15 +316,15 @@ const jobStats = async (req, res) => {
       } else if (req.query.yearRange === "lastYear") {
         yearRange = {
           createdAt: {
-            $gte: new Date(new Date().getFullYear() - 1, 0, 1),
-            $lt: new Date(new Date().getFullYear(), 11, 31),
+            $gte: new Date(year - 1, 0, 1),
+            $lt: new Date(year - 1, 11, 31),
           },
         };
       } else if (req.query.yearRange === "last3Years") {
         yearRange = {
           createdAt: {
-            $gte: new Date(new Date().getFullYear() - 3, 0, 1),
-            $lt: new Date(new Date().getFullYear(), 11, 31),
+            $gte: new Date(year - 3, 0, 1),
+            $lt: new Date(year, 11, 31),
           },
         };
       }
@@ -488,7 +490,6 @@ const getWallets = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = req.query.page ? (page - 1) * limit : 0;
-    console.log("skip", skip, limit);
     const wallets = await Wallet.aggregate([
       {
         $sort: { createdAt: -1 },
