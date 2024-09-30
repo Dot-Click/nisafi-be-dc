@@ -133,7 +133,7 @@ const getAllJobsClient = async (req, res) => {
           ],
         }
       : {};
-
+    const sort = req.query.sort === "old" ? 1 : -1;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
@@ -148,7 +148,7 @@ const getAllJobsClient = async (req, res) => {
         ...statusFilter,
         ...searchFilter,
       })
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: sort })
         .populate("review proofOfWork worker proposals")
         .skip(skip)
         .limit(limit);
@@ -158,7 +158,7 @@ const getAllJobsClient = async (req, res) => {
         ...statusFilter,
         ...searchFilter,
       })
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: sort })
         .populate("review proofOfWork worker")
         .skip(skip)
         .limit(limit);
@@ -170,10 +170,6 @@ const getAllJobsClient = async (req, res) => {
     //     select: "firstName lastName email profilePic",
     //   },
     // });
-    console.log("jobs", jobs);
-    console.log("user", req.user._id);
-    console.log("status", req.query.status);
-    console.log("search", req.query.search);
 
     return SuccessHandler(jobs, 200, res);
   } catch (error) {
