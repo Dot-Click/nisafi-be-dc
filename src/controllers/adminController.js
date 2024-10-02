@@ -10,6 +10,10 @@ const {
 } = require("../utils/saveToServer");
 const Banner = require("../models/Banner");
 const Wallet = require("../models/User/workerWallet");
+const {
+  sendNotification,
+  sendAdminNotification,
+} = require("../utils/sendNotification");
 
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
@@ -17,9 +21,21 @@ const approveUser = async (req, res) => {
     if (req.params.status == "pending") {
       return ErrorHandler("Invalid status", 400, req, res);
     }
-    await User.findByIdAndUpdate(req.params.id, {
-      adminApproval: req.params.status,
-    });
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        adminApproval: req.params.status,
+      },
+      {
+        new: true,
+      }
+    );
+    await sendNotification(
+      user,
+      "Your account has been approved by admin",
+      "approval",
+      user._id
+    );
     return SuccessHandler("User approved successfully", 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
