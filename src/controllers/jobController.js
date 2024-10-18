@@ -594,14 +594,14 @@ const deliverWork = async (req, res) => {
       200,
       res
     );
-
+    const worker = await User.findById(job.worker);
     if (job?.user?.deviceToken) {
       await sendNotification(
         {
           _id: job.user._id,
           deviceToken: job.user.deviceToken,
         },
-        `Work delivered by ${job.worker.name} for ${job.type} and payment has been requested`,
+        `Work delivered by ${worker.name} for ${job.type} and payment has been requested`,
         "job",
         "/job/" + job._id
       );
@@ -612,7 +612,7 @@ const deliverWork = async (req, res) => {
       allAdmins.map(async (admin) => {
         await sendAdminNotification(
           admin._id,
-          `Work delivered by ${job.worker.name} for ${job.type} and payment has been requested`,
+          `Work delivered by ${worker.name} for ${job.type} and payment has been requested`,
           "job",
           job._id,
           "Work Delivered"
