@@ -19,5 +19,6 @@ router.route("/me").put(isAuthenticated, auth.updateMe);
 router.route("/worker/:id").get(isAuthenticated, auth.getWorkerById);
 router.route("/wallet").get(isAuthenticated, auth.getWallet);
 router.route("/withdraw").post(isAuthenticated, isWorker, auth.withdraw);
+router.route("/deleteMe").delete(isAuthenticated, auth.deleteUserAccount);
 
 module.exports = router;

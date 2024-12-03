@@ -26,8 +26,14 @@ const register = async (req, res) => {
   try {
     const { name, email, phone, password, role } = req.body;
     const user = await User.findOne({ email });
-    if (user) {
+    if (user && user.isActive) {
       return ErrorHandler("User already exists", 400, req, res);
+    }
+    if (user && !user.isActive) {
+      user.isActive = true;
+      user.adminApproval = "pending";
+      await user.save();
+      return SuccessHandler("User created successfully", 200, res);
     }
     const newUser = await User.create({
       name,
@@ -152,6 +158,9 @@ const login = async (req, res) => {
     // if (!user.emailVerified) {
     //   return ErrorHandler("Email not verified", 400, req, res);
     // }
+    if (!user.isActive) {
+      return ErrorHandler("Account deleted.", 400, req, res);
+    }
     jwtToken = user.getJWTToken();
     delete user.password;
 
@@ -613,6 +622,21 @@ const withdraw = async (req, res) => {
   }
 };
 
+const deleteUserAccount = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return ErrorHandler("User not found", 400, req, res);
+    }
+    user.isActive = false;
+    await user.save();
+    return SuccessHandler("Account deleted successfully", 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   register,
   // requestEmailToken,
@@ -627,4 +651,5 @@ module.exports = {
   getWorkerById,
   getWallet,
   withdraw,
+  deleteUserAccount,
 };
