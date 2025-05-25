@@ -19,7 +19,16 @@ const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
     if (req.params.status == "pending") {
-      return ErrorHandler("Invalid status", 400, req, res);
+      // return ErrorHandler("Invalid status", 400, req, res);
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          adminApproval: req.params.status,
+        },
+        {
+          new: true,
+        }
+      );
     }
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -36,9 +45,28 @@ const approveUser = async (req, res) => {
       "approval",
       user._id
     );
-    return SuccessHandler("User approved successfully", 200, res);
+    return SuccessHandler("User status updated", 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+const deleteUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
@@ -660,6 +688,7 @@ const generalStats = async (req, res) => {
 
 module.exports = {
   approveUser,
+  deleteUserById,
   getAllUsers,
   getSingleUser,
   getJobs,
