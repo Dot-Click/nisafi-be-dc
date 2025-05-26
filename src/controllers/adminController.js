@@ -14,6 +14,7 @@ const {
   sendNotification,
   sendAdminNotification,
 } = require("../utils/sendNotification");
+const EscrowDeposit = require("../models/EscrowDeposit");
 
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
@@ -686,6 +687,42 @@ const generalStats = async (req, res) => {
   }
 };
 
+const getPayments = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    const payments = await EscrowDeposit.find({})
+      .populate([
+        { path: "client", select: "_id name email phone role" },
+        { path: "worker", select: "_id name email phone role" },
+        { path: "jobId", select: "title description price" },
+      ])
+      .sort({ createdAt: -1 });
+
+    if (!payments || payments.length === 0) {
+      return ErrorHandler("No payments found", 404, req, res);
+    }
+
+    const formatted = payments.map((payment) => ({
+      transaction_id: payment.transaction_id,
+      amount: payment.amount,
+      status: payment.status,
+      escrowStatus: payment.escrowStatus,
+      createdAt: payment.createdAt,
+      client: payment.client,
+      worker: payment.worker,
+      jobId: payment.jobId,
+    }));
+
+    return SuccessHandler(
+      { count: formatted.length, payments: formatted },
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 module.exports = {
   approveUser,
   deleteUserById,
@@ -700,4 +737,5 @@ module.exports = {
   getBanners,
   deleteBanner,
   getWallets,
+  getPayments,
 };

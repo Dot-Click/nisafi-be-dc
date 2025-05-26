@@ -7,21 +7,13 @@
   },
   "host": "backed-fe-production.up.railway.app",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/auth/logout": {
       "get": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [],
         "responses": {}
@@ -29,9 +21,7 @@
     },
     "/auth/me": {
       "get": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -50,9 +40,7 @@
         }
       },
       "put": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -121,9 +109,7 @@
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -159,9 +145,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -188,9 +172,7 @@
     },
     "/auth/forgotPassword": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -211,9 +193,7 @@
     },
     "/auth/resetPassword": {
       "put": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -240,9 +220,7 @@
     },
     "/auth/updatePassword": {
       "put": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -278,9 +256,7 @@
     },
     "/auth/worker/{id}": {
       "get": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -307,9 +283,7 @@
     },
     "/auth/wallet": {
       "get": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -330,9 +304,7 @@
     },
     "/auth/withdraw": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "parameters": [
           {
@@ -371,9 +343,7 @@
     },
     "/admin/approveUser/{id}/{status}": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -409,9 +379,7 @@
     },
     "/admin/users": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -460,9 +428,7 @@
     },
     "/admin/users/{id}": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -492,9 +458,7 @@
     },
     "/admin/jobs": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -543,9 +507,7 @@
     },
     "/admin/jobs/{id}": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -575,9 +537,7 @@
     },
     "/admin/recentjobs": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -601,9 +561,7 @@
     },
     "/admin/jobStats": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -632,9 +590,7 @@
     },
     "/admin/generalStats": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -658,9 +614,7 @@
     },
     "/admin/banner": {
       "post": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -694,9 +648,7 @@
         }
       },
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -717,9 +669,7 @@
     },
     "/admin/banner/{id}": {
       "delete": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -749,9 +699,7 @@
     },
     "/admin/getWallets": {
       "get": {
-        "tags": [
-          "admin"
-        ],
+        "tags": ["admin"],
         "description": "",
         "parameters": [
           {
@@ -795,9 +743,7 @@
     },
     "/job/client": {
       "get": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -841,9 +787,7 @@
     },
     "/job/worker": {
       "get": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -887,9 +831,7 @@
     },
     "/job/proposals/{id}": {
       "get": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -926,9 +868,7 @@
     },
     "/job/create": {
       "post": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -988,9 +928,7 @@
     },
     "/job/submitProposal/{id}": {
       "post": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1038,9 +976,7 @@
     },
     "/job/acceptProposal": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1079,9 +1015,7 @@
     },
     "/job/deliverWork": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1120,9 +1054,7 @@
     },
     "/job/cancelJob/{id}": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1152,9 +1084,7 @@
     },
     "/job/markAsCompleted/{id}": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1184,9 +1114,7 @@
     },
     "/job/submitReview": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1228,9 +1156,7 @@
     },
     "/job/createDispute": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1272,9 +1198,7 @@
     },
     "/job/resolveDispute": {
       "put": {
-        "tags": [
-          "job"
-        ],
+        "tags": ["job"],
         "description": "",
         "parameters": [
           {
@@ -1313,9 +1237,7 @@
     },
     "/notification/unread-count": {
       "get": {
-        "tags": [
-          "Notification"
-        ],
+        "tags": ["Notification"],
         "description": "",
         "parameters": [
           {
@@ -1336,9 +1258,7 @@
     },
     "/notification/": {
       "get": {
-        "tags": [
-          "Notification"
-        ],
+        "tags": ["Notification"],
         "description": "",
         "parameters": [
           {
@@ -1353,6 +1273,154 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/safaricom/test": {
+      "get": {
+        "tags": ["Safaricom"],
+        "summary": "Test Route",
+        "description": "Checks if Safaricom routes are working",
+        "responses": {
+          "200": {
+            "description": "Routes working",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Hello, routes work"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/safaricom/stkpush": {
+      "post": {
+        "tags": ["Safaricom"],
+        "summary": "Initiate STK Push",
+        "description": "Starts an M-Pesa STK Push and stores transaction in escrow",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phonenumber": { "type": "string", "example": "0712345678" },
+                  "amount": { "type": "number", "example": 100 },
+                  "client": {
+                    "type": "string",
+                    "example": "66230ccf81a24a001f2db264"
+                  },
+                  "worker": {
+                    "type": "string",
+                    "example": "66230ccf81a24a001f2db299"
+                  },
+                  "jobId": { "type": "string", "example": "job_456" }
+                },
+                "required": [
+                  "phonenumber",
+                  "amount",
+                  "client",
+                  "worker",
+                  "jobId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "STK Push initiated",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "STK Push initiated",
+                  "transaction_id": "uuid-v4-id",
+                  "response_data": {
+                    "MerchantRequestID": "...",
+                    "CheckoutRequestID": "...",
+                    "ResponseCode": "0",
+                    "CustomerMessage": "Success message..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/safaricom/callback": {
+      "post": {
+        "tags": ["Safaricom"],
+        "summary": "STK Callback URL",
+        "description": "Callback used by M-Pesa to notify payment result",
+        "responses": {
+          "200": {
+            "description": "Callback received and processed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Payment successful",
+                  "status": "success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Callback failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Payment failed: [Reason]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/safaricom/status/{transactionId}": {
+      "get": {
+        "tags": ["Safaricom"],
+        "summary": "Check Payment Status",
+        "description": "Get the status of an escrow M-Pesa transaction",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "uuid-v4-transaction-id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction status retrieved",
+            "content": {
+              "application/json": {
+                "example": {
+                  "transaction_id": "uuid-v4",
+                  "status": "SUCCESS",
+                  "amount": 100,
+                  "phone_number": "254712345678"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Transaction not found"
+                }
+              }
+            }
           }
         }
       }

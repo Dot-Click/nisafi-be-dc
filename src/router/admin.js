@@ -24,5 +24,6 @@ router
   .route("/banner/:id")
   .delete(isAuthenticated, isAdmin, admin.deleteBanner);
 router.route("/getWallets").get(isAuthenticated, isAdmin, admin.getWallets);
+router.route("/getPayments").get(isAuthenticated, isAdmin, admin.getPayments);
 
 module.exports = router;
