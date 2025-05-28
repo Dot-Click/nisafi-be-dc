@@ -1,21 +1,23 @@
-const dotenv = require("dotenv");
-dotenv.config({ path: "./src/config/config.env" });
-const sendGrid = require("@sendgrid/mail");
-sendGrid.setApiKey(process.env.NODEMAILER_API_KEY);
+const emailjs = require("@emailjs/nodejs");
 
-const sendMail = async (email, subject, text) => {
+const sendMail = async (email, code) => {
+  const serviceId = process.env.EMAILJS_SERVICE_ID;
+  const templateId = process.env.EMAILJS_TEMPLATE_ID;
+  const publicKey = process.env.EMAILJS_PUBLIC_KEY;
+
+  const templateParams = {
+    email: email,
+    otp: code,
+  };
+
   try {
-    const msg = {
-      from: "developer@dotclickllc.com",
-      to: email,
-      subject: subject,
-      html: text,
-    };
-
-    await sendGrid.send(msg);
+    await emailjs.send(serviceId, templateId, templateParams, {
+      publicKey,
+    });
   } catch (error) {
-    console.log("Error in sendMail", error.response.body.errors);
+    console.error("EmailJS Error:", error);
+    throw new Error("Failed to send email");
   }
 };
 
-module.exports = sendMail;
+module.exports = { sendMail };

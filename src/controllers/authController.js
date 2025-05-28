@@ -84,62 +84,74 @@ const register = async (req, res) => {
   }
 };
 
-// const requestEmailToken = async (req, res) => {
-//   // #swagger.tags = ['auth']
+const requestEmailToken = async (req, res) => {
+  // #swagger.tags = ['auth']
 
-//   try {
-//     const { email } = req.body;
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return ErrorHandler("User does not exist", 400, req, res);
-//     }
-//     const emailVerificationToken = Math.floor(100000 + Math.random() * 900000);
-//     const emailVerificationTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
-//     user.emailVerificationToken = emailVerificationToken;
-//     user.emailVerificationTokenExpires = emailVerificationTokenExpires;
-//     await user.save();
-//     const message = `Your email verification token is ${emailVerificationToken} and it expires in 10 minutes`;
-//     const subject = `Email verification token`;
-//     await sendMail(email, subject, message);
-//     return SuccessHandler(
-//       `Email verification token sent to ${email}`,
-//       200,
-//       res
-//     );
-//   } catch (error) {
-//     return ErrorHandler(error.message, 500, req, res);
-//   }
-// };
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return ErrorHandler("Email is required", 400, req, res);
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return ErrorHandler("User does not exist", 400, req, res);
+    }
+    const verificationToken = Math.floor(100000 + Math.random() * 900000); // 6-digit code
+    const tokenExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
 
-// //verify email token
-// const verifyEmail = async (req, res) => {
-//   // #swagger.tags = ['auth']
+    user.emailVerificationToken = verificationToken;
+    user.emailVerificationTokenExpires = tokenExpires;
+    await user.save();
 
-//   try {
-//     const { email, emailVerificationToken } = req.body;
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "User does not exist",
-//       });
-//     }
-//     if (
-//       user.emailVerificationToken !== emailVerificationToken ||
-//       user.emailVerificationTokenExpires < Date.now()
-//     ) {
-//       return ErrorHandler("Invalid token", 400, req, res);
-//     }
-//     user.emailVerified = true;
-//     user.emailVerificationToken = null;
-//     user.emailVerificationTokenExpires = null;
-//     jwtToken = user.getJWTToken();
-//     await user.save();
-//     return SuccessHandler("Email verified successfully", 200, res);
-//   } catch (error) {
-//     return ErrorHandler(error.message, 500, req, res);
-//   }
-// };
+    await sendMail(email, verificationToken);
+    return SuccessHandler(
+      `Email verification token sent to ${email}`,
+      200,
+      res
+    );
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+//verify email token
+const verifyEmail = async (req, res) => {
+  // #swagger.tags = ['auth']
+
+  try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return ErrorHandler("Email and code are required", 400, req, res);
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User does not exist",
+      });
+    }
+    if (
+      user.emailVerificationToken !== Number(code) ||
+      user.emailVerificationTokenExpires < Date.now()
+    ) {
+      return ErrorHandler("Invalid or expired token", 400, req, res);
+    }
+    user.emailVerified = true;
+    user.emailVerificationToken = null;
+    user.emailVerificationTokenExpires = null;
+
+    const jwtToken = user.getJWTToken();
+    await user.save();
+    return SuccessHandler(
+      { message: "Email verified successfully", token: jwtToken },
+      200,
+      res
+    );
+  } catch (err) {
+    return ErrorHandler(err.message, 500, req, res);
+  }
+};
 
 //login
 const login = async (req, res) => {
@@ -200,30 +212,49 @@ const logout = async (req, res) => {
 //forgot password
 const forgotPassword = async (req, res) => {
   // #swagger.tags = ['auth']
-
   try {
     const { email } = req.body;
+
     const user = await User.findOne({ email });
     if (!user) {
       return ErrorHandler("User does not exist", 400, req, res);
     }
+
     const passwordResetToken = Math.floor(100000 + Math.random() * 900000);
-    const passwordResetTokenExpires = new Date(Date.now() + 10 * 60 * 1000);
+    const passwordResetTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 60 mins
+
     user.passwordResetToken = passwordResetToken;
     user.passwordResetTokenExpires = passwordResetTokenExpires;
     await user.save();
-    console.log(passwordResetToken);
 
-    const message = `Your password reset token is ${passwordResetToken} and it expires in 10 minutes`;
-    const subject = `Password reset token`;
-    const emailTemp = await ejs.renderFile(
-      `${path.join(__dirname, "../view")}/forgotpassword.ejs`,
-      { otp: passwordResetToken }
-    );
-
-    await sendMail(email, subject, emailTemp);
+    await sendMail(email, passwordResetToken); // Using EmailJS
 
     return SuccessHandler(`Password reset token sent to ${email}`, 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
+// verify token
+const verifyResetToken = async (req, res) => {
+  // #swagger.tags = ['auth']
+  try {
+    const { email, passwordResetToken } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return ErrorHandler("User does not exist", 400, req, res);
+    }
+
+    const isTokenValid =
+      user.passwordResetToken === Number(passwordResetToken) &&
+      user.passwordResetTokenExpires > Date.now();
+
+    if (!isTokenValid) {
+      return ErrorHandler("Invalid or expired token", 400, req, res);
+    }
+
+    return SuccessHandler("Token verified successfully", 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
   }
@@ -232,23 +263,28 @@ const forgotPassword = async (req, res) => {
 //reset password
 const resetPassword = async (req, res) => {
   // #swagger.tags = ['auth']
-
   try {
     const { email, passwordResetToken, password } = req.body;
+
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return ErrorHandler("User does not exist", 400, req, res);
     }
-    if (
-      user.passwordResetToken !== passwordResetToken ||
-      user.passwordResetTokenExpires < Date.now()
-    ) {
-      return ErrorHandler("Invalid token", 400, req, res);
+
+    const isTokenValid =
+      user.passwordResetToken === Number(passwordResetToken) &&
+      user.passwordResetTokenExpires > Date.now();
+
+    if (!isTokenValid) {
+      return ErrorHandler("Invalid or expired token", 400, req, res);
     }
+
     user.password = password;
     user.passwordResetToken = null;
     user.passwordResetTokenExpires = null;
+
     await user.save();
+
     return SuccessHandler("Password reset successfully", 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
@@ -639,11 +675,12 @@ const deleteUserAccount = async (req, res) => {
 
 module.exports = {
   register,
-  // requestEmailToken,
-  // verifyEmail,
+  requestEmailToken,
+  verifyEmail,
   login,
   logout,
   forgotPassword,
+  verifyResetToken,
   resetPassword,
   updatePassword,
   me,
