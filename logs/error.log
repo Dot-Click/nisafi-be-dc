@@ -300,3 +300,5 @@
 {"date":"2025-05-25T16:27:44.276Z","level":"error","message":"Cannot populate path `paidBy` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/getPayments"}
 {"date":"2025-05-25T16:28:15.142Z","level":"error","message":"Cannot populate path `job` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/getPayments"}
 {"date":"2025-05-25T16:28:17.545Z","level":"error","message":"Cannot populate path `job` because it is not in your schema. Set the `strictPopulate` option to false to override.","method":"GET","service":"user-service","url":"/getPayments"}
+{"date":"2025-05-28T10:56:51.210Z","level":"error","message":"sendMail is not a function","method":"POST","service":"user-service","url":"/forgotPassword"}
+{"date":"2025-05-28T10:59:29.392Z","level":"error","message":"Failed to send email","method":"POST","service":"user-service","url":"/forgotPassword"}
