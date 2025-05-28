@@ -52,6 +52,29 @@ const approveUser = async (req, res) => {
   }
 };
 
+const makeUserAdmin = async (req, res) => {
+  // #swagger.tags = ['admin']
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return ErrorHandler("User not found", 404, req, res);
+    }
+
+    if (user.role === "admin") {
+      return ErrorHandler("User is already an admin", 400, req, res);
+    }
+
+    user.role = "admin";
+    await user.save();
+
+    await sendNotification(user, "You are now an Admin", "approval", user._id);
+
+    return SuccessHandler("User is now an admin", 200, res);
+  } catch (error) {
+    return ErrorHandler(error.message, 500, req, res);
+  }
+};
+
 const deleteUserById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -724,6 +747,7 @@ const getPayments = async (req, res) => {
 };
 
 module.exports = {
+  makeUserAdmin,
   approveUser,
   deleteUserById,
   getAllUsers,

@@ -5,6 +5,9 @@ const router = express.Router();
 
 // get
 router
+  .route("/makeUserAdmin/:id")
+  .get(isAuthenticated, isAdmin, admin.makeUserAdmin);
+router
   .route("/approveUser/:id/:status")
   .get(isAuthenticated, isAdmin, admin.approveUser);
 router
