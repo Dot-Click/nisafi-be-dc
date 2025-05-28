@@ -135,7 +135,7 @@ const getAllJobsClient = async (req, res) => {
       : {};
     const sort = req.query.sort === "old" ? 1 : -1;
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 100;
+    const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
     let jobs;
     if (
@@ -189,9 +189,9 @@ const getAllJobsWorker = async (req, res) => {
           ],
         }
       : {};
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 100;
-    const skip = (page - 1) * limit;
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
 
     let jobs;
 
@@ -199,10 +199,9 @@ const getAllJobsWorker = async (req, res) => {
       jobs = await Job.find({
         status: "open",
         ...searchFilter,
-      })
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit);
+      }).sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
     } else if (req.query?.status === "proposalSubmitted") {
       // get all jobs where worker has submitted a proposal
       const proposals = await Proposal.find({ user: req.user._id });
@@ -362,10 +361,9 @@ const getAllJobsWorker = async (req, res) => {
         worker: req.user._id,
         status: req.query.status,
         ...searchFilter,
-      })
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit);
+      }).sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
     }
 
     return SuccessHandler(jobs, 200, res);
@@ -1058,7 +1056,7 @@ const resolveDispute = async (req, res) => {
         id: job._id,
       });
 
-      if (!status) {
+      if(!status){
         return ErrorHandler("Payment failed", 400, req, res);
       }
       const userTransaction = {

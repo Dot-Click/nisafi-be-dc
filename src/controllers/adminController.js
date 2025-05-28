@@ -14,22 +14,12 @@ const {
   sendNotification,
   sendAdminNotification,
 } = require("../utils/sendNotification");
-const EscrowDeposit = require("../models/EscrowDeposit");
 
 const approveUser = async (req, res) => {
   // #swagger.tags = ['admin']
   try {
     if (req.params.status == "pending") {
-      // return ErrorHandler("Invalid status", 400, req, res);
-      const user = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          adminApproval: req.params.status,
-        },
-        {
-          new: true,
-        }
-      );
+      return ErrorHandler("Invalid status", 400, req, res);
     }
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -46,51 +36,9 @@ const approveUser = async (req, res) => {
       "approval",
       user._id
     );
-    return SuccessHandler("User status updated", 200, res);
+    return SuccessHandler("User approved successfully", 200, res);
   } catch (error) {
     return ErrorHandler(error.message, 500, req, res);
-  }
-};
-
-const makeUserAdmin = async (req, res) => {
-  // #swagger.tags = ['admin']
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return ErrorHandler("User not found", 404, req, res);
-    }
-
-    if (user.role === "admin") {
-      return ErrorHandler("User is already an admin", 400, req, res);
-    }
-
-    user.role = "admin";
-    await user.save();
-
-    await sendNotification(user, "You are now an Admin", "approval", user._id);
-
-    return SuccessHandler("User is now an admin", 200, res);
-  } catch (error) {
-    return ErrorHandler(error.message, 500, req, res);
-  }
-};
-
-const deleteUserById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedUser = await User.findByIdAndDelete(id);
-
-    if (!deletedUser) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
-
-    res
-      .status(200)
-      .json({ success: true, message: "User deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
   }
 };
 
@@ -710,46 +658,8 @@ const generalStats = async (req, res) => {
   }
 };
 
-const getPayments = async (req, res) => {
-  // #swagger.tags = ['admin']
-  try {
-    const payments = await EscrowDeposit.find({})
-      .populate([
-        { path: "client", select: "_id name email phone role" },
-        { path: "worker", select: "_id name email phone role" },
-        { path: "jobId", select: "title description price" },
-      ])
-      .sort({ createdAt: -1 });
-
-    if (!payments || payments.length === 0) {
-      return ErrorHandler("No payments found", 404, req, res);
-    }
-
-    const formatted = payments.map((payment) => ({
-      transaction_id: payment.transaction_id,
-      amount: payment.amount,
-      status: payment.status,
-      escrowStatus: payment.escrowStatus,
-      createdAt: payment.createdAt,
-      client: payment.client,
-      worker: payment.worker,
-      jobId: payment.jobId,
-    }));
-
-    return SuccessHandler(
-      { count: formatted.length, payments: formatted },
-      200,
-      res
-    );
-  } catch (error) {
-    return ErrorHandler(error.message, 500, req, res);
-  }
-};
-
 module.exports = {
-  makeUserAdmin,
   approveUser,
-  deleteUserById,
   getAllUsers,
   getSingleUser,
   getJobs,
@@ -761,5 +671,4 @@ module.exports = {
   getBanners,
   deleteBanner,
   getWallets,
-  getPayments,
 };
