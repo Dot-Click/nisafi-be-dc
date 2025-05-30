@@ -1,21 +1,17 @@
-const emailjs = require("@emailjs/nodejs");
+// utils/sendMail.js
+const { Resend } = require("resend");
+const resend = new Resend("re_ipn5PbL1_NxSq4u9p3Qcw7MM61DaVv4AS");
 
-const sendMail = async (email, code) => {
-  const serviceId = process.env.EMAILJS_SERVICE_ID;
-  const templateId = process.env.EMAILJS_TEMPLATE_ID;
-  const publicKey = process.env.EMAILJS_PUBLIC_KEY;
-
-  const templateParams = {
-    email: email,
-    otp: code,
-  };
-
+const sendMail = async (to, code) => {
   try {
-    await emailjs.send(serviceId, templateId, templateParams, {
-      publicKey,
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to,
+      subject: "Password Reset Code",
+      text: `Your OTP code is: ${code}`,
     });
   } catch (error) {
-    console.error("EmailJS Error:", error);
+    console.error("Resend Error:", error);
     throw new Error("Failed to send email");
   }
 };

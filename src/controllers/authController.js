@@ -1,5 +1,5 @@
 const User = require("../models/User/user");
-const sendMail = require("../utils/sendMail");
+const { sendMail } = require("../utils/sendMail");
 const SuccessHandler = require("../utils/SuccessHandler");
 const ErrorHandler = require("../utils/ErrorHandler");
 const {
@@ -228,6 +228,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     await sendMail(email, passwordResetToken); // Using EmailJS
+    console.log(`Reset token ${passwordResetToken} has been sent to ${email}`);
 
     return SuccessHandler(`Password reset token sent to ${email}`, 200, res);
   } catch (error) {
